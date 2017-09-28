@@ -1,6 +1,15 @@
 {
+    "name": "fermino/tu-estudio.org",
+    "type": "project",
     "require": {
-        "nikic/fast-route": "^1.2",
-        "monolog/monolog": "^1.23"
-    }
+        "monolog/monolog": "^1.23",
+        "nikic/fast-route": "^1.2"
+    },
+    "license": "GPL v3",
+    "authors": [
+        {
+            "name": "Fermin Olaiz",
+            "email": "ferminolaiz@gmail.com"
+        }
+    ]
 }
