@@ -14,7 +14,7 @@
 
 	$cfg = array
 	(
-		'project_path'	=> '..',
+		'vendor_path'	=> '../vendor/',
 		'dbs'			=> array
 		(
 			'development'	=> array
