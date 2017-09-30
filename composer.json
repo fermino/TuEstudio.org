@@ -3,7 +3,8 @@
     "type": "project",
     "require": {
         "monolog/monolog": "^1.23",
-        "nikic/fast-route": "^1.2"
+        "nikic/fast-route": "^1.2",
+        "php-activerecord/php-activerecord": "^1.2"
     },
     "license": "GPL v3",
     "authors": [
