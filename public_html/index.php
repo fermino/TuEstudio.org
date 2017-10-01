@@ -49,8 +49,7 @@
 						$data[1] = [$data[1]];
 
 					// Add the route for every available method
-					// TODO sttrtoupper on every value of the array
-					$r->addRoute($data[1], $route, $data[0]);
+					$r->addRoute(array_map('strtoupper', $data[1]), $route, $data[0]);
 				}
 				else
 				{
