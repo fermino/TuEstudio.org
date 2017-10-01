@@ -24,6 +24,8 @@
 		$orm_cfg->set_default_connection(SITE_MODE);
 	});
 
+	// Set up the router
+
 	$fast_route = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) use($routes)
 	{
 		$add_route = function(FastRoute\RouteCollector $r, $routes) use(&$add_route)
@@ -67,44 +69,32 @@
 		$add_route($r, $routes);
 	});
 
+	// Fetch method and URI from somewhere
+	$request_method	= $_SERVER['REQUEST_METHOD'];
+	$request_uri	= $_SERVER['REQUEST_URI'];
 
-$dispatcher = &$fast_route;
+	// Strip query string (?foo=bar)and decode URI
+	if(false !== ($pos = strpos($request_uri, '?')))
+		$request_uri = substr($request_uri, 0, $pos);
 
-// Fetch method and URI from somewhere
-$httpMethod = $_SERVER['REQUEST_METHOD'];
-$uri = $_SERVER['REQUEST_URI'];
+	$request_uri = rawurldecode($request_uri);
 
-// Strip query string (?foo=bar) and decode URI
-if (false !== $pos = strpos($uri, '?')) {
-    $uri = substr($uri, 0, $pos);
-}
-$uri = rawurldecode($uri);
-$uri = str_replace('/tuestudio', null, $uri);
+	// Strip the site path (folder)
+	if(!empty($cfg['site_uri']))
+		$request_uri = substr($request_uri, strlen($cfg['site_uri']));
 
-$routeInfo = $dispatcher->dispatch($httpMethod, $uri);
-switch ($routeInfo[0]) {
-    case FastRoute\Dispatcher::NOT_FOUND:
-    echo 'not found';
-        // ... 404 Not Found
-        break;
-    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-        $allowedMethods = $routeInfo[1];
-        // ... 405 Method Not Allowed
-        echo 'no metodo';
-        break;
-    case FastRoute\Dispatcher::FOUND:
-        $handler = $routeInfo[1];
-        $vars = $routeInfo[2];
-        $handler(...$vars);
-        // ... call $handler with $vars
-        break;
-}
+	// Dispatch the route
+	$route_info = $fast_route->dispatch($request_method, $request_uri);
 
-
-
-
-	function handler()
+	switch($route_info[0])
 	{
-		echo 'si, hay una pagina';
-		var_dump(func_get_args());
+		case FastRoute\Dispatcher::FOUND:
+			// ... 405 Method Not Allowed
+			break;
+		case FastRoute\Dispatcher::NOT_FOUND:
+			// ... 404 Not Found
+			break;
+		case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+			// ... call $handler with $vars
+			break;
 	}
