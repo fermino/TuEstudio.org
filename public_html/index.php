@@ -93,12 +93,22 @@
 	switch($route_info[0])
 	{
 		case FastRoute\Dispatcher::FOUND:
-			// ... 405 Method Not Allowed
+			// ... call $handler with $vars
 			break;
 		case FastRoute\Dispatcher::NOT_FOUND:
-			// ... 404 Not Found
+			http_response_code(404); // 404 Not Found
+
+			// Load static template
+			exit;
 			break;
 		case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-			// ... call $handler with $vars
+			http_response_code(405); // 405 Method Not Allowed
+
+			if(!headers_sent())
+				header('Allow: ' . implode(', ', $route_info[1]));
+
+			// Load static template
+
+			exit;
 			break;
 	}
