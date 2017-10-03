@@ -20,7 +20,6 @@
 	[
 		'site_uri'		=> '/', // /tuestudio => without ending slash
 
-		'vendor_path'	=> '../vendor/',
 		SITE_MODE_DEV	=>
 		[
 			'db' =>

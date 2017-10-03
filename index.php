@@ -7,7 +7,7 @@
 	if(empty($routes) || !is_array($routes))
 		exit;
 
-	require __DIR__ . '/' . $cfg['vendor_path'] . '/autoload.php';
+	require __DIR__ . '/vendor/autoload.php';
 
 	// Set up the ORM
 
