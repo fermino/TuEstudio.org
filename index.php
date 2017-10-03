@@ -8,6 +8,7 @@
 		exit;
 
 	require __DIR__ . '/vendor/autoload.php';
+	require __DIR__ . '/class/controller_base.php';
 
 	// Set up the ORM
 
@@ -93,13 +94,36 @@
 	switch($route_info[0])
 	{
 		case FastRoute\Dispatcher::FOUND:
-			// ... call $handler with $vars
-			break;
+			$route_info[1] = strtolower($route_info[1]);
+
+			include __DIR__ . '/controllers/' . $route_info[1] . '.php';
+
+			$class_name = str_replace('_', null, ucwords($route_info[1], '_')) . 'Controller';
+
+			if(class_exists($class_name))
+			{
+				$controller = new $class_name;
+
+				if($controller->handleRequest($_SERVER['REQUEST_METHOD'], $route_info[2]))
+					break;
+				else
+				{
+					http_response_code(500);
+					echo '500';
+
+					// Load static template
+
+					break;
+				}
+			}
+			// Else
+			// Log error and send 404
+
 		case FastRoute\Dispatcher::NOT_FOUND:
 			http_response_code(404); // 404 Not Found
+			echo '404';
 
 			// Load static template
-			exit;
 			break;
 		case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
 			http_response_code(405); // 405 Method Not Allowed
@@ -107,8 +131,9 @@
 			if(!headers_sent())
 				header('Allow: ' . implode(', ', $route_info[1]));
 
+			echo '405';
+
 			// Load static template
 
-			exit;
 			break;
 	}
