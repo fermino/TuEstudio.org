@@ -90,6 +90,7 @@
 
 	// Dispatch the route
 	$route_info = $fast_route->dispatch($request_method, $request_uri);
+	$response = 500;
 
 	switch($route_info[0])
 	{
@@ -104,36 +105,51 @@
 			{
 				$controller = new $class_name;
 
-				if($controller->handleRequest($_SERVER['REQUEST_METHOD'], $route_info[2]))
-					break;
+				if($controller instanceof ControllerBase)
+				{
+					$response = $controller->handleRequest($_SERVER['REQUEST_METHOD'], $route_info[2]);
+				}
 				else
 				{
-					http_response_code(500);
-					echo '500';
-
-					// Load static template
-
-					break;
+					//Log
+					$response = 500;
 				}
 			}
-			// Else
-			// Log error and send 404
-
+			else
+			{
+				//Log
+				$response = 500;
+			}
+			break;
 		case FastRoute\Dispatcher::NOT_FOUND:
-			http_response_code(404); // 404 Not Found
-			echo '404';
-
-			// Load static template
+			$response = 404;
 			break;
 		case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+			$response = 405;
+			break;
+	}
+
+	switch($response)
+	{
+		case 0:
+			// Everything went true
+			break;
+		case 404:
+			http_response_code(404); // 404 Not Found
+			echo '404';
+			//Load template
+			break;
+		case 405:
 			http_response_code(405); // 405 Method Not Allowed
 
 			if(!headers_sent())
 				header('Allow: ' . implode(', ', $route_info[1]));
 
 			echo '405';
-
-			// Load static template
-
+			break;
+		case 500:
+		default:
+			http_response_code(500); // 500 Internal Server Error
+			echo '500';
 			break;
 	}
