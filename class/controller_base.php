@@ -22,7 +22,7 @@
 			{
 				$response = $this->{$http_method}($environment);
 
-				if(is_int($response) && 200 !== $response && null !== $response)
+				if(is_int($response))
 					return $response;
 
 				if(is_array($response))
