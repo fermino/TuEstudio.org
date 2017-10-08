@@ -1,14 +1,22 @@
 <?php
-	require __DIR__ . '/config.php';
+	require __DIR__.'/config.php';
 	if(empty($cfg) || !is_array($cfg))
 		exit;
 
-	require __DIR__ . '/routes.php';
+	require __DIR__.'/routes.php';
 	if(empty($routes) || !is_array($routes))
 		exit;
 
-	require __DIR__ . '/vendor/autoload.php';
-	require __DIR__ . '/class/controller_base.php';
+	require __DIR__.'/vendor/autoload.php';
+	require __DIR__.'/class/controller_base.php';
+
+	use Monolog\Logger;
+	use Monolog\Handler\StreamHandler;
+
+	// Set up Monolog
+
+	$logger = new Logger($cfg['log_name']);
+	$logger->pushHandler(new StreamHandler(__DIR__.'/log/main.log'));
 
 	// Set up the ORM
 
@@ -103,7 +111,7 @@
 
 			if(class_exists($class_name))
 			{
-				$controller = new $class_name;
+				$controller = new $class_name($logger);
 
 				if($controller instanceof ControllerBase)
 				{
@@ -131,7 +139,7 @@
 
 	switch($response)
 	{
-		case 0:
+		case null:
 			// Everything went true
 			break;
 		case 404:
@@ -148,8 +156,8 @@
 			echo '405';
 			break;
 		case 500:
-		default:
 			http_response_code(500); // 500 Internal Server Error
 			echo '500';
+		default:
 			break;
 	}

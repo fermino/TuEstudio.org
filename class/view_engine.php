@@ -1,12 +1,26 @@
 <?php
+	use Psr\Log\LoggerInterface;
+
 	abstract class ViewEngine
 	{
 		protected $view_name = null;
 
-		final public function __construct(string $view_name)
+		protected $logger = null;
+
+		final public function __construct(string $view_name, LoggerInterface $logger)
 		{
+			$this->logger = $logger;
+
 			if(!defined(get_class($this) . '::EXTENSION'))
+			{
+				$this->logger->critical('[ViewEngine::__construct] ViewEngine::EXTENSION must be defined',
+				[
+					'engine'		=> get_class($this),
+					'view'			=> $view_name,
+				]);
+
 				throw new Exception('You must define ' . get_class($this) . '::EXTENSION');
+			}
 
 			$this->view_name = $view_name;
 		}

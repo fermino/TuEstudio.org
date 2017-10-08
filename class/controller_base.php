@@ -1,4 +1,6 @@
 <?php
+	use Psr\Log\LoggerInterface;
+
 	abstract class ControllerBase
 	{
 		private static $engines =
@@ -9,14 +11,22 @@
 		protected $unique_view = true;
 		protected $view = null;
 
-		final public function handleRequest(string $http_method, array $environment) : int
+		protected $logger = null;
+
+		final public function __construct(LoggerInterface $logger)
+		{ $this->logger = $logger; }
+
+		final public function handleRequest(string $http_method, array $environment) : ?int
 		{
 			if(method_exists($this, strtolower($http_method)))
 			{
 				$response = $this->{$http_method}($environment);
 
-				if(is_int($response) && 200 !== $response && 0 !== $response)
+				if(is_int($response) && 200 !== $response && null !== $response)
 					return $response;
+
+				if(is_array($response))
+					$environment = $response;
 
 				if($this->unique_view)
 				{
@@ -32,30 +42,50 @@
 					{
 						if($this->view->parse())
 						{
-							if($this->view->display(is_array($response) ? $response : $environment))
-								return 0;
-							else
-							{
-								// Log
-								return 500;
-							}
-						}
-						else
-						{
-							// Log
+							if($this->view->display($environment))
+								return null;
+
+							$this->logger->critical('[Controller::handleRequest] ViewEngine::display() returned false',
+							[
+								'controller'	=> get_class($this),
+								'view'			=> $view_name,
+								'method'		=> $http_method,
+								'environment'	=> $environment
+							]);
 							return 500;
 						}
-					}
-					else
-					{
-						// Log
+
+						$this->logger->critical('[Controller::handleRequest] ViewEngine::parse() returned false',
+						[
+							'controller'	=> get_class($this),
+							'view'			=> $view_name,
+							'method'		=> $http_method,
+							'environment'	=> $environment
+						]);
 						return 500;
 					}
+
+					$this->logger->critical('[Controller::handleRequest] Controller::loadView() returned false: view not loadable',
+					[
+						'controller'	=> get_class($this),
+						'view'			=> $view_name,
+						'method'		=> $http_method,
+						'environment'	=> $environment
+					]);
+					return 500;
 				}
+
+				return null;
 			}
 
-			// Log error
-			return 405;
+			$this->logger->critical('[Controller::handleRequest] Controller method does not exist',
+			[
+				'controller'	=> get_class($this),
+				'view'			=> $view_name,
+				'method'		=> $http_method,
+				'environment'	=> $environment
+			]);
+			return 500;
 		}
 
 		final protected function loadView(string $view_name) : ?ViewEngine
@@ -65,7 +95,7 @@
 				require_once strtolower($class_name) . '_view.php';
 
 				$class_name = $class_name . 'View';
-				$view = new $class_name($view_name);
+				$view = new $class_name($view_name, $this->logger);
 
 				if($view->isReadable())
 					return $view;
