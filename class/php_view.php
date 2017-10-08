@@ -1,6 +1,4 @@
 <?php
-	require_once __DIR__.'/view_engine.php';
-
 	class PHPView extends ViewEngine
 	{
 		const EXTENSION = 'php';

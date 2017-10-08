@@ -1,4 +1,6 @@
 <?php
+	require __DIR__.'/view_engine.php';
+
 	use Psr\Log\LoggerInterface;
 
 	abstract class ControllerBase
