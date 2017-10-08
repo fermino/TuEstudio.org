@@ -25,11 +25,11 @@
 				if(is_int($response))
 					return $response;
 
-				if(is_array($response))
-					$environment = $response;
-
 				if($this->unique_view)
 				{
+					if(is_array($response))
+						$environment = $response;
+
 					$view_name = get_class($this);
 					$view_name = substr($view_name, 0, strlen($view_name) - 10);
 
