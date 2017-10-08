@@ -81,7 +81,6 @@
 			$this->logger->critical('[Controller::handleRequest] Controller method does not exist',
 			[
 				'controller'	=> get_class($this),
-				'view'			=> $view_name,
 				'method'		=> $http_method,
 				'environment'	=> $environment
 			]);

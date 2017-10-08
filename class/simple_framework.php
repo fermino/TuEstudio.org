@@ -103,7 +103,7 @@
 			switch($route_info[0])
 			{
 				case FastRoute\Dispatcher::FOUND:
-					return $this->loadController($route_info[1]);
+					return $this->loadController($route_info[1], $request_method, $route_info[2]);
 					break;
 				case FastRoute\Dispatcher::NOT_FOUND:
 					return $this->sendResponse(404);
@@ -116,7 +116,7 @@
 			return false;
 		}
 
-		private function loadController(string $controller) : bool
+		private function loadController(string $controller, string $request_method, array $route_params) : bool
 		{
 			$controller = strtolower($controller);
 			$controller_path = __DIR__.'/../controllers/' . $controller . '.php';
@@ -131,11 +131,11 @@
 
 				if(class_exists($class_name))
 				{
-					$controller = new $class_name($logger);
-
-					if($controller instanceof ControllerBase)
+					if(is_subclass_of($class_name, 'ControllerBase'))
 					{
-						$response = $controller->handleRequest($_SERVER['REQUEST_METHOD'], $route_info[2]);
+						$controller = new $class_name($this->logger);
+
+						$response = $controller->handleRequest($request_method, $route_params);
 
 						if(null === $response)
 							return true;
