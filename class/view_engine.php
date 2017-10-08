@@ -3,7 +3,8 @@
 
 	abstract class ViewEngine
 	{
-		protected $view_name = null;
+		protected $view_name	= null;
+		protected $path			= null;
 
 		protected $logger = null;
 
@@ -23,13 +24,11 @@
 			}
 
 			$this->view_name = $view_name;
+			$this->path = __DIR__.'/../views/' . $this->view_name . '.' . $this::EXTENSION;
 		}
 
-		final protected function getPath() : string
-		{ return __DIR__.'/../views/' . $this->view_name . '.' . $this::EXTENSION; }
-
 		final public function isReadable() : bool
-		{ return is_readable($this->getPath()); }
+		{ return is_readable($this->path); }
 
 		abstract public function parse() : bool;
 		abstract public function display(array $environment) : bool;

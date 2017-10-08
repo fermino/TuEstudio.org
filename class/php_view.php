@@ -18,6 +18,6 @@
 		{
 			extract($environment, EXTR_OVERWRITE);
 
-			return include $this->getPath();
+			return include $this->path;
 		}
 	}
