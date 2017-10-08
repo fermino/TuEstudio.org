@@ -146,6 +146,8 @@
 					$this->logger->critical('[SimpleFramework::handleRequest] Controller must extend ControllerBase',
 					[
 						'controller'	=> $controller,
+						'method'		=> $request_method,
+						'route_params'	=> $route_params
 					]);
 					return $this->sendResponse(500);
 				}
@@ -153,6 +155,8 @@
 				$this->logger->critical('[SimpleFramework::handleRequest] Controller class not exist',
 				[
 					'controller'	=> $controller,
+					'method'		=> $request_method,
+					'route_params'	=> $route_params
 				]);
 				return $this->sendResponse(500);
 			}
@@ -160,6 +164,8 @@
 			$this->logger->critical('[SimpleFramework::handleRequest] Controller file not readable',
 			[
 				'controller'	=> $controller,
+				'method'		=> $request_method,
+				'route_params'	=> $route_params
 			]);
 			return $this->sendResponse(500);
 		}
