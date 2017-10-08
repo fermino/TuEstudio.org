@@ -26,7 +26,7 @@
 		}
 
 		final protected function getPath() : string
-		{ return realpath(__DIR__ . '/../views/' . $this->view_name . '.' . $this::EXTENSION); }
+		{ return __DIR__.'/../views/' . $this->view_name . '.' . $this::EXTENSION; }
 
 		final public function isReadable() : bool
 		{ return is_readable($this->getPath()); }
