@@ -9,22 +9,54 @@
 			'|'			=> ['$1',				null]
 		];
 
-		private $string = '';
+		private $compiled_path = null;
 
 		public function parse() : bool
 		{
-			if(null !== ($lines = $this->getFile()))
+			if($this->isReadable())
 			{
-				$string = '';
-				$tags_to_close = [];
+				$sli_mtime = filemtime($this->path);
 
-				$line_count = count($lines);
-				for($i = 0; $i < $line_count; $i++)
-					$string .= $this->parseLine($lines[$i], $lines[$i + 1] ?? [0, null, null], $tags_to_close);
+				$this->compiled_path = __DIR__.'/../views/cache/'. $this->view_name . $sli_mtime . '_.php';
 
-				$this->string = $string;
+				if(!is_readable($this->compiled_path))
+				{
+					// Let's compile it!
+					if(null !== ($lines = $this->getFile()))
+					{
+						$string = '';
+						$tags_to_close = [];
 
-				return true;
+						$line_count = count($lines);
+						for($i = 0; $i < $line_count; $i++)
+							$string .= $this->parseLine($lines[$i], $lines[$i + 1] ?? [0, null, null], $tags_to_close);
+
+						// If can't save
+						if(strlen($string) !== file_put_contents($this->compiled_path, $string))
+						{
+							$this->compiled_path = null;
+
+							// Log error
+						}
+						// The file was successfully compiled and saved
+						else
+						{
+							// Delete previous compiled views
+							foreach(glob(__DIR__.'/../views/cache/' . $this->view_name . '*_.php') as $file)
+								if($file !== $this->compiled_path)
+									unlink($file);
+
+							return true;
+						}
+					}
+					else
+					{
+						// Log error
+					}
+				}
+				// The file is already compiled
+				else
+					return true;
 			}
 
 			return false;
@@ -53,7 +85,7 @@
 			if(isset($this->restricted_tags[$tag_name]))
 				return str_replace('$1', $line, $this->restricted_tags[$tag_name][$closing ? 1 : 0]);
 
-			return '<'.($closing ? '/' : null).$tag_name.'>';
+			return '<'.($closing ? '/' : null).$tag_name.(!empty($line) ? ' '.$line : null).'>';
 		}
 
 		private function getFile() : ?array
@@ -114,11 +146,14 @@
 
 		public function display(array $environment) : bool
 		{
-			//extract($environment, EXTR_OVERWRITE);
-			//return include $this->path;
+			if(!empty($this->compiled_path))
+			{
+				extract($environment, EXTR_OVERWRITE);
+				$nombre = 'este es mi nombre';
 
-			echo $this->string;
+				return include $this->compiled_path;
+			}
 
-			return true;
+			return false;
 		}
 	}
