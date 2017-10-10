@@ -36,17 +36,12 @@
 			$tags_to_close[] = $current[1];
 
 			// If the next line indent level is smaller
-			if($next[0] < $current[0])
+			// If the next line is a sibling
+			if($next[0] <= $current[0])
 			{
 				// We must close the tags
 				for($i = count($tags_to_close) - $next[0]; $i > 0; $i--)
 					$string .= '</'.array_pop($tags_to_close).'>';
-			}
-			// If the next line is a sibling
-			elseif($next[0] == $current[0])
-			{
-				// We must close the last tag
-				$string .= '</'.array_pop($tags_to_close).'>';
 			}
 
 			return $string;
