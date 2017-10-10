@@ -7,7 +7,8 @@
 	{
 		private static $engines =
 		[
-			'PHP'
+			'PHP',
+			'Sli'
 		];
 
 		protected $unique_view = true;
