@@ -5,8 +5,11 @@
 
 		private $restricted_tags =
 		[
-			'doctype'	=> ['<doctype $1>',		null],
-			'|'			=> ['$1',				null]
+			'doctype'	=> [ '<doctype $1>'											, null			],
+			'title'		=> [ '<title>$1'											, '</title>'	],
+			'|'			=> [ '$1'													, null			],
+			'='			=> [ 'echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');'	, null,		true],
+			'=raw'		=> [ 'echo $$1;'											, null,		true]
 		];
 
 		private $compiled_path = null;
@@ -83,7 +86,14 @@
 		private function addTag(bool $closing, string $tag_name, string $line = null) : string
 		{
 			if(isset($this->restricted_tags[$tag_name]))
-				return str_replace('$1', $line, $this->restricted_tags[$tag_name][$closing ? 1 : 0]);
+			{
+				$string = str_replace('$1', $line, $this->restricted_tags[$tag_name][$closing ? 1 : 0]);
+
+				if(!empty($this->restricted_tags[$tag_name][2]) && !empty($this->restricted_tags[$tag_name][$closing ? 1 : 0]))
+					$string = '<?php ' . $string . '?>';
+
+				return $string;
+			}
 
 			return '<'.($closing ? '/' : null).$tag_name.(!empty($line) ? ' '.$line : null).'>';
 		}
@@ -149,7 +159,6 @@
 			if(!empty($this->compiled_path))
 			{
 				extract($environment, EXTR_OVERWRITE);
-				$nombre = 'este es mi nombre';
 
 				return include $this->compiled_path;
 			}
