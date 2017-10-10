@@ -3,10 +3,11 @@
 	{
 		const EXTENSION = 'sli';
 
-		/*private $restricted_names =
+		private $restricted_tags =
 		[
-			'html' => ['<!doctype html><html>', '</html>']
-		];*/
+			'doctype'	=> ['<doctype $1>',		null],
+			'|'			=> ['$1',				null]
+		];
 
 		private $string = '';
 
@@ -32,7 +33,7 @@
 		// This will add $current's tag and let everything ready to add $next's one
 		private function parseLine(array $current, array $next, array &$tags_to_close) : string
 		{
-			$string = '<'.$current[1].'>';
+			$string = $this->addTag(false, $current[1], $current[2]);
 			$tags_to_close[] = $current[1];
 
 			// If the next line indent level is smaller
@@ -41,10 +42,18 @@
 			{
 				// We must close the tags
 				for($i = count($tags_to_close) - $next[0]; $i > 0; $i--)
-					$string .= '</'.array_pop($tags_to_close).'>';
+					$string .= $this->addTag(true, array_pop($tags_to_close));
 			}
 
 			return $string;
+		}
+
+		private function addTag(bool $closing, string $tag_name, string $line = null) : string
+		{
+			if(isset($this->restricted_tags[$tag_name]))
+				return str_replace('$1', $line, $this->restricted_tags[$tag_name][$closing ? 1 : 0]);
+
+			return '<'.($closing ? '/' : null).$tag_name.'>';
 		}
 
 		private function getFile() : ?array
