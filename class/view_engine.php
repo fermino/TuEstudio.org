@@ -32,4 +32,27 @@
 
 		abstract public function parse() : bool;
 		abstract public function display(array $environment) : bool;
+
+		// Autoload (glob('view_*'))
+		private static $engines =
+		[
+			'PHP',
+			'Sli'
+		];
+
+		final static public function loadView(string $view_name, LoggerInterface $logger) : ?ViewEngine
+		{
+			foreach(self::$engines as $class_name)
+			{
+				require_once strtolower($class_name) . '_view.php';
+
+				$class_name = $class_name . 'View';
+				$view = new $class_name($view_name, $logger);
+
+				if($view->isReadable())
+					return $view;
+			}
+
+			return null;
+		}
 	}

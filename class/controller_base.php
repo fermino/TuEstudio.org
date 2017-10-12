@@ -5,12 +5,6 @@
 
 	abstract class ControllerBase
 	{
-		private static $engines =
-		[
-			'PHP',
-			'Sli'
-		];
-
 		protected $unique_view = true;
 		protected $view = null;
 
@@ -39,7 +33,7 @@
 					$view_name[0] = strtolower($view_name[0]);
 					$view_name = preg_replace_callback('/([A-Z])/', function($c) { return strtolower($c[1]); }, $view_name);
 
-					$this->view = $this->loadView($view_name);
+					$this->view = ViewEngine::loadView($view_name, $this->logger);
 
 					if(!empty($this->view))
 					{
@@ -88,21 +82,5 @@
 				'environment'	=> $environment
 			]);
 			return 500;
-		}
-
-		final protected function loadView(string $view_name) : ?ViewEngine
-		{
-			foreach(self::$engines as $class_name)
-			{
-				require_once strtolower($class_name) . '_view.php';
-
-				$class_name = $class_name . 'View';
-				$view = new $class_name($view_name, $this->logger);
-
-				if($view->isReadable())
-					return $view;
-			}
-
-			return null;
 		}
 	}
