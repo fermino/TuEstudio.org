@@ -5,18 +5,28 @@
 
 		private $restricted_tags =
 		[
-			'doctype'	=> [ '<doctype $1>'											, null			],
-			'title'		=> [ '<title>$1'											, '</title>'	],
-			'|'			=> [ '$1'													, null			],
-			'='			=> [ 'echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');'	, null,		true],
-			'=raw'		=> [ 'echo $$1;'											, null,		true],
-			'render'	=> [ 'if(null !== ($_v = ViewEngine::loadView(\'$1\'[0] === \'$\' ? $1 : \'$1\', $this->logger)) && $_v->parse()) $_v->display($environment);', null, true]
+			// HTML5 standard
+			'doctype'	=> ['<!doctype $1>'],
+			'title'		=> ['<title>$1', '</title>'],
+			'br'		=> ['<br>'],
+
+			// Code shortcuts
+			'rjs'		=> ['<script src="$1">', '</script>'],
+			'rcss'		=> ['<link rel="stylesheet" href="$1">'],
+
+			// Display'ers
+			'|'			=> ['$1'], // We need to avoid rtrimming
+			'='			=> ['echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');', null, true],
+			'=raw'		=> ['echo $$1;', null, true],
+
+			// Helpers
+			'render'	=> ['if(null !== ($_v = ViewEngine::loadView(\'$1\'[0] === \'$\' ? $1 : \'$1\', $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
 		];
 
 		private $post_parse =
 		[
 			[
-				'/=([A-Za-z0-9]+)/',
+				'/=([A-Za-z0-9_]+)/',
 				'echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');'
 			]
 		];
@@ -112,7 +122,7 @@
 		{
 			if(isset($this->restricted_tags[$tag_name]))
 			{
-				$string = str_replace('$1', $line, $this->restricted_tags[$tag_name][$closing ? 1 : 0]);
+				$string = str_replace('$1', $line, $this->restricted_tags[$tag_name][$closing ? 1 : 0] ?? null);
 
 				if(!empty($this->restricted_tags[$tag_name][2]) && !empty($this->restricted_tags[$tag_name][$closing ? 1 : 0]))
 					$string = '<?php ' . $string . '?>';
