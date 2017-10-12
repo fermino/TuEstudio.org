@@ -17,7 +17,7 @@
 				$this->logger->critical('[ViewEngine::__construct] ViewEngine::EXTENSION must be defined',
 				[
 					'engine'		=> get_class($this),
-					'view'			=> $view_name,
+					'view'			=> $view_name
 				]);
 
 				throw new Exception('You must define ' . get_class($this) . '::EXTENSION');
@@ -31,7 +31,7 @@
 		{ return is_readable($this->path); }
 
 		abstract public function parse() : bool;
-		abstract public function display(array $environment) : bool;
+		abstract public function display(array $environment = []) : bool;
 
 		// Autoload (glob('view_*'))
 		private static $engines =

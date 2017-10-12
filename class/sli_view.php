@@ -76,8 +76,7 @@
 							'engine'		=> get_class($this),
 							'view'			=> $this->view_name,
 							'path'			=> $this->path,
-							'compiled_path'	=> $this->compiled_path,
-							'environment'	=> $environment
+							'compiled_path'	=> $this->compiled_path
 						]);
 						return false;
 					}
@@ -87,8 +86,7 @@
 						'engine'		=> get_class($this),
 						'view'			=> $this->view_name,
 						'path'			=> $this->path,
-						'compiled_path'	=> $this->compiled_path,
-						'environment'	=> $environment
+						'compiled_path'	=> $this->compiled_path
 					]);
 					return false;
 				}
@@ -97,6 +95,12 @@
 				return true;
 			}
 
+			$this->logger->critical('[ViewEngine::parse] The not-compiled view is not readable',
+			[
+				'engine'		=> get_class($this),
+				'view'			=> $this->view_name,
+				'path'			=> $this->path
+			]);
 			return false;
 		}
 
@@ -141,7 +145,7 @@
 
 				if(false !== $lines && is_array($lines))
 				{
-					// Trim lines and delete empty ones
+					// Delete empty lines
 					$lines = array_values(array_filter($lines, function($v) { return rtrim($v) !== ''; }));
 
 					// getDepth() and tag - rest
@@ -163,17 +167,22 @@
 					return $lines;
 				}
 
-				// Log
+				$this->logger->critical('[ViewEngine::getFile] The not-compiled view is not readable',
+				[
+					'engine'		=> get_class($this),
+					'view'			=> $this->view_name,
+					'path'			=> $this->path,
+					'compiled_path'	=> $this->compiled_path
+				]);
 				return null;
-
 			}
 
-			$this->logger->critical('[ViewEngine::parseLine] The not-compiled view is not readable',
+			$this->logger->critical('[ViewEngine::getFile] The not-compiled view is not readable',
 			[
 				'engine'		=> get_class($this),
 				'view'			=> $this->view_name,
 				'path'			=> $this->path,
-				'environment'	=> $environment
+				'compiled_path'	=> $this->compiled_path
 			]);
 			return null;
 		}
@@ -206,7 +215,7 @@
 			return $depth;
 		}
 
-		public function display(array $environment) : bool
+		public function display(array $environment = []) : bool
 		{
 			if(!empty($this->compiled_path))
 			{

@@ -143,7 +143,7 @@
 						return $this->sendResponse($response);
 					}
 
-					$this->logger->critical('[SimpleFramework::handleRequest] Controller must extend ControllerBase',
+					$this->logger->critical('[SimpleFramework::loadController] Controller must extend ControllerBase',
 					[
 						'controller'	=> $controller,
 						'method'		=> $request_method,
@@ -152,7 +152,7 @@
 					return $this->sendResponse(500);
 				}
 
-				$this->logger->critical('[SimpleFramework::handleRequest] Controller class not exist',
+				$this->logger->critical('[SimpleFramework::loadController] Controller class not exist',
 				[
 					'controller'	=> $controller,
 					'method'		=> $request_method,
@@ -161,7 +161,7 @@
 				return $this->sendResponse(500);
 			}
 
-			$this->logger->critical('[SimpleFramework::handleRequest] Controller file not readable',
+			$this->logger->critical('[SimpleFramework::loadController] Controller file not readable',
 			[
 				'controller'	=> $controller,
 				'method'		=> $request_method,

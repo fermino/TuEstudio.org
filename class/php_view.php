@@ -18,7 +18,7 @@
 			return false;
 		}
 
-		public function display(array $environment) : bool
+		public function display(array $environment = []) : bool
 		{
 			extract($environment, EXTR_OVERWRITE);
 

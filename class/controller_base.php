@@ -42,7 +42,7 @@
 						'view'				=> 'application',
 						'controller_view'	=> $view_name,
 						'method'			=> $http_method,
-						'environment'		=> $environment,
+						'environment'		=> $environment
 					]);
 					return 500;
 				}
@@ -67,7 +67,9 @@
 			{
 				if($view->parse())
 				{
-					if($view->display(array_merge(['controller_view' => $view_name, 'title' => $this->title ?? null], $environment)))
+					$environment = array_merge(['controller_view' => $view_name, 'title' => $this->title ?? null], $environment);
+
+					if($view->display($environment))
 						return true;
 
 					$this->logger->critical('[Controller::loadControllerView] ViewEngine::display() returned false',
@@ -75,8 +77,7 @@
 						'controller'		=> get_class($this),
 						'view'				=> 'application',
 						'controller_view'	=> $view_name,
-						'method'			=> $http_method,
-						'environment'		=> $environment,
+						'environment'		=> $environment
 					]);
 					return false;
 				}
@@ -86,8 +87,7 @@
 					'controller'		=> get_class($this),
 					'view'				=> 'application',
 					'controller_view'	=> $view_name,
-					'method'			=> $http_method,
-					'environment'		=> $environment,
+					'environment'		=> $environment
 				]);
 				return false;
 			}
@@ -97,8 +97,7 @@
 				'controller'		=> get_class($this),
 				'view'				=> 'application',
 				'controller_view'	=> $view_name,
-				'method'			=> $http_method,
-				'environment'		=> $environment,
+				'environment'		=> $environment
 			]);
 			return false;
 		}
