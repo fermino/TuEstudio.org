@@ -15,7 +15,7 @@
 			'rcss'		=> ['<link rel="stylesheet" href="$1">'],
 
 			// Display'ers
-			'|'			=> ['$1'], // We need to avoid rtrimming
+			'|'			=> ['$1'],
 			'='			=> ['echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');', null, true],
 			'=raw'		=> ['echo $$1;', null, true],
 
@@ -142,15 +142,15 @@
 				if(false !== $lines && is_array($lines))
 				{
 					// Trim lines and delete empty ones
-					$lines = array_values(array_filter(array_map(function($v) { return rtrim($v); }, $lines), function($v) { return $v !== ''; }));
+					$lines = array_values(array_filter($lines, function($v) { return rtrim($v) !== ''; }));
 
 					// getDepth() and tag - rest
 					$lines = array_map(function($v)
 					{
-						$depth = $this->getDepth($v);
+						$depth = $this::getDepth($v);
 
 						$v		= ltrim($v);
-						$strpos	= strpos($v, ' ');
+						$strpos	= $this::strpos_array($v, [' ', "\t"]);
 
 						return
 						[
@@ -178,7 +178,18 @@
 			return null;
 		}
 
-		private function getDepth(string $string) : int
+		private static function strpos_array(string $haystack, array $needles, int $offset = 0)
+		{
+			foreach($needles as $needle)
+			{
+				if(false !== ($pos = strpos($haystack, $needle, $offset)))
+					return $pos;
+			}
+
+			return false;
+		}
+
+		private static function getDepth(string $string) : int
 		{
 			$depth = 0;
 
