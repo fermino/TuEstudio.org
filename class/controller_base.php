@@ -6,7 +6,7 @@
 	abstract class ControllerBase
 	{
 		protected $unique_view = true;
-		protected $view = null;
+		protected $title = null;
 
 		protected $logger = null;
 
@@ -33,41 +33,16 @@
 					$view_name[0] = strtolower($view_name[0]);
 					$view_name = preg_replace_callback('/([A-Z])/', function($c) { return strtolower($c[1]); }, $view_name);
 
-					$this->view = ViewEngine::loadView($view_name, $this->logger);
+					if($this->loadControllerView($view_name, $environment))
+						return null;
 
-					if(!empty($this->view))
-					{
-						if($this->view->parse())
-						{
-							if($this->view->display($environment))
-								return null;
-
-							$this->logger->critical('[Controller::handleRequest] ViewEngine::display() returned false',
-							[
-								'controller'	=> get_class($this),
-								'view'			=> $view_name,
-								'method'		=> $http_method,
-								'environment'	=> $environment
-							]);
-							return 500;
-						}
-
-						$this->logger->critical('[Controller::handleRequest] ViewEngine::parse() returned false',
-						[
-							'controller'	=> get_class($this),
-							'view'			=> $view_name,
-							'method'		=> $http_method,
-							'environment'	=> $environment
-						]);
-						return 500;
-					}
-
-					$this->logger->critical('[Controller::handleRequest] Controller::loadView() returned false: view not loadable',
+					$this->logger->critical('[Controller::handleRequest] Controller::loadControllerView() returned false',
 					[
-						'controller'	=> get_class($this),
-						'view'			=> $view_name,
-						'method'		=> $http_method,
-						'environment'	=> $environment
+						'controller'		=> get_class($this),
+						'view'				=> 'application',
+						'controller_view'	=> $view_name,
+						'method'			=> $http_method,
+						'environment'		=> $environment,
 					]);
 					return 500;
 				}
@@ -82,5 +57,49 @@
 				'environment'	=> $environment
 			]);
 			return 500;
+		}
+
+		final protected function loadControllerView(string $view_name, array $environment) : bool
+		{
+			$view = ViewEngine::loadView('application', $this->logger);
+
+			if(!empty($view))
+			{
+				if($view->parse())
+				{
+					if($view->display(array_merge(['controller_view' => $view_name, 'title' => $this->title ?? null], $environment)))
+						return true;
+
+					$this->logger->critical('[Controller::loadControllerView] ViewEngine::display() returned false',
+					[
+						'controller'		=> get_class($this),
+						'view'				=> 'application',
+						'controller_view'	=> $view_name,
+						'method'			=> $http_method,
+						'environment'		=> $environment,
+					]);
+					return false;
+				}
+
+				$this->logger->critical('[Controller::loadControllerView] ViewEngine::parse() returned false',
+				[
+					'controller'		=> get_class($this),
+					'view'				=> 'application',
+					'controller_view'	=> $view_name,
+					'method'			=> $http_method,
+					'environment'		=> $environment,
+				]);
+				return false;
+			}
+
+			$this->logger->critical('[Controller::loadControllerView] ViewEngine::loadView() returned false: view not loadable',
+			[
+				'controller'		=> get_class($this),
+				'view'				=> 'application',
+				'controller_view'	=> $view_name,
+				'method'			=> $http_method,
+				'environment'		=> $environment,
+			]);
+			return false;
 		}
 	}

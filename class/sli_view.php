@@ -9,7 +9,16 @@
 			'title'		=> [ '<title>$1'											, '</title>'	],
 			'|'			=> [ '$1'													, null			],
 			'='			=> [ 'echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');'	, null,		true],
-			'=raw'		=> [ 'echo $$1;'											, null,		true]
+			'=raw'		=> [ 'echo $$1;'											, null,		true],
+			'render'	=> [ 'if(null !== ($_v = ViewEngine::loadView(\'$1\'[0] === \'$\' ? $1 : \'$1\', $this->logger)) && $_v->parse()) $_v->display($environment);', null, true]
+		];
+
+		private $post_parse =
+		[
+			[
+				'/=([A-Za-z0-9]+)/',
+				'echo $$1;'
+			]
 		];
 
 		private $compiled_path = null;
@@ -33,6 +42,9 @@
 						$line_count = count($lines);
 						for($i = 0; $i < $line_count; $i++)
 							$string .= $this->parseLine($lines[$i], $lines[$i + 1] ?? [0, null, null], $tags_to_close);
+
+						foreach($this->post_parse as $regex)
+							$string = preg_replace_callback($regex[0], function($matches) use($regex) { return '<?php ' . str_replace('$1', $matches[1], $regex[1]) . ' ?>'; }, $string);
 
 						// If can't save
 						if(strlen($string) !== file_put_contents($this->compiled_path, $string))
@@ -133,7 +145,13 @@
 
 			}
 
-			// Log
+			$this->logger->critical('[ViewEngine::parseLine] The not-compiled view is not readable',
+			[
+				'engine'		=> get_class($this),
+				'view'			=> $this->view_name,
+				'path'			=> $this->path,
+				'environment'	=> $environment
+			]);
 			return null;
 		}
 
@@ -163,6 +181,14 @@
 				return include $this->compiled_path;
 			}
 
+			$this->logger->critical('[ViewEngine::display] The compiled view is not readable',
+			[
+				'engine'		=> get_class($this),
+				'view'			=> $this->view_name,
+				'path'			=> $this->path,
+				'compiled_path'	=> $this->compiled_path,
+				'environment'	=> $environment
+			]);
 			return false;
 		}
 	}
