@@ -8,9 +8,13 @@
 			// Add linter?
 			if($this->isReadable())
 				return true;
-			// Log error
-			// throw new Exception('The view ' . $this->view_name . ' is not readable');
 
+			$this->logger->critical('[ViewEngine::parse] The view is not readable',
+			[
+				'engine'		=> get_class($this),
+				'view'			=> $this->view_name,
+				'path'			=> $this->path
+			]);
 			return false;
 		}
 
