@@ -17,7 +17,7 @@
 		[
 			[
 				'/=([A-Za-z0-9]+)/',
-				'echo $$1;'
+				'echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');'
 			]
 		];
 
