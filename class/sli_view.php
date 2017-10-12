@@ -46,15 +46,8 @@
 						foreach($this->post_parse as $regex)
 							$string = preg_replace_callback($regex[0], function($matches) use($regex) { return '<?php ' . str_replace('$1', $matches[1], $regex[1]) . ' ?>'; }, $string);
 
-						// If can't save
-						if(strlen($string) !== file_put_contents($this->compiled_path, $string))
-						{
-							$this->compiled_path = null;
-
-							// Log error
-						}
 						// The file was successfully compiled and saved
-						else
+						if(strlen($string) === file_put_contents($this->compiled_path, $string))
 						{
 							// Delete previous compiled views
 							foreach(glob(__DIR__.'/../views/cache/' . $this->view_name . '*_.php') as $file)
@@ -63,15 +56,35 @@
 
 							return true;
 						}
+
+						// If can't save
+
+						$this->compiled_path = null;
+
+						$this->logger->critical('[ViewEngine::parse] The compiled view could not be saved',
+						[
+							'engine'		=> get_class($this),
+							'view'			=> $this->view_name,
+							'path'			=> $this->path,
+							'compiled_path'	=> $this->compiled_path,
+							'environment'	=> $environment
+						]);
+						return false;
 					}
-					else
-					{
-						// Log error
-					}
+
+					$this->logger->critical('[ViewEngine::parse] The not-compiled view is not readable',
+					[
+						'engine'		=> get_class($this),
+						'view'			=> $this->view_name,
+						'path'			=> $this->path,
+						'compiled_path'	=> $this->compiled_path,
+						'environment'	=> $environment
+					]);
+					return false;
 				}
+
 				// The file is already compiled
-				else
-					return true;
+				return true;
 			}
 
 			return false;
