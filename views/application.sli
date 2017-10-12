@@ -3,5 +3,4 @@ html
 	head
 		title =title
 	body
-		hea
 		render $controller_view
