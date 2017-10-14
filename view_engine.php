@@ -24,7 +24,7 @@
 			}
 
 			$this->view_name = $view_name;
-			$this->path = __DIR__.'/../views/' . $this->view_name . '.' . $this::EXTENSION;
+			$this->path = __DIR__.'/views/' . $this->view_name . '.' . $this::EXTENSION;
 		}
 
 		final public function isReadable() : bool
@@ -44,7 +44,9 @@
 		{
 			foreach(self::$engines as $class_name)
 			{
-				require_once strtolower($class_name) . '_view.php';
+				require_once __DIR__.'/view_engines/' . strtolower($class_name) . '_view.php';
+
+				// Check is_subclass_of
 
 				$class_name = $class_name . 'View';
 				$view = new $class_name($view_name, $logger);

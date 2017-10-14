@@ -31,7 +31,7 @@
 		{
 			ActiveRecord\Config::initialize(function(ActiveRecord\Config $orm_cfg) use ($cfg)
 			{
-				$orm_cfg->set_model_directory(realpath(__DIR__ . '/../models/'));
+				$orm_cfg->set_model_directory(realpath(__DIR__ . '/models/'));
 
 				$connections =
 				[
@@ -127,7 +127,7 @@
 		private function loadController(string $controller, string $request_method, array $route_params) : bool
 		{
 			$controller = strtolower($controller);
-			$controller_path = __DIR__.'/../controllers/' . $controller . '.php';
+			$controller_path = __DIR__.'/controllers/' . $controller . '.php';
 
 			if(is_readable($controller_path))
 			{

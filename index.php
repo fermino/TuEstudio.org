@@ -9,7 +9,7 @@
 
 	require __DIR__.'/vendor/autoload.php';
 
-	require __DIR__.'/class/simple_framework.php';
+	require __DIR__.'/simple_framework.php';
 
 	use Monolog\Logger;
 	use Monolog\Handler\StreamHandler;
