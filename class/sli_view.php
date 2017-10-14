@@ -1,7 +1,7 @@
 <?php
 	class SliView extends ViewEngine
 	{
-		const EXTENSION = 'sli';
+		public const EXTENSION = 'sli';
 
 		private $restricted_tags =
 		[

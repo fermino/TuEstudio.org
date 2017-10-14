@@ -1,7 +1,7 @@
 <?php
 	class PHPView extends ViewEngine
 	{
-		const EXTENSION = 'php';
+		public const EXTENSION = 'php';
 
 		public function parse() : bool
 		{
