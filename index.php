@@ -1,11 +1,5 @@
 <?php
-	require __DIR__.'/config.php';
-	if(empty($cfg) || !is_array($cfg))
-		exit;
-
-	require __DIR__.'/routes.php';
-	if(empty($routes) || !is_array($routes))
-		exit;
+	require __DIR__.'/config/main.php';
 
 	require __DIR__.'/vendor/autoload.php';
 
@@ -21,7 +15,7 @@
 
 	// Do it all (?
 
-	$fw = new SimpleFramework($cfg, $routes, $logger);
+	$fw = new SimpleFramework($site_uri, $db, $routes, $logger);
 
 	if(!$fw->handleRequest($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']))
 	{

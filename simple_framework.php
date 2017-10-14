@@ -6,30 +6,30 @@
 
 	const HTTP_INTERNAL_SERVER_ERROR	= 500;
 
-
 	require __DIR__.'/controller_base.php';
 
 	use Psr\Log\LoggerInterface;
 
 	class SimpleFramework
 	{
-		private $cfg	= null;
+		private $site_uri = null;
 
 		private $router	= null;
 		private $logger	= null;
 
-		public function __construct(array $cfg, array $routes, LoggerInterface $logger)
+		public function __construct(string $site_uri, array $db, array $routes, LoggerInterface $logger)
 		{
-			$this->cfg		= $cfg;
+			$this->site_uri	= $site_uri;
+
 			$this->logger	= $logger;
 
-			$this->initializeORM($this->cfg);
+			$this->initializeORM($db);
 			$this->initializeRouter($routes);
 		}
 
-		private function initializeORM(array $cfg)
+		private function initializeORM(array $db)
 		{
-			ActiveRecord\Config::initialize(function(ActiveRecord\Config $orm_cfg) use ($cfg)
+			ActiveRecord\Config::initialize(function(ActiveRecord\Config $orm_cfg) use ($db)
 			{
 				$orm_cfg->set_model_directory(realpath(__DIR__ . '/models/'));
 
@@ -37,9 +37,9 @@
 				[
 					// pdo_driver://username:password@socket/database?charset=utf8
 
-					SITE_MODE_DEV => "{$cfg[SITE_MODE_DEV]['db']['pdo_driver']}://{$cfg[SITE_MODE_DEV]['db']['username']}:{$cfg[SITE_MODE_DEV]['db']['password']}@{$cfg[SITE_MODE_DEV]['db']['socket']}/{$cfg[SITE_MODE_DEV]['db']['database']}?charset=utf8",
-					SITE_MODE_PROD => "{$cfg[SITE_MODE_PROD]['db']['pdo_driver']}://{$cfg[SITE_MODE_PROD]['db']['username']}:{$cfg[SITE_MODE_PROD]['db']['password']}@{$cfg[SITE_MODE_PROD]['db']['socket']}/{$cfg[SITE_MODE_PROD]['db']['database']}?charset=utf8",
-					SITE_MODE_TEST => "{$cfg[SITE_MODE_TEST]['db']['pdo_driver']}://{$cfg[SITE_MODE_TEST]['db']['username']}:{$cfg[SITE_MODE_TEST]['db']['password']}@{$cfg[SITE_MODE_TEST]['db']['socket']}/{$cfg[SITE_MODE_TEST]['db']['database']}?charset=utf8"
+					SITE_MODE_DEV => "{$db[SITE_MODE_DEV]['pdo_driver']}://{$db[SITE_MODE_DEV]['username']}:{$db[SITE_MODE_DEV]['password']}@{$db[SITE_MODE_DEV]['socket']}/{$db[SITE_MODE_DEV]['database']}?charset=utf8",
+					SITE_MODE_PROD => "{$db[SITE_MODE_PROD]['pdo_driver']}://{$db[SITE_MODE_PROD]['username']}:{$db[SITE_MODE_PROD]['password']}@{$db[SITE_MODE_PROD]['socket']}/{$db[SITE_MODE_PROD]['database']}?charset=utf8",
+					SITE_MODE_TEST => "{$db[SITE_MODE_TEST]['pdo_driver']}://{$db[SITE_MODE_TEST]['username']}:{$db[SITE_MODE_TEST]['password']}@{$db[SITE_MODE_TEST]['socket']}/{$db[SITE_MODE_TEST]['database']}?charset=utf8"
 				];
 
 				$orm_cfg->set_connections($connections);
@@ -102,8 +102,8 @@
 			$request_uri = rawurldecode($request_uri);
 
 			// Strip the site path (folder)
-			if(!empty($this->cfg['site_uri']))
-				$request_uri = substr($request_uri, strlen($this->cfg['site_uri']));
+			if(!empty($this->site_uri))
+				$request_uri = substr($request_uri, strlen($this->site_uri));
 
 			// Dispatch the route
 			$route_info = $this->router->dispatch($request_method, $request_uri);
