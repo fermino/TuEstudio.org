@@ -44,7 +44,7 @@
 						'method'			=> $http_method,
 						'environment'		=> $environment
 					]);
-					return 500;
+					return HTTP_INTERNAL_SERVER_ERROR;
 				}
 
 				return null;
@@ -56,7 +56,7 @@
 				'method'		=> $http_method,
 				'environment'	=> $environment
 			]);
-			return 500;
+			return HTTP_INTERNAL_SERVER_ERROR;
 		}
 
 		final protected function loadControllerView(string $view_name, array $environment) : bool

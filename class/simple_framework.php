@@ -1,4 +1,12 @@
 <?php
+	const HTTP_OK	= 200;
+
+	const HTTP_NOT_FOUND			= 404;
+	const HTTP_METHOD_NOT_ALLOWED	= 405;
+
+	const HTTP_INTERNAL_SERVER_ERROR	= 500;
+
+
 	require __DIR__.'/controller_base.php';
 
 	use Psr\Log\LoggerInterface;
@@ -106,10 +114,10 @@
 					return $this->loadController($route_info[1], $request_method, $route_info[2]);
 					break;
 				case FastRoute\Dispatcher::NOT_FOUND:
-					return $this->sendResponse(404);
+					return $this->sendResponse(HTTP_NOT_FOUND);
 					break;
 				case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-					return $this->sendResponse(405);
+					return $this->sendResponse(HTTP_METHOD_NOT_ALLOWED);
 					break;
 			}
 
@@ -149,7 +157,7 @@
 						'method'		=> $request_method,
 						'route_params'	=> $route_params
 					]);
-					return $this->sendResponse(500);
+					return $this->sendResponse(HTTP_INTERNAL_SERVER_ERROR);
 				}
 
 				$this->logger->critical('[SimpleFramework::loadController] Controller class not exist',
@@ -158,7 +166,7 @@
 					'method'		=> $request_method,
 					'route_params'	=> $route_params
 				]);
-				return $this->sendResponse(500);
+				return $this->sendResponse(HTTP_INTERNAL_SERVER_ERROR);
 			}
 
 			$this->logger->critical('[SimpleFramework::loadController] Controller file not readable',
@@ -167,38 +175,38 @@
 				'method'		=> $request_method,
 				'route_params'	=> $route_params
 			]);
-			return $this->sendResponse(500);
+			return $this->sendResponse(HTTP_INTERNAL_SERVER_ERROR);
 		}
 
 		private function sendResponse(int $http_response_code) : bool
 		{
 			switch($http_response_code)
 			{
-				case 404:
-					http_response_code(404); // 404 Not Found
-					echo '404';
+				case HTTP_NOT_FOUND:
+					http_response_code(HTTP_NOT_FOUND); // 404 Not Found
+					echo HTTP_NOT_FOUND;
 					//Load template
 
 					return true;
 
-				case 405:
-					http_response_code(405); // 405 Method Not Allowed
+				case HTTP_METHOD_NOT_ALLOWED:
+					http_response_code(HTTP_METHOD_NOT_ALLOWED); // 405 Method Not Allowed
 
 					if(!headers_sent())
 						header('Allow: ' . implode(', ', $route_info[1]));
 
-					echo '405';
+					echo HTTP_METHOD_NOT_ALLOWED;
 
 					return true;
 
-				case 500:
-					http_response_code(500); // 500 Internal Server Error
-					echo '500';
+				case HTTP_INTERNAL_SERVER_ERROR:
+					http_response_code(HTTP_INTERNAL_SERVER_ERROR); // 500 Internal Server Error
+					echo HTTP_INTERNAL_SERVER_ERROR;
 
 					return true;
 
-				case 200:
-					http_response_code(200); // 200 OK
+				case HTTP_OK:
+					http_response_code(HTTP_OK); // 200 OK
 					return true;
 
 				// default:
