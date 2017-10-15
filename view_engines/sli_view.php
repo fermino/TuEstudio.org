@@ -12,8 +12,8 @@
 			'br'		=> ['<br>'],
 
 			// Code shortcuts
-			'rjs'		=> ['<script src="$1">', '</script>'],
-			'rcss'		=> ['<link rel="stylesheet" href="$1">'],
+			'rjs'		=> ['<script src="$1" crossorigin="anonymous" async defer>', '</script>'],
+			'rcss'		=> ['<link rel="stylesheet" href="$1" crossorigin="anonymous">'],
 
 			// Display'ers
 			'|'			=> ['$1'],
