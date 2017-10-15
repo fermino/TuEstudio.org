@@ -17,7 +17,7 @@
 		{
 			if(method_exists($this, strtolower($http_method)))
 			{
-				$response = $this->{$http_method}($environment);
+				$response = $this->{$http_method}(...array_values($environment));
 
 				if(is_int($response))
 					return $response;
