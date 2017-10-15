@@ -20,7 +20,7 @@
 			'=raw'		=> ['echo $$1;', null, true],
 
 			// Helpers
-			'render'	=> ['if(null !== ($_v =  ViewEngine::loadView(\'$1\'[0] === \'$\' ? $1 : \'$1\', $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
+			'render'	=> ['if(null !== ($_v = ViewEngine::loadView(\'$1\'[0] === \'$\' ? $1 : \'$1\', $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
 
 			// Comments
 			'//'		=> [null]
@@ -28,13 +28,21 @@
 
 		private $post_parse =
 		[
-			[	// =variable['whatever']
-				'/= ?([a-zA-Z0-9_]+\[[\'"][a-zA-Z0-9_-]+[\'"]\])/',
-				'echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');',
-			],
-			[	// =variable
-				'/= ?([a-zA-Z0-9_]+)/',
-				'echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');'
+			[
+				// add json and xml formats
+				//'/={([a-zA-Z0-9_]+)(\\[[\'"]?([a-zA-Z0-9_-]+)[\'"]?])?}/',
+				'/=(raw)?{([a-zA-Z0-9_]+)(\\[[\'"]?([a-zA-Z0-9_-]+)[\'"]?])?}/',
+				'
+					$_c = $- == 4 ? ${"$2"}["$4"] : ${"$2"};
+					switch("$1")
+					{
+						case "raw":
+							echo $_c;
+							break;
+						default:
+							echo htmlspecialchars($_c, ENT_QUOTES, \'UTF-8\');
+					}
+				'
 			]
 		];
 
@@ -61,7 +69,16 @@
 							$string .= $this->parseLine($lines[$i], $lines[$i + 1] ?? [0, null, null], $tags_to_close);
 
 						foreach($this->post_parse as $regex)
-							$string = preg_replace_callback($regex[0], function($matches) use($regex) { return '<?php ' . str_replace('$1', $matches[1], $regex[1]) . ' ?>'; }, $string);
+							$string = preg_replace_callback($regex[0], function($matches) use($regex)
+							{	
+								$c = count($matches);
+								$s = str_replace('$-', $c - 1, $regex[1]);
+
+								for($i = 0; $i < $c; $i++)
+									$s = str_replace('$'.$i, $matches[$i], $s);
+
+								return '<?php ' . $s . ' ?>';
+							}, $string);
 
 						// The file was successfully compiled and saved
 						if(strlen($string) === file_put_contents($this->compiled_path, $string))
