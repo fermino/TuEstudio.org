@@ -156,10 +156,13 @@
 				if(!empty($this->restricted_tags[$tag_name][2]) && !empty($this->restricted_tags[$tag_name][$closing ? 1 : 0]))
 					$string = '<?php ' . $string . '?>';
 
-				return $string;
+				if(!empty($string))
+					return $string . "\n";
+
+				return '';
 			}
 
-			return '<'.($closing ? '/' : null).$tag_name.(!empty($line) ? ' '.$line : null).'>';
+			return '<'.($closing ? '/' : null).$tag_name.(!empty($line) ? ' '.$line : null).">\n";
 		}
 
 		private function getFile() : ?array
