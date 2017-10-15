@@ -254,7 +254,6 @@
 				'engine'		=> get_class($this),
 				'view'			=> $this->view_name,
 				'path'			=> $this->path,
-				'compiled_path'	=> $this->compiled_path,
 				'environment'	=> $environment
 			]);
 			return false;
