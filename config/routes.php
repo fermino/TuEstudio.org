@@ -1,5 +1,6 @@
 <?php
 	$routes = 
 	[
-		'/'			=> 'index'
+		'/'								=> 'index',
+		'/assets/{folder}/{file}.{ext}'	=> 'assets'
 	];
