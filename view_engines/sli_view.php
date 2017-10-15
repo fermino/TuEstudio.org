@@ -7,6 +7,7 @@
 		[
 			// HTML5 standard
 			'doctype'	=> ['<!doctype $1>'],
+			'meta'		=> ['<meta $1>'],
 			'title'		=> ['<title>$1', '</title>'],
 			'br'		=> ['<br>'],
 
