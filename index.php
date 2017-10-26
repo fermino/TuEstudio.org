@@ -11,11 +11,11 @@
 	// Set up Monolog
 
 	$logger = new Logger(SITE_MODE);
-	$logger->pushHandler(new StreamHandler(__DIR__.'/log/' . strtolower(SITE_MODE) . '_main.log'));
+	$logger->pushHandler(new StreamHandler(__DIR__.'/logs/' . strtolower(SITE_MODE) . '_main.log'));
 
 	// Do it all (?
 
-	$fw = new SimpleFramework($site_uri, $db, $routes, $logger);
+	$fw = new SimpleFramework($db, $routes, $logger);
 
 	if(!$fw->handleRequest($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']))
 	{

@@ -19,7 +19,6 @@
 
 	const SITE_MODE	= SITE_MODE_DEV;
 
-	$site_uri = ''; // Empty or path ONLY with start slash
 /**
  * End config
  */

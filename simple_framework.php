@@ -12,15 +12,11 @@
 
 	class SimpleFramework
 	{
-		private $site_uri = null;
-
 		private $router	= null;
 		private $logger	= null;
 
-		public function __construct(string $site_uri, array $db, array $routes, LoggerInterface $logger)
+		public function __construct(array $db, array $routes, LoggerInterface $logger)
 		{
-			$this->site_uri	= $site_uri;
-
 			$this->logger	= $logger;
 
 			$this->initializeORM($db);
@@ -100,10 +96,6 @@
 				$request_uri = substr($request_uri, 0, $pos);
 
 			$request_uri = rawurldecode($request_uri);
-
-			// Strip the site path (folder)
-			if(!empty($this->site_uri))
-				$request_uri = substr($request_uri, strlen($this->site_uri));
 
 			// Dispatch the route
 			$route_info = $this->router->dispatch($request_method, $request_uri);
