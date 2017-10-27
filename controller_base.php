@@ -17,8 +17,11 @@
 		{
 			if(method_exists($this, strtolower($http_method)))
 			{
-				$response = $this->{$http_method}(...array_values($environment));
+				$response = $this->init($http_method, $environment);
+				if(is_int($response))
+					return $response;
 
+				$response = $this->{$http_method}(...array_values($environment));
 				if(is_int($response))
 					return $response;
 
@@ -101,4 +104,6 @@
 			]);
 			return false;
 		}
+
+		abstract protected function init(string $http_method, array $environment) : ?int;
 	}

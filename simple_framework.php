@@ -6,7 +6,7 @@
 
 	const HTTP_INTERNAL_SERVER_ERROR	= 500;
 
-	require __DIR__.'/controller_base.php';
+	require __DIR__.'/controllers/application.php';
 
 	use Psr\Log\LoggerInterface;
 
@@ -131,7 +131,7 @@
 
 				if(class_exists($class_name))
 				{
-					if(is_subclass_of($class_name, 'ControllerBase'))
+					if(is_subclass_of($class_name, 'ApplicationController'))
 					{
 						$controller = new $class_name($this->logger);
 

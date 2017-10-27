@@ -1,5 +1,5 @@
 <?php
-	class AssetsController extends ControllerBase
+	class AssetsController extends ApplicationController
 	{
 		protected $unique_view = false;
 
@@ -22,7 +22,11 @@
 				{
 					if(in_array(basename(dirname($realpath)), $this->allowed_folders))
 					{
-						if(false !== readfile($path))
+						$f = finfo_open(FILEINFO_MIME_TYPE);
+						header('Content-Type: ' . finfo_file($f, $realpath));
+						finfo_close($f);
+
+						if(false !== readfile($realpath))
 							return null;
 
 						return 500;

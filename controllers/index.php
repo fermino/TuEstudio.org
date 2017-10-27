@@ -1,5 +1,5 @@
 <?php
-	class IndexController extends ControllerBase
+	class IndexController extends ApplicationController
 	{
 		protected $title = 'Title';
 
