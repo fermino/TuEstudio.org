@@ -17,18 +17,23 @@
 		{
 			if(method_exists($this, strtolower($http_method)))
 			{
-				$response = $this->init($http_method, $environment);
-				if(is_int($response))
-					return $response;
+				$init_response = $this->init($http_method, $environment);
+				if(is_int($init_response))
+					return $init_response;
 
 				$response = $this->{$http_method}(...array_values($environment));
 				if(is_int($response))
 					return $response;
 
+				$this->terminate();
+
 				if($this->unique_view)
 				{
 					if(is_array($response))
 						$environment = $response;
+
+					if(is_array($init_response))
+						$environment = array_merge($init_response, $environment);
 
 					$view_name = get_class($this);
 					$view_name = substr($view_name, 0, strlen($view_name) - 10);
@@ -105,5 +110,6 @@
 			return false;
 		}
 
-		abstract protected function init(string $http_method, array $environment) : ?int;
+		abstract protected function init(string $http_method, array $environment);
+		abstract protected function terminate();
 	}
