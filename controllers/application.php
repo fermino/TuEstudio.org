@@ -20,6 +20,8 @@
 			if(is_int($r))
 				return $r;
 
+			$this->environment['user_logged_in'] = $this->userIsLoggedIn();
+
 			return $this->environment;
 		}
 
@@ -64,9 +66,16 @@
 			return 500;
 		}
 
-		protected function terminate()
+		protected function userIsLoggedIn() : bool
 		{
-			// Secure-Session is already doing this
-			// session_write_close();
+			return
+			(
+				!empty($_SESSION['remote_address']) &&
+				$_SESSION['remote_address'] === $_SERVER['REMOTE_ADDR'] &&
+				!empty($_SESSION['email'])
+			);
 		}
+
+		protected function terminate()
+		{ }
 	}

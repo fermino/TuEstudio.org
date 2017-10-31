@@ -25,7 +25,7 @@
 			return null;
 		}
 
-		protected function destroySession()
+		protected function destroySession() : bool
 		{
 			if('' !== session_id())
 			{

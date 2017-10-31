@@ -1,6 +1,30 @@
 doctype html
 html
 	head
-		title ={title}
+		title ={title} | TuEstudio.org
+
+		meta charset="utf-8"
+		meta name="viewport" content="width=device-width, initial-scale=1"
+
+		rcss https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
 	body
+		nav class="navbar navbar-default navbar-fixed-top"
+			div class="container-fluid"
+				div class="navbar-header"
+					a class="navbar-brand" href="https://={_SERVER[SERVER_NAME]}/"
+						| TuEstudio.org
+				ul class="nav navbar-nav"
+					li
+						a href="https://={_SERVER[SERVER_NAME]}/el-proyecto"
+							| El proyecto
+					li
+						a href="https://={_SERVER[SERVER_NAME]}/contacto"
+							| Contacto
+				ul class="nav navbar-nav navbar-right"
+					button class="btn btn-danger navbar-btn navbar-right" style="margin-right: 10px" onClick="window.location = '={auth_url}'"
+						| Ingresar con Google
+
 		render $controller_view
+
+		rjs https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
+		rjs https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js
