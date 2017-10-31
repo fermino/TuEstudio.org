@@ -42,6 +42,15 @@
 				$orm_cfg->set_connections($connections);
 				$orm_cfg->set_default_connection(SITE_MODE);
 			});
+
+			spl_autoload_register(function($class)
+			{
+				$class = preg_replace_callback('/([A-Z])/', function($c) { return strtolower($c[1]); }, $class);
+				$class = __DIR__.'/models/' . strtolower($class) . '.php';
+
+				if(is_readable($class))
+					include $class;
+			});
 		}
 
 		private function initializeRouter(array $routes)
