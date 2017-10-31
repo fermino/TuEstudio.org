@@ -1,6 +1,7 @@
 <?php
 	const HTTP_OK	= 200;
 
+	const HTTP_FORBIDDEN			= 403;
 	const HTTP_NOT_FOUND			= 404;
 	const HTTP_METHOD_NOT_ALLOWED	= 405;
 
@@ -174,6 +175,13 @@
 		{
 			switch($http_response_code)
 			{
+				case HTTP_FORBIDDEN:
+					http_response_code(HTTP_FORBIDDEN); // 403 Forbidden
+					echo HTTP_FORBIDDEN;
+					//Load template
+
+					return true;
+
 				case HTTP_NOT_FOUND:
 					http_response_code(HTTP_NOT_FOUND); // 404 Not Found
 					echo HTTP_NOT_FOUND;
