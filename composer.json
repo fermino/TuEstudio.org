@@ -4,7 +4,9 @@
     "require": {
         "monolog/monolog": "^1.23",
         "nikic/fast-route": "^1.2",
-        "php-activerecord/php-activerecord": "^1.2"
+        "php-activerecord/php-activerecord": "^1.2",
+        "google/apiclient": "^2.2",
+        "ezimuel/php-secure-session": "^1.0"
     },
     "license": "GPL v3",
     "authors": [
