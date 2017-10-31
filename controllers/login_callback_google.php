@@ -31,7 +31,7 @@
 							if(false !== $user->save())
 							{
 								$_SESSION['remote_address'] = $_SERVER['REMOTE_ADDR'];
-								$_SESSION['email'] = $user->email;
+								$_SESSION['id'] = $user->id;
 
 								return '/';
 							}
@@ -45,7 +45,7 @@
 						}
 
 						$_SESSION['remote_address'] = $_SERVER['REMOTE_ADDR'];
-						$_SESSION['email'] = $user->email;
+						$_SESSION['id'] = $user->id;
 
 						return '/';
 					}

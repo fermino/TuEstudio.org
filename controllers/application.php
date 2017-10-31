@@ -20,7 +20,29 @@
 			if(is_int($r))
 				return $r;
 
-			$this->environment['user_logged_in'] = $this->userIsLoggedIn();
+			$this->environment['user_logged_in'] = false;
+			if($this->userIsLoggedIn())
+			{
+				try
+				{
+					$this->environment['user'] = User::find($_SESSION['id']);
+
+					if(null !== $this->environment['user'])
+						$this->environment['user_logged_in'] = true;
+				}
+				catch(ActiveRecord\RecordNotFound $e)
+				{
+					$this->logger->critical('[ApplicationController::init] there is no user with the ID _SESSION[id]. Destroying session',
+					[
+						'controller'	=> get_class($this),
+						'method'		=> $http_method,
+						'environment'	=> $environment,
+						'session'		=> $_SESSION
+					]);
+
+					$this->destroySession();
+				}
+			}
 
 			return $this->environment;
 		}
@@ -72,7 +94,7 @@
 			(
 				!empty($_SESSION['remote_address']) &&
 				$_SESSION['remote_address'] === $_SERVER['REMOTE_ADDR'] &&
-				!empty($_SESSION['email'])
+				!empty($_SESSION['id'])
 			);
 		}
 

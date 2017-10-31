@@ -12,8 +12,13 @@
 			'br'		=> ['<br>'],
 
 			// Code shortcuts
-			'rjs'		=> ['<script src="$1" crossorigin="anonymous" async defer>', '</script>'],
-			'rcss'		=> ['<link rel="stylesheet" href="$1" crossorigin="anonymous">'],
+			'rjs'		=> ['<script src="$1" defer>', '</script>'],
+			'rcss'		=> ['<link rel="stylesheet" href="$1">'],
+			'rimg'		=> ['<img src="$1">'],
+
+			'js'		=> ['<script src="//=raw{_SERVER[SERVER_NAME]}/assets/js/$1.js" defer>', '</script>'],
+			'css'		=> ['<link rel="stylesheet" href="//=raw{_SERVER[SERVER_NAME]}/assets/css/$1.css">'],
+			'img'		=> ['<img src="//=raw{_SERVER[SERVER_NAME]}/assets/img/$1">'],
 
 			// Display'ers
 			'|'			=> ['$1'],
@@ -28,7 +33,7 @@
 
 			// PHP
 
-			'--'		=> ['$1 {', '}', true]
+			'--'		=> ['$1', null, true]
 		];
 
 		private $post_parse =
