@@ -129,7 +129,12 @@
 		private function loadController(string $controller, string $request_method, array $route_params) : bool
 		{
 			$controller = strtolower($controller);
-			$controller_path = __DIR__.'/controllers/' . $controller . '.php';
+
+			$controller_path	= __DIR__.'/controllers/' . $controller . '.php';
+			$helper_path 		= __DIR__.'/helpers/' . $controller . '.php';
+
+			if(is_readable($helper_path))
+				include $helper_path;
 
 			if(is_readable($controller_path))
 			{
@@ -183,7 +188,7 @@
 		private function sendResponse($response, array $data = []) : bool
 		{
 			if(null === $response)
-				return true; // $response = 200
+				return true; // $response = HTTP_OK
 
 			if(!headers_sent())
 			{
