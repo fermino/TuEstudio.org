@@ -32,28 +32,7 @@
 			'//'		=> [null],
 
 			// PHP
-
 			'--'		=> ['$1', null, true]
-		];
-
-		private $post_parse =
-		[
-			[
-				// add json and xml formats
-				//'/={([a-zA-Z0-9_]+)(\\[[\'"]?([a-zA-Z0-9_-]+)[\'"]?])?}/',
-				'/=(raw)?{([a-zA-Z0-9_]+)(\\[[\'"]?([a-zA-Z0-9_-]+)[\'"]?])?}/',
-				'
-					$_c = $- == 4 ? ${"$2"}["$4"] : ${"$2"};
-					switch("$1")
-					{
-						case "raw":
-							echo $_c;
-							break;
-						default:
-							echo htmlspecialchars($_c, ENT_QUOTES, \'UTF-8\');
-					}
-				'
-			]
 		];
 
 		private $compiled_path = null;
@@ -78,11 +57,37 @@
 						for($i = 0; $i < $line_count; $i++)
 							$string .= $this->parseLine($lines[$i], $lines[$i + 1] ?? [0, null, null], $tags_to_close);
 
-						foreach($this->post_parse as $regex)
+						// Needs to be here as closures can't be stored as properties
+						$post_parse =
+						[
+							[
+								'/=(raw|json|rawjson|pjson)?{([a-zA-Z0-9_]+)(\\[[\'"]?([a-zA-Z0-9_-]+)[\'"]?])?}/',
+								function($matches)
+								{
+									$v = (5 === count($matches)) ? '${\'$2\'}[\'$4\']' : '${\'$2\'}';
+
+									switch($matches[1])
+									{
+										case 'raw':
+											return "echo {$v};";
+										case 'json':
+											return "echo htmlspecialchars(json_encode({$v}), ENT_QUOTES, 'UTF-8');";
+										case 'rawjson':
+											return "echo json_encode({$v});";
+										case 'pjson':
+											return "echo htmlspecialchars(json_encode({$v}, JSON_PRETTY_PRINT), ENT_QUOTES, 'UTF-8');";
+										default:
+											return "echo htmlspecialchars({$v}, ENT_QUOTES, 'UTF-8');";
+									}
+								}
+							]
+						];
+
+						foreach($post_parse as $regex)
 							$string = preg_replace_callback($regex[0], function($matches) use($regex)
-							{	
+							{
 								$c = count($matches);
-								$s = str_replace('$-', $c - 1, $regex[1]);
+								$s = str_replace('$-', $c - 1, $regex[1]($matches));
 
 								for($i = 0; $i < $c; $i++)
 									$s = str_replace('$'.$i, $matches[$i], $s);
