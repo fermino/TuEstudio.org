@@ -119,7 +119,7 @@
 					return $this->sendResponse(HTTP_NOT_FOUND);
 					break;
 				case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-					return $this->sendResponse(HTTP_METHOD_NOT_ALLOWED);
+					return $this->sendResponse(HTTP_METHOD_NOT_ALLOWED, $route_info[1]);
 					break;
 			}
 
@@ -180,45 +180,62 @@
 			return $this->sendResponse(HTTP_INTERNAL_SERVER_ERROR);
 		}
 
-		private function sendResponse(int $http_response_code) : bool
+		private function sendResponse($response, array $data = []) : bool
 		{
-			switch($http_response_code)
+			if(null === $response)
+				return true; // $response = 200
+
+			if(!headers_sent())
 			{
-				case HTTP_FORBIDDEN:
-					http_response_code(HTTP_FORBIDDEN); // 403 Forbidden
-					echo HTTP_FORBIDDEN;
-					//Load template
+				if(is_string($response))
+				{
+					http_response_code(200); // 200 OK
+					header('Location: ' . $response);
 
 					return true;
+				}
+				else if(is_int($response))
+				{
+					switch($response)
+					{
+						case HTTP_FORBIDDEN:
+							http_response_code(HTTP_FORBIDDEN); // 403 Forbidden
+							echo HTTP_FORBIDDEN;
+							//Load template
 
-				case HTTP_NOT_FOUND:
-					http_response_code(HTTP_NOT_FOUND); // 404 Not Found
-					echo HTTP_NOT_FOUND;
-					//Load template
+							return true;
 
-					return true;
+						case HTTP_NOT_FOUND:
+							http_response_code(HTTP_NOT_FOUND); // 404 Not Found
+							echo HTTP_NOT_FOUND;
+							//Load template
 
-				case HTTP_METHOD_NOT_ALLOWED:
-					http_response_code(HTTP_METHOD_NOT_ALLOWED); // 405 Method Not Allowed
+							return true;
 
-					if(!headers_sent())
-						header('Allow: ' . implode(', ', $route_info[1]));
+						case HTTP_METHOD_NOT_ALLOWED:
+							http_response_code(HTTP_METHOD_NOT_ALLOWED); // 405 Method Not Allowed
+							header('Allow: ' . implode(', ', $data));
 
-					echo HTTP_METHOD_NOT_ALLOWED;
+							echo HTTP_METHOD_NOT_ALLOWED;
+							//Load template
 
-					return true;
+							return true;
 
-				case HTTP_INTERNAL_SERVER_ERROR:
-					http_response_code(HTTP_INTERNAL_SERVER_ERROR); // 500 Internal Server Error
-					echo HTTP_INTERNAL_SERVER_ERROR;
+						case HTTP_INTERNAL_SERVER_ERROR:
+							http_response_code(HTTP_INTERNAL_SERVER_ERROR); // 500 Internal Server Error
+							echo HTTP_INTERNAL_SERVER_ERROR;
 
-					return true;
+							//Load template
 
-				case HTTP_OK:
-					http_response_code(HTTP_OK); // 200 OK
-					return true;
+							return true;
 
-				// default:
+						case HTTP_OK:
+							http_response_code(HTTP_OK); // 200 OK
+							return true;
+
+						// default:
+					}
+				}
 			}
 
 			return false;

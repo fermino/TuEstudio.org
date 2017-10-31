@@ -13,7 +13,7 @@
 		final public function __construct(LoggerInterface $logger)
 		{ $this->logger = $logger; }
 
-		final public function handleRequest(string $http_method, array $environment) : ?int
+		final public function handleRequest(string $http_method, array $environment)
 		{
 			if(method_exists($this, strtolower($http_method)))
 			{
@@ -22,7 +22,7 @@
 					return $init_response;
 
 				$response = $this->{$http_method}(...array_values($environment));
-				if(is_int($response))
+				if(is_int($response) || is_string($response))
 					return $response;
 
 				$this->terminate();
