@@ -39,7 +39,7 @@
 					$view_name = substr($view_name, 0, strlen($view_name) - 10);
 
 					$view_name[0] = strtolower($view_name[0]);
-					$view_name = preg_replace_callback('/([A-Z])/', function($c) { return strtolower($c[1]); }, $view_name);
+					$view_name = preg_replace_callback('/([A-Z])/', function($c) { return '_' . strtolower($c[1]); }, $view_name);
 
 					if($this->loadControllerView($view_name, $environment))
 						return null;
