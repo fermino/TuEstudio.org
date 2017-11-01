@@ -55,6 +55,10 @@
 					return $view;
 			}
 
+			$logger->critical('[ViewEngine::loadView] No such view',
+			[
+				'view'	=> $view_name
+			]);
 			return null;
 		}
 	}

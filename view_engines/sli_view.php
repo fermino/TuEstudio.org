@@ -26,7 +26,8 @@
 			'=raw'		=> ['echo $$1;', null, true],
 
 			// Helpers
-			'render'	=> ['if(null !== ($_v = ViewEngine::loadView(\'$1\'[0] === \'$\' ? $1 : \'$1\', $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
+			'render'	=> ['if(null !== ($_v = ViewEngine::loadView(\'$1\', $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
+			'rendervar'	=> ['if(null !== ($_v = ViewEngine::loadView($$1, $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
 
 			// Comments
 			'//'		=> [null],

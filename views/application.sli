@@ -50,4 +50,4 @@ html
 							| Ingresar con Google
 					-- }
 
-		render $controller_view
+		rendervar controller_view
