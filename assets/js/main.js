@@ -2,7 +2,7 @@ $(function()
 {
 	$('#logout').click(function()
 	{
-		$(location).attr('href', '/logout');
+		$(location).attr('href', $('#logout').attr('data-url'));
 	});
 
 	$('#login').click(function()
