@@ -6,34 +6,35 @@
 		private $restricted_tags =
 		[
 			// HTML5 standard
-			'doctype'	=> ['<!doctype $1>'],
-			'meta'		=> ['<meta $1>'],
-			'title'		=> ['<title>$1', '</title>'],
+			'doctype'	=> ['<!doctype $->'],
+			'meta'		=> ['<meta $->'],
+			'title'		=> ['<title>$-', '</title>'],
 			'br'		=> ['<br>'],
 
 			// Code shortcuts
-			'rjs'		=> ['<script src="$1" defer>', '</script>'],
-			'rcss'		=> ['<link rel="stylesheet" href="$1">'],
-			'rimg'		=> ['<img src="$1">'],
+			'rjs'		=> ['<script src="$-" defer>', '</script>'],
+			'rcss'		=> ['<link rel="stylesheet" href="$-">'],
+			'rimg'		=> ['<img src="$-">'],
 
-			'js'		=> ['<script src="//=raw{_SERVER[SERVER_NAME]}/assets/js/$1.js" defer>', '</script>'],
-			'css'		=> ['<link rel="stylesheet" href="//=raw{_SERVER[SERVER_NAME]}/assets/css/$1.css">'],
-			'img'		=> ['<img src="//=raw{_SERVER[SERVER_NAME]}/assets/img/$1">'],
+			'js'		=> ['<script src="//=raw{_SERVER[SERVER_NAME]}/assets/js/$-.js" defer>', '</script>'],
+			'css'		=> ['<link rel="stylesheet" href="//=raw{_SERVER[SERVER_NAME]}/assets/css/$-.css">'],
+			'img'		=> ['<img src="//=raw{_SERVER[SERVER_NAME]}/assets/img/$-">'],
 
 			// Display'ers
-			'|'			=> ['$1'],
-			'='			=> ['echo htmlspecialchars($$1, ENT_QUOTES, \'UTF-8\');', null, true],
-			'=raw'		=> ['echo $$1;', null, true],
+			'|'			=> ['$-'],
+			'='			=> ['echo htmlspecialchars($$-, ENT_QUOTES, \'UTF-8\');', null, true],
+			'=raw'		=> ['echo $$-;', null, true],
 
 			// Helpers
-			'render'	=> ['if(null !== ($_v = ViewEngine::loadView(\'$1\', $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
-			'rendervar'	=> ['if(null !== ($_v = ViewEngine::loadView($$1, $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
+			'render'	=> ['if(null !== ($_v = ViewEngine::loadView(\'$-\', $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
+			'rendervar'	=> ['if(null !== ($_v = ViewEngine::loadView($$-, $this->logger)) && $_v->parse()) $_v->display($environment);', null, true],
 
 			// Comments
 			'//'		=> [null],
 
 			// PHP
-			'--'		=> ['$1', null, true]
+			'--'		=> ['$-', null, true],
+			'=set'		=> ['$environment[\'$0\'] = ${\'$0\'} = \'$1\';', null, true]
 		];
 
 		private $compiled_path = null;
@@ -173,10 +174,14 @@
 		{
 			if(isset($this->restricted_tags[$tag_name]))
 			{
-				$string = str_replace('$1', $line, $this->restricted_tags[$tag_name][$closing ? 1 : 0] ?? null);
+				$string = str_replace('$-', $line, $this->restricted_tags[$tag_name][$closing ? 1 : 0] ?? null);
+
+				$words = explode(' ', $line);
+				for($i = count($words) - 1; $i >= 0; $i--)
+					$string = str_replace('$'.$i, $words[$i], $string);
 
 				if(!empty($this->restricted_tags[$tag_name][2]) && !empty($this->restricted_tags[$tag_name][$closing ? 1 : 0]))
-					$string = '<?php ' . $string . '?>';
+					$string = '<?php ' . $string . ' ?>';
 
 				if(!empty($string))
 					return $string . "\n";
