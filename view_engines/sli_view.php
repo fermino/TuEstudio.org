@@ -61,10 +61,17 @@
 						$post_parse =
 						[
 							[
-								'/=(raw|json|rawjson|pjson)?{([a-zA-Z0-9_]+)(\\[[\'"]?([a-zA-Z0-9_-]+)[\'"]?])?}/',
+								'/=(raw|json|rawjson|pjson)?{([a-zA-Z0-9_]+)(\\[[\'"]?([a-zA-Z0-9_-]+)[\'"]?]|->([a-zA-Z0-9_-]+))?}/',
 								function($matches)
 								{
-									$v = (5 === count($matches)) ? '${\'$2\'}[\'$4\']' : '${\'$2\'}';
+									$c = count($matches);
+
+									if(6 === $c)
+										$v = '${\'$2\'}->{\'$5\'}';
+									else if(5 === $c)
+										$v = '${\'$2\'}[\'$4\']';
+									else
+										$v = '${\'$2\'}';
 
 									switch($matches[1])
 									{
