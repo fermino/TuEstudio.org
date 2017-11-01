@@ -45,6 +45,7 @@
 
 			spl_autoload_register(function($class)
 			{
+				$class[0] = strtolower($class[0]);
 				$class = preg_replace_callback('/([A-Z])/', function($c) { return '_' . strtolower($c[1]); }, $class);
 				$class = __DIR__.'/models/' . strtolower($class) . '.php';
 
