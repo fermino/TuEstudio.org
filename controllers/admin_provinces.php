@@ -28,9 +28,9 @@
 				$province->name = $_POST['name'];
 
 				if($province->save())
-					return '/admin/provinces#' . $province->id;
+					return '/admin/provinces?success=inserted#' . $province->id;
 
-				return '/admin/provinces';
+				return '/admin/provinces?error=unique&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
 			}
 			else if(!empty($_POST['id']) && '-' !== $_POST['id'] && !empty($_POST['name']))
 			{
@@ -43,7 +43,7 @@
 						$province->name = $_POST['name'];
 
 						if($province->save())
-							return '/admin/provinces#' . $_POST['id'];
+							return '/admin/provinces?success=updated#' . $_POST['id'];
 						else
 							return '/admin/provinces?error=unique&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
 					}
