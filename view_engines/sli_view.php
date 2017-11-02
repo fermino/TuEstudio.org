@@ -10,6 +10,7 @@
 			'meta'		=> ['<meta $->'],
 			'title'		=> ['<title>$-', '</title>'],
 			'br'		=> ['<br>'],
+			'input'		=> ['<input $->'],
 
 			// Code shortcuts
 			'rjs'		=> ['<script src="$-" defer>', '</script>'],
