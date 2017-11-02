@@ -8,6 +8,7 @@ html
 
 		rcss https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
 		css main
+		css iziToast.min
 		-- if($user_logged_in && $user->is_admin) {
 			css admin
 		-- }
@@ -16,9 +17,19 @@ html
 		rjs https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js
 
 		js main
+		js iziToast.min
 		-- if($user_logged_in && $user->is_admin) {
 			js admin
 		-- }
+
+		-- if(!empty($_GET['error']) && !empty($_GET['col']) && !empty($_GET['pcol']) && !empty($_GET['val'])) {
+			script
+				| var error = "={_GET[error]}";
+				| var col = "={_GET[col]}";
+				| var pcol = "={_GET[pcol]}";
+				| var val = "={_GET[val]}";
+		-- }
+
 	body
 		nav class="navbar navbar-inverse navbar-fixed-top"
 			div class="container-fluid"
