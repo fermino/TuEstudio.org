@@ -1,0 +1,42 @@
+=set active_tab places
+render application_admin
+
+div class="panel panel-default"
+	div class="panel-heading"
+		| Provincias
+	div class="panel-body"
+		form method="post" action="/admin/provinces"
+			div class="input-group"
+				input type="text" class="form-control" placeholder="Buscar..." name="search" value="={search}" autofocus
+				span class="input-group-btn"
+					button type="submit" class="btn btn-default"
+						span class="glyphicon glyphicon-search"
+	table class="table"
+		thead
+			tr
+				th class="text-right"
+					| #
+				th class="text-left"
+					| Nombre
+				th class="text-right"
+		tbody
+			-- foreach($provinces as $province) {
+				tr
+					th class="text-right"
+						| ={province->id}
+					td class="text-left"
+						| ={province->name}
+					td class="text-right"
+						button type="button" class="btn button-link btn-primary" data-url="/"
+							span class="glyphicon glyphicon-search"
+							| &nbsp;Universidades
+						button type="button" class="btn button-link btn-primary" data-url="/"
+							span class="glyphicon glyphicon-search"
+							| &nbsp;Alojamientos
+						button type="button" class="btn button-link btn-warning" data-url="/admin/province/={province->id}/edit"
+							span class="glyphicon glyphicon-edit"
+							| &nbsp;Editar
+						button type="button" class="btn button-link btn-danger" data-url="/admin/province/={province->id}/delete"
+							span class="glyphicon glyphicon-remove"
+							| &nbsp;Eliminar
+			-- }

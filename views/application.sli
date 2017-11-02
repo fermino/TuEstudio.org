@@ -8,11 +8,17 @@ html
 
 		rcss https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
 		css main
+		-- if($user_logged_in && $user->is_admin) {
+			css admin
+		-- }
 
 		rjs https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 		rjs https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js
 
 		js main
+		-- if($user_logged_in && $user->is_admin) {
+			js admin
+		-- }
 	body
 		nav class="navbar navbar-inverse navbar-fixed-top"
 			div class="container-fluid"
@@ -34,16 +40,20 @@ html
 							-- if($user->is_admin) {
 								ul class="nav navbar-nav"
 									li class="dropdown"
-										a class="dropdown-toggle" data-toggle="dropdown" href=""
+										a class="dropdown-toggle" data-toggle="dropdown" href="/admin"
 											| Administración
 											span class="caret"
 										ul class="dropdown-menu"
 											li
-												a href="/admin/states"
-													| Lugares
+												a href="/admin/stats"
+													| Estadísticas
 											li
-												a href="/admin/colleges"
-													| Universidades
+												a href="/admin/provinces"
+													| Lugares
+											li role="separator" class="divider"
+											li
+												a href="/admin/settings"
+													| Configuración
 							-- }
 
 							button class="btn btn-danger navbar-btn button button-link" type="button" data-url="/logout"
@@ -54,4 +64,6 @@ html
 								span class="glyphicon glyphicon-log-in"
 								| &nbsp;Ingresar con Google
 						-- }
-		rendervar controller_view
+
+		div class="container-fluid" id="main"
+			rendervar controller_view

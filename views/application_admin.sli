@@ -1,0 +1,10 @@
+ul class="nav nav-tabs" id="admin-nav" data-active="={active_tab}"
+	li role="presentation" id="admin-stats"
+		a href="/admin/stats"
+			| Estadísticas
+	li role="presentation" id="admin-places"
+		a href="/admin/provinces"
+			| Lugares
+	li role="presentation" id="admin-settings"
+		a href="/admin/settings"
+			| Configuración
