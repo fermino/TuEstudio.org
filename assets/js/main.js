@@ -1,12 +1,10 @@
 $(function()
 {
-	$('#logout').click(function()
+	$('.button-link').each(function(i, button)
 	{
-		$(location).attr('href', $('#logout').attr('data-url'));
-	});
-
-	$('#login').click(function()
-	{
-		$(location).attr('href', $('#login').attr('data-url'));
+		$(button).click(function()
+		{
+			$(location).attr('href', $(button).attr('data-url'));
+		});
 	});
 });
