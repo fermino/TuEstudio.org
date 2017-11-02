@@ -29,6 +29,10 @@ html
 				| var pcol = "={_GET[pcol]}";
 				| var val = "={_GET[val]}";
 		-- }
+		-- if(!empty($_GET['success'])) {
+			script
+				| var success = "={_GET[success]}";
+		-- }
 
 	body
 		nav class="navbar navbar-inverse navbar-fixed-top"
