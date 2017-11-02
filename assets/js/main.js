@@ -2,16 +2,30 @@ $(function()
 {
 	if(typeof error !== 'undefined')
 	{
-		if('unique' == error)
-			iziToast.error({title: 'Error', message: 'El ítem con el ' + pcol + ' "' + val + '" ya existe'});
+		switch(error)
+		{
+			case 'unique':
+				iziToast.error({title: 'Error', message: 'El ítem con el ' + pcol + ' "' + val + '" ya existe'});
+				break;
+			case 'max_length':
+				iziToast.error({title: 'Error', message: 'El ' + pcol + ' es demasiado largo'});
+		}
 	}
 
 	if(typeof success !== 'undefined')
 	{
-		if('inserted' == success)
-			iziToast.success({title: 'Listo!', message: 'El ítem ha sido insertado'});
-		else if('updated' == success)
-			iziToast.success({title: 'Listo!', message: 'El ítem ha sido actualizado'});
+		switch(success)
+		{
+			case 'inserted':
+				iziToast.success({title: 'Listo!', message: 'El ítem ha sido insertado'});
+				break;
+			case 'updated':
+				iziToast.success({title: 'Listo!', message: 'El ítem ha sido actualizado'});
+				break;
+			case 'deleted':
+				iziToast.success({title: 'Listo!', message: 'El ítem ha sido eliminado'});
+				break;
+		}
 	}
 
 	$('.button-link').each(function(i, button)

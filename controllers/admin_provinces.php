@@ -22,8 +22,29 @@
 
 		public function post()
 		{
-			if(!empty($_POST['id']) && '-' === $_POST['id'] && !empty($_POST['name']))
+			if(!empty($_POST['delete_id']))
 			{
+				try
+				{
+					$province = Province::find($_POST['delete_id']);
+
+					if(null !== $province)
+					{
+						$province->delete();
+
+						return '/admin/provinces?success=deleted';
+					}
+				}
+				catch(ActiveRecord\RecordNotFound $e)
+				{ }
+
+				return '/admin/provinces';
+			}
+			else if(!empty($_POST['id']) && '-' === $_POST['id'] && !empty($_POST['name']))
+			{
+				if(255 < strlen($_POST['name']))
+					return '/admin/provinces?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
+
 				$province = new Province;
 				$province->name = $_POST['name'];
 
