@@ -42,15 +42,8 @@ $(function()
 
 		$.each(data, function(key, value)
 		{
-			$(event.currentTarget).find('#span-' + key).each(function(i, span)
-			{
-				$(span).text(value);
-			});
-
-			$(event.currentTarget).find('#input-' + key).each(function(i, input)
-			{
-				$(input).val(value);
-			});
+			$('.span-data-' + key).text(value);
+			$('.input-data-' + key).val(value);
 		});
 	});
 });

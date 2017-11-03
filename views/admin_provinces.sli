@@ -11,7 +11,7 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 				button type="button" class="close" data-dismiss="modal"
 					span class="glyphicon glyphicon-remove"
 				h4 class="modal-title" id="create_edit-modal-title"
-					span id="span-action"
+					span class="span-data-action"
 			// Cuerpo
 			div class="modal-body"
 				form method="post" action="/admin/provinces" class="form-horizontal" id="create_edit"
@@ -19,20 +19,20 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 						label class="col-sm-2 control-label"
 							| #
 						div class="col-sm-10"
-							p class="form-control-static" id="span-id"
-							input type="hidden" name="id" id="input-id"
+							p class="form-control-static span-data-id"
+							input type="hidden" name="id" class="input-data-id"
 					div class="form-group"
 						label class="col-sm-2 control-label" for="input-name"
 							| Nombre
 						div class="col-sm-10"
-							input type="text" class="form-control" id="input-name" name="name" autocomplete="off" placeholder="Nombre..."
+							input type="text" class="form-control input-data-name" id="input-name" name="name" autocomplete="off" placeholder="Nombre..."
 			// Pie
 			div class="modal-footer"
 				button type="button" class="btn btn-danger" data-dismiss="modal"
 					span class="glyphicon glyphicon-remove"
 					| &nbsp;Cancelar
 				button type="submit" class="btn btn-primary" form="create_edit"
-					span id="span-action"
+					span class="span-data-action"
 
 // Delete modal
 div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-title"
@@ -43,7 +43,7 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 				button type="button" class="close" data-dismiss="modal"
 					span class="glyphicon glyphicon-remove"
 				h4 class="modal-title" id="delete-modal-title"
-					span id="delete-modal-title"
+					span
 						| Eliminar
 			// Cuerpo
 			div class="modal-body"
@@ -52,13 +52,13 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 						label class="col-sm-2 control-label"
 							| #
 						div class="col-sm-10"
-							p class="form-control-static" id="span-id"
-							input type="hidden" name="delete_id" id="input-id"
+							p class="form-control-static span-data-id"
+							input type="hidden" name="delete_id" class="input-data-id"
 					div class="form-group"
 						label class="col-sm-2 control-label"
 							| Nombre
 						div class="col-sm-10"
-							p class="form-control-static" id="span-name"
+							p class="form-control-static span-data-name"
 			// Pie
 			div class="modal-footer"
 				button type="button" class="btn btn-primary" data-dismiss="modal"
