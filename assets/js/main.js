@@ -42,8 +42,8 @@ $(function()
 
 		$.each(data, function(key, value)
 		{
-			$('.span-data-' + key).text(value);
-			$('.input-data-' + key).val(value);
+			$('input[data=' + key + ']').val(value);
+			$('[data=' + key + ']').text(value);
 		});
 	});
 });
