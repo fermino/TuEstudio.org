@@ -35,4 +35,22 @@ $(function()
 			$(location).attr('href', $(button).attr('data-url'));
 		});
 	});
+
+	$('.modal').on('show.bs.modal', function(event)
+	{
+		var data = $(event.relatedTarget).data();
+
+		$.each(data, function(key, value)
+		{
+			$(event.currentTarget).find('#span-' + key).each(function(i, span)
+			{
+				$(span).text(value);
+			});
+
+			$(event.currentTarget).find('#input-' + key).each(function(i, input)
+			{
+				$(input).val(value);
+			});
+		});
+	});
 });
