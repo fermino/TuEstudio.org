@@ -8,7 +8,7 @@
 		'/admin'						=>
 		[
 			''				=> 'admin_index',
-			'/provinces'		=>
+			'/places'		=>
 			[
 				''				=> ['admin_provinces', ['get', 'post']],
 				'/{search}'		=> 'admin_provinces'

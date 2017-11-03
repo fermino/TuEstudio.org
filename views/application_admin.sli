@@ -3,7 +3,7 @@ ul class="nav nav-tabs" id="admin-nav" data-active="={active_tab}"
 		a href="/admin/stats"
 			| Estadísticas
 	li role="presentation" id="admin-places"
-		a href="/admin/provinces"
+		a href="/admin/places"
 			| Lugares
 	li role="presentation" id="admin-settings"
 		a href="/admin/settings"

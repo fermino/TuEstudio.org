@@ -32,26 +32,26 @@
 					{
 						$province->delete();
 
-						return '/admin/provinces?success=deleted';
+						return '/admin/places?success=deleted';
 					}
 				}
 				catch(ActiveRecord\RecordNotFound $e)
 				{ }
 
-				return '/admin/provinces';
+				return '/admin/places';
 			}
 			else if(!empty($_POST['id']) && '-' === $_POST['id'] && !empty($_POST['name']))
 			{
 				if(255 < strlen($_POST['name']))
-					return '/admin/provinces?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
+					return '/admin/places?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
 
 				$province = new Province;
 				$province->name = $_POST['name'];
 
 				if($province->save())
-					return '/admin/provinces?success=inserted#' . $province->id;
+					return '/admin/places?success=inserted#' . $province->id;
 
-				return '/admin/provinces?error=unique&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
+				return '/admin/places?error=unique&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
 			}
 			else if(!empty($_POST['id']) && '-' !== $_POST['id'] && !empty($_POST['name']))
 			{
@@ -64,21 +64,21 @@
 						$province->name = $_POST['name'];
 
 						if($province->save())
-							return '/admin/provinces?success=updated#' . $_POST['id'];
+							return '/admin/places?success=updated#' . $_POST['id'];
 						else
-							return '/admin/provinces?error=unique&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
+							return '/admin/places?error=unique&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
 					}
 
-					return '/admin/provinces#' . $_POST['id'];
+					return '/admin/places#' . $_POST['id'];
 				}
 				catch(ActiveRecord\RecordNotFound $e)
 				{
-					return '/admin/provinces';
+					return '/admin/places';
 				}
 			}
 			else if(!empty($_POST['search']))
-				return '/admin/provinces/' . urlencode($_POST['search']);
+				return '/admin/places/' . urlencode($_POST['search']);
 			else
-				return '/admin/provinces';
+				return '/admin/places';
 		}
 	}

@@ -14,7 +14,7 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 					span data="action"
 			// Cuerpo
 			div class="modal-body"
-				form method="post" action="/admin/provinces" class="form-horizontal" id="create_edit"
+				form method="post" action="/admin/places" class="form-horizontal" id="create_edit"
 					div class="form-group"
 						label class="col-sm-2 control-label"
 							| #
@@ -47,7 +47,7 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 						| Eliminar
 			// Cuerpo
 			div class="modal-body"
-				form method="post" action="/admin/provinces" class="form-horizontal" id="delete"
+				form method="post" action="/admin/places" class="form-horizontal" id="delete"
 					div class="form-group"
 						label class="col-sm-2 control-label"
 							| #
@@ -73,7 +73,7 @@ div class="panel panel-default"
 		| Provincias
 	// Cuerpo (búsqueda)
 	div class="panel-body"
-		form method="post" action="/admin/provinces"
+		form method="post" action="/admin/places"
 			div class="input-group"
 				input type="text" class="form-control" placeholder="Buscar..." name="search" value="={search}" autocomplete="off" autofocus
 				span class="input-group-btn"

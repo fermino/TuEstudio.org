@@ -63,7 +63,7 @@ html
 												a href="/admin/stats"
 													| Estadísticas
 											li
-												a href="/admin/provinces"
+												a href="/admin/places"
 													| Lugares
 											li role="separator" class="divider"
 											li
