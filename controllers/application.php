@@ -101,3 +101,5 @@
 		protected function terminate()
 		{ }
 	}
+
+	require __DIR__.'/application_admin.php';

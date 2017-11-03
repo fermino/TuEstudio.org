@@ -1,5 +1,5 @@
 <?php
-	class AdminProvincesController extends ApplicationController
+	class AdminProvincesController extends AdminController
 	{
 		protected $title = 'Provincias';
 
