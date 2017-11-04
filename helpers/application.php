@@ -39,4 +39,18 @@
 
 			return true;
 		}
+
+		// http://cubiq.org/the-perfect-php-clean-url-generator
+		public static function getPrettyURL(string $url, array $replace = [], string $delimiter = '-') : string
+		{
+			if(!empty($replace))
+				$url = str_replace($replace, ' ', $url);
+
+			$url = iconv('UTF-8', 'ASCII//TRANSLIT', $url);
+			$url = preg_replace('/[^a-zA-Z0-9\\/_|+ -]/', '', $url);
+			$url = strtolower(trim($url, '-'));
+			$url = preg_replace('/[\\/_|+ -]+/', $delimiter, $url);
+
+			return $url;
+		}
 	}
