@@ -91,10 +91,12 @@ div class="panel panel-default"
 	// Cabecera
 	div class="panel-heading"
 		a href="/admin/places"
-			| Lugares
+			| Provincias
 		| &nbsp;/&nbsp;
 		a href="/admin/places/={province->id}"
 			| ={province->name}
+		| &nbsp;/&nbsp;
+		| Ciudades (={city_c})
 	// Cuerpo (búsqueda)
 	div class="panel-body"
 		form method="post" action="/admin/places/={province->id}"

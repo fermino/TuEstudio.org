@@ -1,15 +1,12 @@
 <?php
 	class AdminProvincesController extends AdminController
 	{
-		protected $title = 'Provincias';
+		protected $title = 'Provincias | Administración';
 
 		public function get($search = null)
 		{
 			if(null === $search)
-				$provinces = Province::all(
-				[
-					'order'		=> 'name ASC'
-				]);
+				$provinces = Province::all(['order' => 'name ASC']);
 			else
 				$provinces = Province::all(
 				[
@@ -17,7 +14,12 @@
 					'order'			=> 'name ASC'
 				]);
 
-			return ['provinces' => $provinces, 'search' => $search];
+			return
+			[
+				'provinces'		=> $provinces,
+				'province_c'	=> count($provinces),
+				'search'		=> $search
+			];
 		}
 
 		public function post()

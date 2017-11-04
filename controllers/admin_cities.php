@@ -7,6 +7,8 @@
 
 			if(!empty($province))
 			{
+				$this->title = "Ciudades en {$province->name} | Administración";
+
 				if(null === $search)
 					$cities = City::all(
 					[
@@ -25,6 +27,7 @@
 					'provinces'	=> Province::all(['order' => 'name ASC']),
 					'province'	=> $province,
 					'cities'	=> $cities,
+					'city_c'	=> count($cities),
 					'search'	=> $search
 				];
 			}
