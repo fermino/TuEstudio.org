@@ -16,6 +16,8 @@
 		 *	  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 		 */
 
+		public static $has_many = ['cities'];
+
 		public static $attr_protected = ['pretty_url'];
 
 		public static $validates_length_of =

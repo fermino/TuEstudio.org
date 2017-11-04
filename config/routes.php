@@ -11,7 +11,12 @@
 			'/places'		=>
 			[
 				''				=> ['admin_provinces', ['get', 'post']],
-				'/{search}'		=> 'admin_provinces'
+				'/{id:\d+}'		=>
+				[
+					''			=> ['admin_cities', ['get', 'post']],
+					'/{search}'	=> ['admin_cities']
+				],
+				'/{search}'		=> 'admin_provinces',
 			]
 		]
 	];
