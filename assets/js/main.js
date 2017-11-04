@@ -42,8 +42,14 @@ $(function()
 
 		$.each(data, function(key, value)
 		{
-			$('input[data=' + key + ']').val(value);
-			$('[data=' + key + ']').text(value);
+			$('input[data="' + key + '"]')
+				.val(value);
+
+			$('select[data="' + key + '"] option[value="' + value + '"]')
+				.prop('selected', true);
+
+			$('[data="' + key + '"]').not('input').not('select')
+				.text(value);
 		});
 	});
 });
