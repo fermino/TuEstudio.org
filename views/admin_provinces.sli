@@ -70,7 +70,8 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 div class="panel panel-default"
 	// Cabecera
 	div class="panel-heading"
-		| Provincias
+		a href="/admin/places"
+			| Lugares
 	// Cuerpo (búsqueda)
 	div class="panel-body"
 		form method="post" action="/admin/places"
@@ -96,12 +97,13 @@ div class="panel panel-default"
 					th class="text-right"
 						| ={province->id}
 					td class="text-left"
-						| ={province->name}
+						a href="/admin/places/={province->id}"
+							| ={province->name}
 					td class="text-right"
-						button type="button" class="btn button-link btn-primary" data-url="/"
+						button type="button" class="btn btn-primary"
 							span class="glyphicon glyphicon-search"
 							| &nbsp;Universidades
-						button type="button" class="btn button-link btn-primary" data-url="/"
+						button type="button" class="btn btn-primary"
 							span class="glyphicon glyphicon-search"
 							| &nbsp;Alojamientos
 						button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={province->id}" data-name="={province->name}"
