@@ -140,6 +140,6 @@ div class="panel panel-default"
 				-- }
 	-- } else {
 		p class="text-center"
-				span class="label label-info"
-					| No hay resultados...
+			span class="label label-info"
+				| No hay resultados...
 	-- }
