@@ -17,6 +17,11 @@
 					'/{search}'	=> ['admin_cities']
 				],
 				'/{search}'		=> 'admin_provinces',
+			],
+			'/knowledge-areas'	=>
+			[
+				''								=> ['admin_knowledge_areas', ['get', 'post']],
+				'/{id_or_search}[/{search}]'	=> 'admin_knowledge_areas'
 			]
 		]
 	];
