@@ -17,7 +17,8 @@
 		 *	  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 		 */
 
-		public static $belongs_to = [['parent_id', 'class_name' => 'KnowledgeArea']];
+		public static $belongs_to = [['parent', 'foreign_key' => 'parent_id', 'class_name' => 'KnowledgeArea']];
+		public static $has_many = [['areas', 'foreign_key' => 'parent_id', 'class_name' => 'KnowledgeArea']];
 
 		public static $attr_protected = ['pretty_url'];
 

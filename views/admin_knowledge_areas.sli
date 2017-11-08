@@ -5,7 +5,13 @@ render application_admin
 div class="panel panel-default"
 	// Cabecera
 	div class="panel-heading"
-		| Áreas de conocimiento
+		a href="/admin/knowledge-areas"
+			| Áreas de conocimiento
+		-- if(!empty($id)) foreach($all_areas[$id] as $i => $area) {
+			| &nbsp;/&nbsp;
+			a href="/admin/knowledge-areas/={i}"
+				| ={area}
+		-- }
 	// Cuerpo (búsqueda)
 	div class="panel-body"
 		form method="post" action="/admin/knowledge-areas"
@@ -39,7 +45,7 @@ div class="panel panel-default"
 						td class="text-left"
 							| ={area->description}
 						td class="text-right"
-							button type="button" class="btn btn-primary"
+							button type="button" class="btn btn-primary" data-link="/admin/knowledge-areas/={area->id}"
 								span class="glyphicon glyphicon-search"
 								| &nbsp;Materias de estudio ()
 							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar"
