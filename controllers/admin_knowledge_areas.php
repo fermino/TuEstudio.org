@@ -127,6 +127,8 @@
 
 				return "/admin/knowledge-areas/{$_POST['search']}";
 			}
+			else if(!empty($_POST['search_id']))
+				return "/admin/knowledge-areas/{$_POST['search_id']}";
 
 			// En cualquier otro caso :P
 			return "/admin/knowledge-areas";
