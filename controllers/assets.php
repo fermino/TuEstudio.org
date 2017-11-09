@@ -6,6 +6,7 @@
 		private $allowed_folders =
 		[
 			'css'	=> 'text/css',
+			'fonts'	=> null,
 			'img'	=> null,
 			'js'	=> 'application/javascript'
 		];
