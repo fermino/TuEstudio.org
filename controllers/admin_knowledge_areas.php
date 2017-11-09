@@ -25,13 +25,36 @@
 				$conditions[] = '%' . $search . '%';
 			}
 
-			$areas = KnowledgeArea::all(['conditions' => $conditions, 'order' => 'name ASC']);
+			$current_areas = KnowledgeArea::all(['conditions' => $conditions, 'order' => 'name ASC']);
+
+			// The select dropdown
+
+			$areas = [];
+			foreach(KnowledgeArea::all() as $area)
+			{
+				$areas[$area->id] = [$area->id => $area->name];
+
+				$parent = $area->parent;
+
+				while(!empty($parent))
+				{
+					$areas[$area->id][$parent->id] = $parent->name;
+
+					$parent = $parent->parent;
+				}
+
+				$areas[$area->id] = array_reverse($areas[$area->id], true);
+			}
+
+			uasort($areas, function($a, $b)
+			{ return strnatcmp(implode('/', $a), implode('/', $b)); });
 
 			return
 			[
-				'areas'		=> $areas,
-				'id'		=> $id ?? null,
-				'search'	=> $search,
+				'areas'			=> $current_areas,
+				'all_areas'		=> $areas,
+				'id'			=> $id ?? null,
+				'search'		=> $search,
 			];
 		}
 
