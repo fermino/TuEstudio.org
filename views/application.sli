@@ -6,15 +6,16 @@ html
 		meta charset="utf-8"
 		meta name="viewport" content="width=device-width, initial-scale=1"
 
-		rcss https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
-		css main
+		css bootstrap.min
+		css application
 		css iziToast.min
 		-- if($user_logged_in && $user->is_admin) {
 			css admin
 		-- }
 
-		rjs https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
-		rjs https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js
+		js jquery.min
+
+		js bootstrap.min
 
 		js main
 		js iziToast.min
