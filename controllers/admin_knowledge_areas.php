@@ -3,24 +3,28 @@
 	{
 		public function get($id_or_search = null, $search = null)
 		{
-			$id = null;
+			$current_id = null;
 
 			if(is_numeric($id_or_search))
-				$id = (int) $id_or_search;
+				$current_id = (int) $id_or_search;
 			else
 				if(!empty($id_or_search))
 					$search = $id_or_search;
 
-			$current_area = (KnowledgeArea::find_all_by_id($id))[0] ?? null;
-			if(empty($current_area))
-				$id = null;
+			if(!empty($current_id))
+			{
+				$current_area = (KnowledgeArea::find_all_by_id($current_id))[0] ?? null;
+
+				if(empty($current_area))
+					return '/admin/knowledge-areas';
+			}
 
 			$conditions = [''];
 
-			if(!empty($id))
+			if(!empty($current_area))
 			{
 				$conditions[0] .= 'parent_id = ?';
-				$conditions[] = $id;
+				$conditions[] = $current_area->id;
 			}
 			else
 				$conditions[0] .= 'parent_id IS NULL';
@@ -31,9 +35,9 @@
 				$conditions[] = '%' . $search . '%';
 			}
 
-			$current_areas = KnowledgeArea::all(['conditions' => $conditions, 'order' => 'name ASC']);
+			$search_areas = KnowledgeArea::all(['conditions' => $conditions, 'order' => 'name ASC']);
 
-			// The select dropdown
+			// La lista completa con sus parents
 
 			$areas = [];
 			foreach(KnowledgeArea::all() as $area)
@@ -55,19 +59,21 @@
 			uasort($areas, function($a, $b)
 			{ return strnatcmp(implode('/', $a), implode('/', $b)); });
 
+			// Devolvemos los datos actuales
+
 			return
 			[
-				'current_area'	=> $current_area,
-				'areas'			=> $current_areas,
-				'all_areas'		=> $areas,
-				'id'			=> $id,
-				'search'		=> $search,
+				'current_id'	=> !empty($current_area) ? $current_area->id : null,
+				'current_area'	=> $current_area ?? null,
+				'search_areas'	=> $search_areas,
+				'list_areas'	=> $areas,
+				'search'		=> $search
 			];
 		}
 
 		public function post()
 		{
-			if(!empty($_POST['id']) && !empty($_POST['parent']) && !empty($_POST['name']))
+			if(!empty($_POST['id']) && !empty($_POST['name']))
 			{
 				// Crear
 				if('-' === $_POST['id'])
@@ -95,7 +101,7 @@
 					// Creamos el área
 					$area = new KnowledgeArea;
 
-					if(is_numeric($_POST['parent']))
+					if(!empty($_POST['parent']) && is_numeric($_POST['parent']))
 					{
 						$parent = (KnowledgeArea::find_all_by_id($_POST['parent']))[0] ?? null;
 
