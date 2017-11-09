@@ -124,6 +124,39 @@
 
 					return "/admin/knowledge-areas/{$_POST['parent']}?error=unique&col=name&pcol=nombre&val=" . urlencode($_POST['name']);
 				}
+				// Editar
+				else if(is_numeric($_POST['id']))
+				{
+					$area = (KnowledgeArea::find_all_by_id($_POST['id']))[0] ?? null;
+
+					if(!empty($area))
+					{
+						if(!empty($_POST['parent']) && is_numeric($_POST['parent']))
+						{
+							$parent = (KnowledgeArea::find_all_by_id($_POST['parent']))[0] ?? null;
+
+							if(empty($parent))
+								return '/admin/knowledge-areas';
+
+							$area->parent_id = (int) $_POST['parent'];
+						}
+
+						$area->name = $_POST['name'];
+
+						if(!empty($_POST['description']))
+							$area->description = $_POST['description'];
+
+						if($area->save())
+							return "/admin/knowledge-areas/{$area->parent_id}?success=updated#{$area->id}";
+
+						if(empty($parent))
+							return '/admin/knowledge-areas?error=unique&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
+
+						return "/admin/knowledge-areas/{$_POST['parent']}?error=unique&col=name&pcol=nombre&val=" . urlencode($_POST['name']);
+					}
+
+					return '/admin/knowledge-areas';
+				}
 			}
 			// Búsqueda
 			else if(!empty($_POST['search']))
