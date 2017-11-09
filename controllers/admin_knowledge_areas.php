@@ -82,7 +82,7 @@
 					{
 						$r = '?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
 
-						if('-' === $_POST['parent'])
+						if(empty($_POST['parent']))
 							return "/admin/knowledge-areas{$r}";
 
 						return "/admin/knowledge-areas/{$_POST['parent']}{$r}";
@@ -92,7 +92,7 @@
 					{
 						$r = '?error=max_length&col=description&pcol=' . urlencode('descripción'). '&val=' . urlencode($_POST['description']);
 
-						if('-' === $_POST['parent'])
+						if(empty($_POST['parent']))
 							return "/admin/knowledge-areas{$r}";
 						
 						return "/admin/knowledge-areas/{$_POST['parent']}{$r}";
