@@ -81,11 +81,11 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 							p class="form-control-static" data="name"
 			// Pie
 			div class="modal-footer"
-				button type="button" class="btn btn-danger" data-dismiss="modal"
+				button type="button" class="btn btn-primary" data-dismiss="modal"
+					| Cancelar
+				button type="button" class="btn btn-danger" form="delete"
 					span class="glyphicon glyphicon-remove"
-					| &nbsp;Cancelar
-				button type="submit" class="btn btn-primary" form="delete"
-					| Eliminar
+					| &nbsp;Eliminar
 
 div class="panel panel-default"
 	// Cabecera
