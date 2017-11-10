@@ -105,12 +105,23 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 div class="panel panel-default"
 	// Cabecera
 	div class="panel-heading"
-		a href="/admin/knowledge-areas"
-			| Áreas de conocimiento
-		-- if(!empty($current_id)) foreach($list_areas[$current_id] as $i => $a) {
+		-- $c = count($search_areas);
+
+		-- if(!empty($current_id)) {
+			a href="/admin/knowledge-areas"
+				| Áreas de conocimiento
+
+			-- foreach($list_areas[$current_id] as $i => $a) {
+				| &nbsp;/&nbsp;
+				a href="/admin/knowledge-areas/={i}"
+					| ={a}
+			-- }
+
 			| &nbsp;/&nbsp;
-			a href="/admin/knowledge-areas/={i}"
-				| ={a}
+			| Materias de estudio (={c})
+		-- } else {
+			a href="/admin/knowledge-areas"
+				| Áreas de conocimiento (={c})
 		-- }
 	// Cuerpo (búsqueda)
 	div class="panel-body"
