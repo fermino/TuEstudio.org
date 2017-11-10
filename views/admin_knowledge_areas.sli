@@ -148,13 +148,20 @@ div class="panel panel-default"
 						td class="text-right"
 							button type="button" class="btn btn-primary" data-link="/admin/knowledge-areas/={area->id}"
 								span class="glyphicon glyphicon-search"
-								| &nbsp;Materias de estudio
+								-- $c = count($area->areas);
+								| &nbsp;Materias de estudio (={c})
 							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={area->id}" data-parent="={area->parent_id}" data-name="={area->name}" data-description="={area->description}"
 								span class="glyphicon glyphicon-edit"
 								| &nbsp;Editar
-							button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={area->id}" data-parent="={parent_name}" data-name="={area->name}" data-description="={area->description}"
-								span class="glyphicon glyphicon-remove"
-								| &nbsp;Eliminar
+							-- if($c > 0) {
+								button type="button" class="btn btn-danger disabled"
+									span class="glyphicon glyphicon-remove"
+									| &nbsp;Eliminar
+							-- } else {
+								button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={area->id}" data-parent="={parent_name}" data-name="={area->name}" data-description="={area->description}"
+									span class="glyphicon glyphicon-remove"
+									| &nbsp;Eliminar
+							-- }
 				-- }
 	-- } else {
 		p class="text-center"
