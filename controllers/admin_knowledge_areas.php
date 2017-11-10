@@ -19,6 +19,11 @@
 					return '/admin/knowledge-areas';
 			}
 
+			if(empty($current_area))
+				$this->title = 'Áreas de conocimiento | Administración';
+			else
+				$this->title = "Áreas de conocimeinto en {$current_area->name} | Administración";
+
 			$conditions = [''];
 
 			if(!empty($current_area))
@@ -156,6 +161,23 @@
 					}
 
 					return '/admin/knowledge-areas';
+				}
+			}
+			// Eliminar
+			else if(!empty($_POST['delete_id']))
+			{
+				$area = (KnowledgeArea::find_all_by_id($_POST['delete_id']))[0] ?? null;
+
+				if(!empty($area))
+				{
+					$parent_id = $area->parent_id;
+
+					$area->delete();
+
+					if(!empty($parent_id))
+						return "/admin/knowledge-areas/{$parent_id}?success=deleted";
+
+					return '/admin/knowledge-areas?success=deleted';
 				}
 			}
 			// Búsqueda

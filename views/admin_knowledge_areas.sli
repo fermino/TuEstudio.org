@@ -55,6 +55,53 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 				button type="submit" class="btn btn-primary" form="create_edit"
 					span data="action"
 
+// Delete modal
+div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-title"
+	div class="modal-dialog" role="document"
+		div class="modal-content"
+			// Cabecera
+			div class="modal-header"
+				button type="button" class="close" data-dismiss="modal"
+					span class="glyphicon glyphicon-remove"
+				h4 class="modal-title" id="delete-modal-title"
+					span
+						| Eliminar
+			// Cuerpo
+			div class="modal-body"
+				form method="post" action="/admin/knowledge-areas" class="form-horizontal" id="delete"
+					// #
+					div class="form-group"
+						label class="col-sm-3 control-label"
+							| #
+						div class="col-sm-9"
+							p class="form-control-static" data="id"
+							input type="hidden" name="delete_id" data="id"
+					// Parent
+					div class="form-group"
+						label class="col-sm-3 control-label"
+							| Área padre
+						div class="col-sm-9"
+							p class="form-control-static" data="parent"
+					// Nombre
+					div class="form-group"
+						label class="col-sm-3 control-label"
+							| Nombre
+						div class="col-sm-9"
+							p class="form-control-static" data="name"
+					// Description
+					div class="form-group"
+						label class="col-sm-3 control-label" for="input-description"
+							| Descripción
+						div class="col-sm-9"
+							p class="form-control-static" data="description"
+			// Pie
+			div class="modal-footer"
+				button type="button" class="btn btn-danger" data-dismiss="modal"
+					span class="glyphicon glyphicon-remove"
+					| &nbsp;Cancelar
+				button type="submit" class="btn btn-primary" form="delete"
+					| Eliminar
+
 div class="panel panel-default"
 	// Cabecera
 	div class="panel-heading"
@@ -90,6 +137,7 @@ div class="panel panel-default"
 					th class="text-right"
 			tbody
 				-- foreach($search_areas as $area) {
+					-- $parent_name = !empty($area->parent_id) ? $area->parent->name : '-';
 					tr
 						th class="text-right"
 							| ={area->id}
@@ -100,11 +148,11 @@ div class="panel panel-default"
 						td class="text-right"
 							button type="button" class="btn btn-primary" data-link="/admin/knowledge-areas/={area->id}"
 								span class="glyphicon glyphicon-search"
-								| &nbsp;Materias de estudio ()
+								| &nbsp;Materias de estudio
 							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={area->id}" data-parent="={area->parent_id}" data-name="={area->name}" data-description="={area->description}"
 								span class="glyphicon glyphicon-edit"
 								| &nbsp;Editar
-							button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal"
+							button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={area->id}" data-parent="={parent_name}" data-name="={area->name}" data-description="={area->description}"
 								span class="glyphicon glyphicon-remove"
 								| &nbsp;Eliminar
 				-- }
