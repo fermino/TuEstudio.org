@@ -98,7 +98,7 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 			div class="modal-footer"
 				button type="button" class="btn btn-primary" data-dismiss="modal"
 					| Cancelar
-				button type="button" class="btn btn-danger" form="delete"
+				button type="submit" class="btn btn-danger" form="delete"
 					span class="glyphicon glyphicon-remove"
 					| &nbsp;Eliminar
 
