@@ -64,16 +64,17 @@
 				if('-' === $_POST['id'])
 				{
 					if(255 < strlen($_POST['name']))
-					{
 						$r = '?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
 
+					if(!empty($r))
+					{
 						if(empty($_POST['parent']))
 							return "/admin/p{$r}";
 
 						return "/admin/p/{$_POST['parent']}{$r}";
 					}
 
-					// Creamos el área
+					// Creamos el ítem
 					$item = new Place;
 
 					if(!empty($_POST['parent']) && is_numeric($_POST['parent']))
@@ -123,10 +124,12 @@
 							return "/admin/p/{$item->parent_id}?success=updated#{$item->id}";
 						}
 
-						if(empty($parent))
-							return '/admin/p?error=unique&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
+						$r = '?error=unique&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
 
-						return "/admin/p/{$_POST['parent']}?error=unique&col=name&pcol=nombre&val=" . urlencode($_POST['name']);
+						if(empty($parent))
+							return "/admin/p{$r}";
+
+						return "/admin/p/{$_POST['parent']}{$r}";
 					}
 				}
 			}
