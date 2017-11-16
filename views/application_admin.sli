@@ -8,6 +8,9 @@ ul class="nav nav-tabs" id="admin-nav" data-active="={active_tab}"
 	li role="presentacion" id="admin-knowledge-areas"
 		a href="/admin/k"
 			| Áreas de conocimiento
+	li role="presentacion" id="admin-universities"
+		a href="/admin/u"
+			| Universidades
 	li role="presentation" id="admin-settings"
 		a href="/admin/settings"
 			| Configuración

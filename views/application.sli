@@ -65,12 +65,16 @@ html
 											li
 												a href="/admin/stats"
 													| Estadísticas
+											li role="separator" class="divider"
 											li
 												a href="/admin/p"
 													| Lugares
 											li
 												a href="/admin/k"
 													| Áreas de conocimiento
+											li
+												a href="/admin/u"
+													| Universidades
 											li role="separator" class="divider"
 											li
 												a href="/admin/settings"
