@@ -5,10 +5,13 @@ $(function()
 		switch(error)
 		{
 			case 'unique':
-				iziToast.error({title: 'Error', message: 'El ítem con el ' + pcol + ' "' + val + '" ya existe'});
+				iziToast.error({title: 'Error', message: 'El ítem con el dato ' + pcol + ' "' + val + '" ya existe'});
 				break;
 			case 'max_length':
 				iziToast.error({title: 'Error', message: 'El ' + pcol + ' es demasiado largo'});
+				break;
+			case 'redundant':
+				iziToast.error({title: 'Error', message: 'Se detectaron datos redundantes. Abortando...'});
 		}
 	}
 

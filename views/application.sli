@@ -23,17 +23,19 @@ html
 			js admin
 		-- }
 
-		-- if(!empty($_GET['error']) && !empty($_GET['col']) && !empty($_GET['pcol']) && !empty($_GET['val'])) {
+		-- if(!empty($_GET['error']))
 			script
 				| var error = "={_GET[error]}";
+
+		-- if(!empty($_GET['col']) && !empty($_GET['pcol']) && !empty($_GET['val']))
+			script
 				| var col = "={_GET[col]}";
 				| var pcol = "={_GET[pcol]}";
 				| var val = "={_GET[val]}";
-		-- }
-		-- if(!empty($_GET['success'])) {
+
+		-- if(!empty($_GET['success']))
 			script
 				| var success = "={_GET[success]}";
-		-- }
 
 	body
 		nav class="navbar navbar-inverse navbar-fixed-top"
