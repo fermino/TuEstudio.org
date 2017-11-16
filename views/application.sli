@@ -64,8 +64,11 @@ html
 												a href="/admin/stats"
 													| Estadísticas
 											li
-												a href="/admin/places"
+												a href="/admin/p"
 													| Lugares
+											li
+												a href="/admin/k"
+													| Áreas de conocimiento
 											li role="separator" class="divider"
 											li
 												a href="/admin/settings"

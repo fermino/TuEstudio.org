@@ -3,10 +3,10 @@ ul class="nav nav-tabs" id="admin-nav" data-active="={active_tab}"
 		a href="/admin/stats"
 			| Estadísticas
 	li role="presentation" id="admin-places"
-		a href="/admin/places"
+		a href="/admin/p"
 			| Lugares
 	li role="presentacion" id="admin-knowledge-areas"
-		a href="/admin/knowledge-areas"
+		a href="/admin/k"
 			| Áreas de conocimiento
 	li role="presentation" id="admin-settings"
 		a href="/admin/settings"
