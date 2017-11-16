@@ -1,5 +1,5 @@
 // Admin navbar
-=set active_tab places
+=set active_tab knowledge-areas
 render application_admin
 
 // Create/Edit modal
@@ -14,17 +14,31 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 					span data="action"
 			// Cuerpo
 			div class="modal-body"
-				form method="post" action="/admin/places" class="form-horizontal" id="create_edit"
+				form method="post" action="/admin/p" class="form-horizontal" id="create_edit"
+					// #
 					div class="form-group"
-						label class="col-sm-2 control-label"
+						label class="col-sm-3 control-label"
 							| #
-						div class="col-sm-10"
+						div class="col-sm-9"
 							p class="form-control-static" data="id"
 							input type="hidden" name="id" data="id"
+					// Parent
 					div class="form-group"
-						label class="col-sm-2 control-label" for="input-name"
+						label class="col-sm-3 control-label"
+							| Localidad padre
+						div class="col-sm-9"
+							select class="form-control" name="parent" data="parent"
+								option value=""
+									| - No tiene -
+								-- foreach($list as $i => $a)
+									-- $name = implode(' > ', $a);
+									option value="={i}"
+										| ={name}
+					// Nombre
+					div class="form-group"
+						label class="col-sm-3 control-label" for="input-name"
 							| Nombre
-						div class="col-sm-10"
+						div class="col-sm-9"
 							input type="text" class="form-control" data="name" id="input-name" name="name" autocomplete="off" placeholder="Nombre..." required
 			// Pie
 			div class="modal-footer"
@@ -47,17 +61,25 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 						| Eliminar
 			// Cuerpo
 			div class="modal-body"
-				form method="post" action="/admin/places" class="form-horizontal" id="delete"
+				form method="post" action="/admin/p" class="form-horizontal" id="delete"
+					// #
 					div class="form-group"
-						label class="col-sm-2 control-label"
+						label class="col-sm-3 control-label"
 							| #
-						div class="col-sm-10"
+						div class="col-sm-9"
 							p class="form-control-static" data="id"
 							input type="hidden" name="delete_id" data="id"
+					// Parent
 					div class="form-group"
-						label class="col-sm-2 control-label"
+						label class="col-sm-3 control-label"
+							| Área padre
+						div class="col-sm-9"
+							p class="form-control-static" data="parent"
+					// Nombre
+					div class="form-group"
+						label class="col-sm-3 control-label"
 							| Nombre
-						div class="col-sm-10"
+						div class="col-sm-9"
 							p class="form-control-static" data="name"
 			// Pie
 			div class="modal-footer"
@@ -70,20 +92,29 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 div class="panel panel-default"
 	// Cabecera
 	div class="panel-heading"
-		a href="/admin/places"
-			| Provincias (={province_c})
+		a href="/admin/p"
+			| Lugares
+		-- if(!empty($current_id))
+			-- foreach($list[$current_id] as $i => $a)
+				| &nbsp;/&nbsp;
+				a href="/admin/p/={i}"
+					| ={a}
+		-- $c = count($search_list);
+		| (={c})
+		div class=""
 	// Cuerpo (búsqueda)
 	div class="panel-body"
-		form method="post" action="/admin/places"
+		form method="post" action=""
 			div class="input-group"
 				input type="text" class="form-control" placeholder="Buscar..." name="search" value="={search}" autocomplete="off" autofocus
+				input type="hidden" name="search_id" value="={current_id}"
 				span class="input-group-btn"
 					button type="submit" class="btn btn-default"
 						span class="glyphicon glyphicon-search"
-					button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_edit-modal" data-action="Crear" data-id="-" data-name=""
+					button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_edit-modal" data-action="Crear" data-id="-" data-parent="={current_id}" data-name=""
 						| Crear
 	// Cuerpo (datos)
-	-- if(!empty($provinces)) {
+	-- if(!empty($search_list)) {
 		table class="table table-striped table-hover"
 			thead
 				tr
@@ -93,36 +124,39 @@ div class="panel panel-default"
 						| Nombre
 					th class="text-right"
 			tbody
-				-- foreach($provinces as $province) {
+				-- foreach($search_list as $item)
+					-- $parent_name = !empty($item->parent_id) ? $item->parent->name : '-';
 					tr
 						th class="text-right"
-							| ={province->id}
+							| ={item->id}
 						td class="text-left"
-							| ={province->name}
+							| ={item->name}
 						td class="text-right"
-							button type="button" class="btn btn-primary" data-link="/admin/places/={province->id}"
+							-- $c_p = count($item->places);
+							-- $c_u = count($item->universities);
+
+							// Localidades
+							button type="button" class="btn btn-primary" data-link="/admin/p/={item->id}"
 								span class="glyphicon glyphicon-search"
-								-- $c = count($province->cities);
-								| &nbsp;Ciudades (={c})
-							button type="button" class="btn btn-primary"
+								| &nbsp;Localidades (={c_p})
+							// Universidades
+							button type="button" class="btn btn-primary" data-link="/admin/u/={item->id}"
 								span class="glyphicon glyphicon-search"
-								| &nbsp;Universidades
-							button type="button" class="btn btn-primary"
-								span class="glyphicon glyphicon-search"
-								| &nbsp;Alojamientos
-							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={province->id}" data-name="={province->name}"
+								| &nbsp;Universidades (={c_u})
+							// Editar
+							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={item->id}" data-parent="={item->parent_id}" data-name="={item->name}"
 								span class="glyphicon glyphicon-edit"
 								| &nbsp;Editar
-							-- if($c > 0) {
+							// Eliminar
+							-- if(($c_p + $c_u) > 0) {
 								button type="button" class="btn btn-danger disabled"
 									span class="glyphicon glyphicon-remove"
 									| &nbsp;Eliminar
 							-- } else {
-								button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={province->id}" data-name="={province->name}"
+								button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={item->id}" data-parent="={parent_name}" data-name="={item->name}"
 									span class="glyphicon glyphicon-remove"
 									| &nbsp;Eliminar
 							-- }
-				-- }
 	-- } else {
 		p class="text-center"
 			span class="label label-info"

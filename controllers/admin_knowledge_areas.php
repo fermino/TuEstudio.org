@@ -43,26 +43,7 @@
 			$search_areas = KnowledgeArea::all(['conditions' => $conditions, 'order' => 'name ASC']);
 
 			// La lista completa con sus parents
-
-			$areas = [];
-			foreach(KnowledgeArea::all() as $area)
-			{
-				$areas[$area->id] = [$area->id => $area->name];
-
-				$parent = $area->parent;
-
-				while(!empty($parent))
-				{
-					$areas[$area->id][$parent->id] = $parent->name;
-
-					$parent = $parent->parent;
-				}
-
-				$areas[$area->id] = array_reverse($areas[$area->id], true);
-			}
-
-			uasort($areas, function($a, $b)
-			{ return strnatcmp(implode('/', $a), implode('/', $b)); });
+			$areas = KnowledgeArea::getList();
 
 			// Devolvemos los datos actuales
 

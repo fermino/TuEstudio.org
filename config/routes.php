@@ -7,17 +7,8 @@
 		'/logout'						=> 'logout',
 		'/admin'						=>
 		[
-			''				=> 'admin_index',
-			'/places'		=>
-			[
-				''				=> ['admin_provinces', ['get', 'post']],
-				'/{id:\d+}'		=>
-				[
-					''			=> ['admin_cities', ['get', 'post']],
-					'/{search}'	=> ['admin_cities']
-				],
-				'/{search}'		=> 'admin_provinces',
-			],
+			''									=> 'admin_index',
+			'/p[/{id_or_search}[/{search}]]'	=> ['admin_places', ['get', 'post']],
 			'/knowledge-areas'	=>
 			[
 				''								=> ['admin_knowledge_areas', ['get', 'post']],
