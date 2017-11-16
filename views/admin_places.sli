@@ -24,10 +24,10 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 							input type="hidden" name="id" data="id"
 					// Parent
 					div class="form-group"
-						label class="col-sm-3 control-label"
+						label class="col-sm-3 control-label" for="input-parent"
 							| Localidad padre
 						div class="col-sm-9"
-							select class="form-control" name="parent" data="parent"
+							select class="form-control" id="input-parent" name="parent" data="parent"
 								option value=""
 									| - No tiene -
 								-- foreach($list as $i => $a)
