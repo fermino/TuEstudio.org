@@ -1,5 +1,5 @@
 // Admin navbar
-=set active_tab knowledge-areas
+=set active_tab places
 render application_admin
 
 // Create/Edit modal

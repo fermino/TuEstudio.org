@@ -30,7 +30,7 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 							select class="form-control" id="input-parent" name="parent" data="parent"
 								option value=""
 									| - No tiene -
-								-- foreach($ĺist as $i => $a)
+								-- foreach($list as $i => $a)
 									!- $name = implode(' > ', $a);
 									option value="={i}"
 										| ={name}

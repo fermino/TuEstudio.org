@@ -89,6 +89,9 @@
 
 					$item->name = $_POST['name'];
 
+					if($item->parent_id === $item->id)
+						return '/admin/p?error=redundant';
+
 					if($item->save())
 						return "/admin/p/{$item->id}?success=inserted";
 
@@ -115,6 +118,9 @@
 						}
 
 						$item->name = $_POST['name'];
+
+						if($item->parent_id === $item->id)
+							return '/admin/p?error=redundant';
 
 						if($item->save())
 						{
@@ -153,6 +159,8 @@
 			// Búsqueda
 			else if(!empty($_POST['search']))
 			{
+				$_POST['search'] = urlencode($_POST['search']);
+
 				if(!empty($_POST['search_id']))
 					return "/admin/p/{$_POST['search_id']}/{$_POST['search']}";
 
