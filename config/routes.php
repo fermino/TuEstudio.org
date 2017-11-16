@@ -10,5 +10,6 @@
 			''												=> ['admin_index'			,['get']		],
 			'/p[/{id_or_search}[/{search}]]'				=> ['admin_places'			,['get', 'post']],
 			'/k[/{id_or_search}[/{search}]]'				=> ['admin_knowledge_areas'	,['get', 'post']],
+			'/u[/{place_id}[/{id_or_search}[/{search}]]]'	=> ['admin_universities'	,['get', 'post']],
 		],
 	];
