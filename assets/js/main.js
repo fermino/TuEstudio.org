@@ -51,10 +51,14 @@ $(function()
 			$('textarea[data="' + key + '"]')
 				.val(value);
 
-			$('select[data="' + key + '"] option[value="' + value + '"]')
-				.prop('selected', true);
+			if(value == parseInt(value))
+				$('select[data="' + key + '"] option[value="' + value + '"]')
+					.prop('selected', true);
 
-			$('[data="' + key + '"]').not('input').not('textarea').not('select')
+			$('div[data="' + key + '"]')
+				.html(value);
+
+			$('[data="' + key + '"]').not('input').not('textarea').not('select').not('div')
 				.text(value);
 		});
 	});

@@ -6,7 +6,8 @@
         "nikic/fast-route": "^1.2",
         "php-activerecord/php-activerecord": "^1.2",
         "google/apiclient": "^2.2",
-        "ezimuel/php-secure-session": "^1.0"
+        "ezimuel/php-secure-session": "^1.0",
+        "erusev/parsedown": "^1.6"
     },
     "license": "GPL v3",
     "authors": [

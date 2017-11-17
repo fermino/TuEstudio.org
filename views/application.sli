@@ -11,6 +11,7 @@ html
 		css iziToast.min
 		-- if($user_logged_in && $user->is_admin) {
 			css admin
+			css simplemde.min
 		-- }
 
 		js jquery.min
@@ -21,6 +22,7 @@ html
 		js iziToast.min
 		-- if($user_logged_in && $user->is_admin) {
 			js admin
+			js simplemde.min
 		-- }
 
 		-- if(!empty($_GET['error']))
