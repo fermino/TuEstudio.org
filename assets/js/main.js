@@ -48,10 +48,13 @@ $(function()
 			$('input[data="' + key + '"]')
 				.val(value);
 
+			$('textarea[data="' + key + '"]')
+				.val(value);
+
 			$('select[data="' + key + '"] option[value="' + value + '"]')
 				.prop('selected', true);
 
-			$('[data="' + key + '"]').not('input').not('select')
+			$('[data="' + key + '"]').not('input').not('textarea').not('select')
 				.text(value);
 		});
 	});
