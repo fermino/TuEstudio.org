@@ -131,9 +131,6 @@
 
 					$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 
-					if($item->parent_id === $item->id)
-						return '/admin/u?error=redundant';
-
 					if($item->save())
 						return "/admin/u/-/{$item->id}?success=inserted";
 

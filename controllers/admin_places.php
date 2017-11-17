@@ -89,9 +89,6 @@
 
 					$item->name = $_POST['name'];
 
-					if($item->parent_id === $item->id)
-						return '/admin/p?error=redundant';
-
 					if($item->save())
 						return "/admin/p/{$item->id}?success=inserted";
 

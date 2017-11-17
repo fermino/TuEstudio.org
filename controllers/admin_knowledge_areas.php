@@ -94,9 +94,6 @@
 					if(!empty($_POST['description']))
 						$item->description = $_POST['description'];
 
-					if($item->parent_id === $item->id)
-						return '/admin/k?error=redundant';
-
 					if($item->save())
 						return "/admin/k/{$item->id}?success=inserted";
 
