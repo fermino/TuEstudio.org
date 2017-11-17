@@ -147,14 +147,19 @@ div class="panel panel-default"
 						td class="text-left"
 							| ={item->description}
 						td class="text-right"
+							!- $c_c = count($item->careers);
+							!- $c_a = count($item->areas);
+
+							button type="button" class="btn btn-primary disabled"
+								span class="glyphicon glyphicon-search"
+								| &nbsp;Carreras (={c_c})
 							button type="button" class="btn btn-primary" data-link="/admin/k/={item->id}"
 								span class="glyphicon glyphicon-search"
-								!- $c = count($item->areas);
-								| &nbsp;Materias de estudio (={c})
+								| &nbsp;Materias de estudio (={c_a})
 							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={item->id}" data-parent="={item->parent_id}" data-name="={item->name}" data-description="={item->description}"
 								span class="glyphicon glyphicon-edit"
 								| &nbsp;Editar
-							!- if($c > 0) {
+							!- if(($c_c + $c_a) > 0) {
 								button type="button" class="btn btn-danger disabled"
 									span class="glyphicon glyphicon-remove"
 									| &nbsp;Eliminar
