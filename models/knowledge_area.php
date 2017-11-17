@@ -19,7 +19,11 @@
 		 */
 
 		public static $belongs_to = [['parent', 'foreign_key' => 'parent_id', 'class_name' => 'KnowledgeArea']];
-		public static $has_many = [['areas', 'foreign_key' => 'parent_id', 'class_name' => 'KnowledgeArea']];
+		public static $has_many =
+		[
+			['areas', 'foreign_key' => 'parent_id', 'class_name' => 'KnowledgeArea'],
+			['careers']
+		];
 
 		public static $attr_protected = ['pretty_url'];
 

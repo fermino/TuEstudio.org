@@ -1,10 +1,10 @@
 // Admin navbar
-=set active_tab universities
+=set active_tab careers
 render application_admin
 
 // Create/Edit modal
 div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-labelledby="create_edit-modal-title"
-	div class="modal-dialog" role="document"
+	div class="modal-dialog modal-lg" role="document"
 		div class="modal-content"
 			// Cabecera
 			div class="modal-header"
@@ -14,7 +14,7 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 					span data="action"
 			// Cuerpo
 			div class="modal-body"
-				form method="post" action="/admin/u" class="form-horizontal" id="create_edit"
+				form method="post" action="/admin/c" class="form-horizontal" id="create_edit"
 					// #
 					div class="form-group"
 						label class="col-sm-3 control-label"
@@ -22,25 +22,27 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 						div class="col-sm-9"
 							p class="form-control-static" data="id"
 							input type="hidden" name="id" data="id"
-					// Parent
+					// Universidad
 					div class="form-group"
-						label class="col-sm-3 control-label" for="input-parent"
-							| Sede de
+						label class="col-sm-3 control-label" for="input-university"
+							| Universidad
 						div class="col-sm-9"
-							select class="form-control" id="input-parent" name="parent" data="parent"
-								option value=""
-									| - No es sede -
-								-- foreach($list as $i => $a)
+							select class="form-control" id="input-university" name="university" data="university" required
+								option value="" default
+									| - Seleccionar -
+								-- foreach($u_list as $i => $a)
 									!- $name = implode(' > ', $a);
 									option value="={i}"
 										| ={name}
-					// Lugar
+					// Área de conocimientos
 					div class="form-group"
-						label class="col-sm-3 control-label" for="input-place"
-							| Lugar
+						label class="col-sm-3 control-label" for="input-knowledge-area"
+							| Área de conocimientos
 						div class="col-sm-9"
-							select class="form-control" id="input-place" name="place" data="place" required
-								-- foreach($p_list as $i => $a)
+							select class="form-control" id="input-knowledge-area" name="knowledge-area" data="knowledge_area" required
+								option value="" default
+									| - Seleccionar -
+								-- foreach($a_list as $i => $a)
 									!- $name = implode(' > ', $a);
 									option value="={i}"
 										| ={name}
@@ -50,30 +52,18 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 							| Nombre
 						div class="col-sm-9"
 							input type="text" class="form-control" data="name" id="input-name" name="name" autocomplete="off" placeholder="Nombre..." required
-					// Web
+					// Duración
 					div class="form-group"
-						label class="col-sm-3 control-label" for="input-web"
-							| Web
+						label class="col-sm-3 control-label" for="input-length"
+							| Duración (años)
 						div class="col-sm-9"
-							input type="url" class="form-control" data="web" id="input-web" name="web" autocomplete="on" placeholder="Web..."
-					// E-mail
+							input type="number" class="form-control" data="length" id="input-length" name="length" autocomplete="off" placeholder="Duración..." min="1" max="9" required
+					// Descripción
 					div class="form-group"
-						label class="col-sm-3 control-label" for="input-email"
-							| E-mail
+						label class="col-sm-3 control-label" for="input-description"
+							| Descripción
 						div class="col-sm-9"
-							input type="email" class="form-control" data="email" id="input-email" name="email" autocomplete="on" placeholder="E-mail..."
-					// Teléfono
-					div class="form-group"
-						label class="col-sm-3 control-label" for="input-phone"
-							| Teléfono
-						div class="col-sm-9"
-							input type="text" class="form-control" data="phone" id="input-phone" name="phone" autocomplete="off" placeholder="Teléfono..."
-					// Dirección
-					div class="form-group"
-						label class="col-sm-3 control-label" for="input-address"
-							| Dirección
-						div class="col-sm-9"
-							input type="text" class="form-control" data="address" id="input-address" name="address" autocomplete="off" placeholder="Dirección..."
+							textarea class="form-control" name="description" data="description" rows="15" id="input-description" required
 					// Verificado (Si/No)
 					div class="form-group"
 						label class="col-sm-3 control-label" for="input-verified"
@@ -94,7 +84,7 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 
 // Delete modal
 div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="delete-modal-title"
-	div class="modal-dialog" role="document"
+	div class="modal-dialog modal-lg" role="document"
 		div class="modal-content"
 			// Cabecera
 			div class="modal-header"
@@ -105,7 +95,7 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 						| Eliminar
 			// Cuerpo
 			div class="modal-body"
-				form method="post" action="/admin/u" class="form-horizontal" id="delete"
+				form method="post" action="/admin/c" class="form-horizontal" id="delete"
 					// #
 					div class="form-group"
 						label class="col-sm-3 control-label"
@@ -113,48 +103,36 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 						div class="col-sm-9"
 							p class="form-control-static" data="id"
 							input type="hidden" name="delete_id" data="id"
-					// Parent
+					// Universidad
 					div class="form-group"
 						label class="col-sm-3 control-label"
-							| Sede de
+							| Universidad
 						div class="col-sm-9"
-							p class="form-control-static" data="parent"
-					// Lugar
+							p class="form-control-static" data="university"
+					// Área de conocimientos
 					div class="form-group"
 						label class="col-sm-3 control-label"
-							| Lugar
+							| Área de conocimientos
 						div class="col-sm-9"
-							p class="form-control-static" data="place"
+							p class="form-control-static" data="knowledge_area"
 					// Nombre
 					div class="form-group"
 						label class="col-sm-3 control-label"
 							| Nombre
 						div class="col-sm-9"
 							p class="form-control-static" data="name"
-					// Web
+					// Duración
 					div class="form-group"
 						label class="col-sm-3 control-label"
-							| Web
+							| Duración
 						div class="col-sm-9"
-							p class="form-control-static" data="web"
-					// E-mail
+							p class="form-control-static" data="length"
+					// Descripción
 					div class="form-group"
 						label class="col-sm-3 control-label"
-							| E-mail
+							| Descripción
 						div class="col-sm-9"
-							p class="form-control-static" data="email"
-					// Teléfono
-					div class="form-group"
-						label class="col-sm-3 control-label"
-							| Teléfono
-						div class="col-sm-9"
-							p class="form-control-static" data="phone"
-					// Dirección
-					div class="form-group"
-						label class="col-sm-3 control-label"
-							| Dirección
-						div class="col-sm-9"
-							p class="form-control-static" data="address"
+							p class="form-control-static" data="description"
 					// Verificado (Si/No)
 					div class="form-group"
 						label class="col-sm-3 control-label"
@@ -172,10 +150,10 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 div class="panel panel-default"
 	// Cabecera
 	div class="panel-heading"
-		a href="/admin/u"
-			| Universidades
+		a href="/admin/c"
+			| Carreras
 		-- if(!empty($current_id))
-			-- foreach($list[$current_id] as $i => $a)
+			-- foreach($u_list[$current_id] as $i => $a)
 				| &nbsp;/&nbsp;
 				a href="/admin/u/-/={i}"
 					| ={a}
@@ -183,15 +161,14 @@ div class="panel panel-default"
 		| (={c})
 	// Cuerpo (búsqueda)
 	div class="panel-body"
-		form method="post" action="/admin/u"
+		form method="post" action="/admin/c"
 			div class="input-group"
 				input type="text" class="form-control" placeholder="Buscar..." name="search" value="={search}" autocomplete="off" autofocus
-				input type="hidden" name="search_place_id" value="={place_id}"
 				input type="hidden" name="search_id" value="={current_id}"
 				span class="input-group-btn"
 					button type="submit" class="btn btn-default"
 						span class="glyphicon glyphicon-search"
-					button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_edit-modal" data-action="Crear" data-id="-" data-parent="={current_id}" data-place="={current_place_id}" data-name="" data-web="" data-email="" data-phone="" data-address="" data-verified="0"
+					button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_edit-modal" data-action="Crear" data-id="-" data-university="={current_id}" data-knowledge-area="" data-name="" data-length="1" data-description="" data-verified="0"
 						| Crear
 	// Cuerpo (datos)
 	!- if(!empty($search_list)) {
@@ -201,41 +178,44 @@ div class="panel panel-default"
 					th class="text-right"
 						| #
 					th class="text-left"
-						| Lugar
+						| Universidad
 					th class="text-left"
-						| Nombre
+						| Área de conocimientos
 					th class="text-left"
-						| Web
+						| Name
 					th class="text-left"
-						| E-mail
-					th class="text-left"
-						| Teléfono
-					th class="text-left"
-						| Dirección
+						| Duración
 					th class="text-center"
 						| Verificado
 					th class="text-right"
 			tbody
 				-- foreach($search_list as $item)
-					!- $place_name = !empty($item->place_id) ? implode(' > ', $p_list[$item->place->id]) : '-';
-					!- $parent_name = !empty($item->parent_id) ? implode(' > ', array_diff_key($list[$item->id], [$item->id => 0])) : '-';
+					!- $u_id = $item->university->id;
+					!- $u_name = implode(' / ', $u_list[$item->university->id]);
+					!- $k_id = $item->knowledge_area->id;
+					!- $k_name = implode(' / ', $a_list[$item->knowledge_area->id]);
+
 					!- $verified = $item->verified ? 'Sí' : 'No';
 
 					tr
 						th class="text-right"
 							| ={item->id}
 						td class="text-left"
-							| ={place_name}
+							-- foreach($u_list[$item->university->id] as $i => $a)
+								a href="/admin/u/-/={i}"
+									| ={a}
+								-- if(end($u_list[$item->university->id]) !== $a)
+									| &nbsp;/&nbsp;
+						td class="text-left"
+							-- foreach($a_list[$item->knowledge_area->id] as $i => $a)
+								a href="/admin/k/={i}"
+									| ={a}
+								-- if(end($a_list[$item->knowledge_area->id]) !== $a)
+									| &nbsp;/&nbsp;
 						td class="text-left"
 							| ={item->name}
 						td class="text-left"
-							| ={item->web_address}
-						td class="text-left"
-							| ={item->email}
-						td class="text-left"
-							| ={item->phone}
-						td class="text-left"
-							| ={item->address}
+							| ={item->length} años
 						td class="text-center"
 							-- if($item->verified)
 								span class="label label-success"
@@ -244,27 +224,12 @@ div class="panel panel-default"
 								span class="label label-danger"
 									span class="glyphicon glyphicon-remove"
 						td class="text-right"
-							!- $c_u = count($item->universities);
-							!- $c_c = count($item->careers);
-
-							button type="button" class="btn btn-primary" data-link="/admin/u/-/={item->id}"
-								span class="glyphicon glyphicon-search"
-								| &nbsp;Sedes (={c_u})
-							button type="button" class="btn btn-primary" data-link="/admin/c/={item->id}"
-								span class="glyphicon glyphicon-search"
-								| &nbsp;Carreras (={c_c})
-							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={item->id}" data-parent="={item->parent_id}" data-place="={item->place_id}" data-name="={item->name}" data-web="={item->web_address}" data-email="={item->email}" data-phone="={item->phone}" data-address="={item->address}" data-verified="={item->verified}"
+							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={item->id}" data-university="={u_id}" data-knowledge_area="={k_id}" data-name="={item->name}" data-length="={item->length}" data-description="={item->description}" data-verified="={item->verified}"
 								span class="glyphicon glyphicon-edit"
 								| &nbsp;Editar
-							!- if(($c_u + $c_c) > 0) {
-								button type="button" class="btn btn-danger disabled"
-									span class="glyphicon glyphicon-remove"
-									| &nbsp;Eliminar
-							!- } else {
-								button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={item->id}" data-parent="={parent_name}" data-place="={place_name}" data-name="={item->name}" data-web="={item->web_address}" data-email="={item->email}" data-phone="={item->phone}" data-address="={item->address}" data-verified="={verified}"
-									span class="glyphicon glyphicon-remove"
-									| &nbsp;Eliminar
-							!- }
+							button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={item->id}" data-university="={u_name}" data-knowledge_area="={k_name}" data-name="={item->name}" data-length="={item->length} años" data-description="={item->description}" data-verified="={verified}"
+								span class="glyphicon glyphicon-remove"
+								| &nbsp;Eliminar
 	!- } else {
 		p class="text-center"
 			span class="label label-info"

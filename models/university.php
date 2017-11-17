@@ -28,7 +28,11 @@
 			['parent', 'foreign_key' => 'parent_id', 'class_name' => 'University'],
 			['place']
 		];
-		public static $has_many = [['universities', 'foreign_key' => 'parent_id', 'class_name' => 'University']];
+		public static $has_many =
+		[
+			['universities', 'foreign_key' => 'parent_id', 'class_name' => 'University'],
+			['careers']
+		];
 
 		public static $attr_protected = ['pretty_url'];
 

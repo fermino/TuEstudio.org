@@ -75,6 +75,9 @@ html
 											li
 												a href="/admin/u"
 													| Universidades
+											li
+												a href="/admin/c"
+													| Carreras
 											li role="separator" class="divider"
 											li
 												a href="/admin/settings"
