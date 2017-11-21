@@ -185,19 +185,15 @@
 
 							$item->parent_id = (int) $_POST['parent'];
 						}
+						else
+							$item->parent_id = null;
 
 						$item->name = $_POST['name'];
 
-						//if(!empty($_POST['description']))
-						//	$item->description = $_POST['description'];
-						if(!empty($_POST['web']))
-							$item->web_address = $_POST['web'];
-						if(!empty($_POST['email']))
-							$item->email = $_POST['email'];
-						if(!empty($_POST['phone']))
-							$item->phone = $_POST['phone'];
-						if(!empty($_POST['address']))
-							$item->address = $_POST['address'];
+						$item->web_address = $_POST['web'] ?? null;
+						$item->email = $_POST['email'] ?? null;
+						$item->phone = $_POST['phone'] ?? null;
+						$item->address = $_POST['address'] ?? null;
 
 						$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 

@@ -113,6 +113,8 @@
 
 							$item->parent_id = (int) $_POST['parent'];
 						}
+						else
+							$item->parent_id = null;
 
 						$item->name = $_POST['name'];
 

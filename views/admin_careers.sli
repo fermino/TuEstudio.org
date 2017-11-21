@@ -54,6 +54,12 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 							| Nombre
 						div class="col-sm-9"
 							input type="text" class="form-control" data="name" id="input-name" name="name" autocomplete="off" placeholder="Nombre..." required
+					// Título
+					div class="form-group"
+						label class="col-sm-3 control-label" for="input-degree"
+							| Título
+						div class="col-sm-9"
+							input type="text" class="form-control" data="degree" id="input-degree" name="degree" autocomplete="off" placeholder="Título..."
 					// Duración
 					div class="form-group"
 						label class="col-sm-3 control-label" for="input-length"
@@ -123,6 +129,12 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 							| Nombre
 						div class="col-sm-9"
 							p class="form-control-static" data="name"
+					// Título
+					div class="form-group"
+						label class="col-sm-3 control-label"
+							| Título
+						div class="col-sm-9"
+							p class="form-control-static" data="degree"
 					// Duración
 					div class="form-group"
 						label class="col-sm-3 control-label"
@@ -170,7 +182,7 @@ div class="panel panel-default"
 				span class="input-group-btn"
 					button type="submit" class="btn btn-default"
 						span class="glyphicon glyphicon-search"
-					button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_edit-modal" data-action="Crear" data-id="-" data-university="={current_id}" data-knowledge_area="" data-name="" data-length="1" data-description="" data-verified="0"
+					button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_edit-modal" data-action="Crear" data-id="-" data-university="={current_id}" data-knowledge_area="" data-name="" data-degree="" data-length="1" data-description="" data-verified="0"
 						| Crear
 	// Cuerpo (datos)
 	!- if(!empty($search_list)) {
@@ -228,10 +240,10 @@ div class="panel panel-default"
 								span class="label label-danger"
 									span class="glyphicon glyphicon-remove"
 						td class="text-right"
-							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={item->id}" data-university="={u_id}" data-knowledge_area="={k_id}" data-name="={item->name}" data-length="={item->length}" data-description="={item->description}" data-verified="={item->verified}"
+							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={item->id}" data-university="={u_id}" data-knowledge_area="={k_id}" data-name="={item->name}" data-degree="={item->degree}" data-length="={item->length}" data-description="={item->description}" data-verified="={item->verified}"
 								span class="glyphicon glyphicon-edit"
 								| &nbsp;Editar
-							button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={item->id}" data-university="={u_name}" data-knowledge_area="={k_name}" data-name="={item->name}" data-length="={item->length} años" data-description="=raw{parsed_description}" data-verified="={verified}"
+							button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={item->id}" data-university="={u_name}" data-knowledge_area="={k_name}" data-name="={item->name}" data-degree="={item->degree}" data-length="={item->length} años" data-description="=raw{parsed_description}" data-verified="={verified}"
 								span class="glyphicon glyphicon-remove"
 								| &nbsp;Eliminar
 	!- } else {

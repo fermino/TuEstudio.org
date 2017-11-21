@@ -120,6 +120,8 @@
 
 							$item->parent_id = (int) $_POST['parent'];
 						}
+						else
+							$item->parent_id = null;
 
 						if(255 < strlen($_POST['name']))
 							$r = '?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
@@ -136,8 +138,7 @@
 
 						$item->name = $_POST['name'];
 
-						if(!empty($_POST['description']))
-							$item->description = $_POST['description'];
+						$item->description = $_POST['description'] ?? null;
 
 						if($item->parent_id === $item->id)
 							return '/admin/k?error=redundant';

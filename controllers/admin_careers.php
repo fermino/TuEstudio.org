@@ -70,6 +70,8 @@
 				{
 					if(255 < strlen($_POST['name']))
 						$r = '?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
+					else if(!empty($_POST['degree']) && 255 < strlen($_POST['degree']))
+						$r = '?error=max_length&col=degree&pcol=' . urlencode('título') . '&val=' . urlencode($_POST['degree']);
 
 					if(!empty($r))
 						return "/admin/c/{$_POST['university']}{$r}";
@@ -94,6 +96,9 @@
 					$item->length = $_POST['length'];
 					$item->description = $_POST['description'];
 
+					if(!empty($_POST['degree']))
+						$item->degree = $_POST['degree'];
+
 					$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 
 					if($item->save())
@@ -109,7 +114,9 @@
 					if(!empty($item))
 					{
 						if(255 < strlen($_POST['name']))
-						$r = '?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
+							$r = '?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
+						else if(!empty($_POST['degree']) && 255 < strlen($_POST['degree']))
+							$r = '?error=max_length&col=degree&pcol=' . urlencode('título') . '&val=' . urlencode($_POST['degree']);
 
 						if(!empty($r))
 							return "/admin/c/{$_POST['university']}{$r}";
@@ -130,6 +137,8 @@
 
 						$item->length = $_POST['length'];
 						$item->description = $_POST['description'];
+
+						$item->degree = $_POST['degree'] ?? null;
 
 						$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 
