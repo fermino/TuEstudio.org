@@ -65,7 +65,7 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 						label class="col-sm-3 control-label" for="input-length"
 							| Duración (años)
 						div class="col-sm-9"
-							input type="number" class="form-control" data="length" id="input-length" name="length" autocomplete="off" placeholder="Duración..."
+							input type="number" class="form-control" data="length" id="input-length" name="length" autocomplete="off" placeholder="Duración..." min="0" max="9"
 					// Descripción
 					div class="form-group"
 						label class="col-sm-3 control-label" for="input-description"

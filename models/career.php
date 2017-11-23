@@ -28,7 +28,7 @@
 			['degree',		'maximum'	=> 255]
 		];
 
-		public static $validates_presence_of = [['university_id'], ['knowledge_area_id'], ['length'], ['verified']];
+		public static $validates_presence_of = [['university_id'], ['knowledge_area_id'], ['verified']];
 
 		public static function getPlacesList()
 		{
