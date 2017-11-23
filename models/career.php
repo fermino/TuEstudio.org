@@ -29,4 +29,13 @@
 		];
 
 		public static $validates_presence_of = [['university_id'], ['knowledge_area_id'], ['length'], ['verified']];
+
+		public static function getPlacesList()
+		{
+			/*$all = [];
+			foreach(self::all() as $item)
+				$all[$item->id] = CareerPlace::find_by_career_id($item->id);
+
+			return $all;*/
+		}
 	}

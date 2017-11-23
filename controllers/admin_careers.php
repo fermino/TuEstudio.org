@@ -47,6 +47,7 @@
 			$p_list = Place::getList();
 			$a_list = KnowledgeArea::getList();
 			$u_list = University::getList();
+			$c_list = Career::getPlacesList();
 
 			// Devolvemos los datos actuales
 			return
@@ -57,6 +58,7 @@
 				'p_list'			=> $p_list,
 				'a_list'			=> $a_list,
 				'u_list'			=> $u_list,
+				'c_list'			=> $c_list,
 				'search'			=> $search
 			];
 		}
