@@ -32,12 +32,14 @@
 			['pretty_url',	'within'	=> [1, 255]]
 		];
 
-		public static $validates_uniqueness_of = [['name'], ['pretty_url']];
+		public static $validates_uniqueness_of = [['pretty_url']];
 
 		public function set_name($name)
 		{
 			$this->assign_attribute('name', $name);
 			$this->pretty_url = ApplicationController::getPrettyURL($this->name);
+
+			$this->pretty_url .= '-' . count(self::all(['conditions' => ['pretty_url like ?', $this->pretty_url . '-%']]));
 		}
 
 		public static function getList()

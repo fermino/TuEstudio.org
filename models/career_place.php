@@ -6,7 +6,7 @@
 		 *	  `id` int(11) NOT NULL,
 		 *	  `career_id` int(11) NOT NULL,
 		 *	  `place_id` int(11) NOT NULL
-		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		 *	
 		 *	ALTER TABLE `career_places`
 		 *	  ADD PRIMARY KEY (`id`);
