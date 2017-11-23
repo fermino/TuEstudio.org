@@ -65,7 +65,7 @@
 
 		public function post()
 		{
-			if(!empty($_POST['id']) && !empty($_POST['university']) && !empty($_POST['knowledge-area']) && !empty($_POST['name']) && !empty($_POST['length']) && !empty($_POST['description']) && isset($_POST['verified']))
+			if(!empty($_POST['id']) && !empty($_POST['university']) && !empty($_POST['knowledge-area']) && !empty($_POST['name']) && !empty($_POST['description']) && isset($_POST['verified']))
 			{
 				// Crear
 				if('-' === $_POST['id'])
@@ -77,9 +77,6 @@
 
 					if(!empty($r))
 						return "/admin/c/{$_POST['university']}{$r}";
-
-					if($_POST['length'] > 9 || $_POST['length'] < 1)
-						return '/admin/c';
 
 					$university = (University::find_all_by_id($_POST['university']))[0] ?? null;
 					$knowledge_area = (KnowledgeArea::find_all_by_id($_POST['knowledge-area']))[0] ?? null;
@@ -95,11 +92,10 @@
 
 					$item->name = $_POST['name'];
 
-					$item->length = $_POST['length'];
+					$item->length = !empty($_POST['length']) ? $_POST['length'] : null;
 					$item->description = $_POST['description'];
 
-					if(!empty($_POST['degree']))
-						$item->degree = $_POST['degree'];
+					$item->degree = !empty($_POST['degree']) ? $_POST['degree'] : null;
 
 					$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 
@@ -123,9 +119,6 @@
 						if(!empty($r))
 							return "/admin/c/{$_POST['university']}{$r}";
 
-						if($_POST['length'] > 9 || $_POST['length'] < 1)
-							return '/admin/c';
-
 						$university = (University::find_all_by_id($_POST['university']))[0] ?? null;
 						$knowledge_area = (KnowledgeArea::find_all_by_id($_POST['knowledge-area']))[0] ?? null;
 
@@ -137,10 +130,10 @@
 
 						$item->name = $_POST['name'];
 
-						$item->length = $_POST['length'];
+						$item->length = !empty($_POST['length']) ? $_POST['length'] : null;
 						$item->description = $_POST['description'];
 
-						$item->degree = $_POST['degree'] ?? null;
+						$item->degree = !empty($_POST['degree']) ? $_POST['degree'] : null;
 
 						$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 

@@ -8,7 +8,7 @@
 		 *	  `knowledge_area_id` int(11) NOT NULL,
 		 *	  `name` varchar(255) NOT NULL,
 		 *	  `degree` varchar(255) DEFAULT NULL,
-		 *	  `length` tinyint(1) NOT NULL,
+		 *	  `length` tinyint(1) DEFAULT NULL,
 		 *	  `description` text NOT NULL,
 		 *	  `verified` tinyint(1) NOT NULL DEFAULT '0'
 		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
