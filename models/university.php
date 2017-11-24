@@ -8,10 +8,10 @@
 		 *	  `place_id` int(11) NOT NULL,
 		 *	  `name` varchar(255) NOT NULL,
 		 *	  `pretty_url` varchar(255) NOT NULL,
-		 *	  `web_address` varchar(255) NOT NULL,
-		 *	  `email` varchar(255) NOT NULL,
-		 *	  `phone` varchar(255) NOT NULL,
-		 *	  `address` varchar(255) NOT NULL,
+		 *	  `web_address` varchar(255) DEFAULT NULL,
+		 *	  `email` varchar(255) DEFAULT NULL,
+		 *	  `phone` varchar(255) DEFAULT NULL,
+		 *	  `address` varchar(255) DEFAULT NULL,
 		 *	  `verified` tinyint(1) NOT NULL DEFAULT '0'
 		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		 *	
