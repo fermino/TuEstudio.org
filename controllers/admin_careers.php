@@ -98,7 +98,19 @@
 					$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 
 					if($item->save())
+					{
+						$cp = new CareerPlace();
+
+						$cp->career_id = $item->id;
+						$cp->place_id = $item->university->place_id;
+
+						// Va a ser tomado como referencia a la dirección de la universidad (si cp->place_id coincide con u->place_id)
+						$cp->address = null;
+
+						$cp->save();
+
 						return "/admin/c/{$university->id}?success=inserted#{$itme->id}";
+					}
 
 					return "/admin/c/{$university->id}?error=unique&col=name&pcol=nombre&val=" . urlencode($_POST['name']);
 				}
@@ -150,6 +162,9 @@
 				if(!empty($item))
 				{
 					$university_id = $item->university->id;
+
+					foreach(CareerPlace::find_all_by_career_id($_POST['delete_id']) as $cp)
+						$cp->delete();
 
 					$item->delete();
 

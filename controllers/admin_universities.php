@@ -118,16 +118,10 @@
 
 					$item->name = $_POST['name'];
 
-					//if(!empty($_POST['description']))
-					//	$item->description = $_POST['description'];
-					if(!empty($_POST['web']))
-						$item->web_address = $_POST['web'];
-					if(!empty($_POST['email']))
-						$item->email = $_POST['email'];
-					if(!empty($_POST['phone']))
-						$item->phone = $_POST['phone'];
-					if(!empty($_POST['address']))
-						$item->address = $_POST['address'];
+					$item->web_address = !empty($_POST['web']) ? $_POST['web'] : null;
+					$item->email = !empty($_POST['email']) ? $_POST['email'] : null;
+					$item->phone = !empty($_POST['phone']) ? $_POST['phone'] : null;
+					$item->address = !empty($_POST['address']) ? $_POST['address'] : null;
 
 					$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 
@@ -150,8 +144,6 @@
 					{
 						if(255 < strlen($_POST['name']))
 							$r = '?error=max_length&col=name&pcol=nombre&val=' . urlencode($_POST['name']);
-						//else if(!empty($_POST['description']) && 255 < strlen($_POST['description']))
-						//	$r = '?error=max_length&col=description&pcol=' . urlencode('descripción'). '&val=' . urlencode($_POST['description']);
 						else if(!empty($_POST['web']) && 255 < strlen($_POST['web']))
 							$r = '?error=max_length&col=web&pcol=web&val=' . urlencode($_POST['web']);
 						else if(!empty($_POST['email']) && 255 < strlen($_POST['email']))
@@ -190,10 +182,10 @@
 
 						$item->name = $_POST['name'];
 
-						$item->web_address = $_POST['web'] ?? null;
-						$item->email = $_POST['email'] ?? null;
-						$item->phone = $_POST['phone'] ?? null;
-						$item->address = $_POST['address'] ?? null;
+						$item->web_address = !empty($_POST['web']) ? $_POST['web'] : null;
+						$item->email = !empty($_POST['email']) ? $_POST['email'] : null;
+						$item->phone = !empty($_POST['phone']) ? $_POST['phone'] : null;
+						$item->address = !empty($_POST['address']) ? $_POST['address'] : null;
 
 						$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 
