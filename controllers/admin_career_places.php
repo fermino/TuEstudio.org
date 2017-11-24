@@ -12,6 +12,9 @@
 			$p_list = Place::getList();
 			$u_list = University::getList();
 
+			$u_name = implode(' > ', $u_list[$current->university->id]);
+			$this->title = "{$current->name} en {$u_name} | Administración";
+
 			return
 			[
 				'current'		=> $current,
