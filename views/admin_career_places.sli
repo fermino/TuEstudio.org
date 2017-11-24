@@ -90,7 +90,7 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 div class="panel panel-default"
 	// Cabecera
 	div class="panel-heading"
-		| En dónde estudiar 
+		| En dónde cursar
 		| &nbsp;/&nbsp;
 		a href="/admin/c"
 			| Carreras
