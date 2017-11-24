@@ -89,11 +89,13 @@
 					$item->knowledge_area_id = $knowledge_area->id;
 
 					$item->name = $_POST['name'];
-
-					$item->length = !empty($_POST['length']) ? $_POST['length'] : null;
 					$item->description = !empty($_POST['description']) ? $_POST['description'] : null;
 
 					$item->degree = !empty($_POST['degree']) ? $_POST['degree'] : null;
+					$item->length = !empty($_POST['length']) ? $_POST['length'] : null;
+
+					$item->middle_degree = !empty($_POST['middle_degree']) ? $_POST['middle_degree'] : null;
+					$item->middle_length = !empty($_POST['middle_length']) ? $_POST['middle_length'] : null;
 
 					$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 
@@ -139,11 +141,13 @@
 						$item->knowledge_area_id = $knowledge_area->id;
 
 						$item->name = $_POST['name'];
-
-						$item->length = !empty($_POST['length']) ? $_POST['length'] : null;
 						$item->description = !empty($_POST['description']) ? $_POST['description'] : null;
 
 						$item->degree = !empty($_POST['degree']) ? $_POST['degree'] : null;
+						$item->length = !empty($_POST['length']) ? $_POST['length'] : null;
+
+						$item->middle_degree = !empty($_POST['middle_degree']) ? $_POST['middle_degree'] : null;
+						$item->middle_length = !empty($_POST['middle_length']) ? $_POST['middle_length'] : null;
 
 						$item->verified = (0 == $_POST['verified']) ? 0 : 1;
 

@@ -10,6 +10,8 @@
 		 *	  `pretty_url` varchar(255) NOT NULL,
 		 *	  `degree` varchar(255) DEFAULT NULL,
 		 *	  `length` tinyint(1) DEFAULT NULL,
+		 *	  `middle_degree` varchar(255) DEFAULT NULL,
+		 *	  `middle_length` tinyint(1) DEFAULT NULL,
 		 *	  `description` text DEFAULT NULL,
 		 *	  `verified` tinyint(1) NOT NULL DEFAULT '0'
 		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -31,9 +33,14 @@
 
 		public static $validates_length_of =
 		[
-			['name',		'within'	=> [1, 255]],
-			['degree',		'maximum'	=> 255]
+			['name',			'within'	=> [1, 255]],
+			['degree',			'maximum'	=> 255],
+			['length', 			'maximum'	=> 1],
+			['middle_degree',	'maximum'	=> 255],
+			['middle_length', 	'maximum'	=> 1]
 		];
+
+		public static $attr_protected = ['pretty_url'];
 
 		public static $validates_presence_of = [['university_id'], ['knowledge_area_id'], ['verified']];
 

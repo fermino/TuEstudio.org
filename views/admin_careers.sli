@@ -66,6 +66,18 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 							| Duración (años)
 						div class="col-sm-9"
 							input type="number" class="form-control" data="length" id="input-length" name="length" autocomplete="off" placeholder="Duración..." min="0" max="9"
+					// Título intermedio
+					div class="form-group"
+						label class="col-sm-3 control-label" for="input-middle_degree"
+							| Título intermedio
+						div class="col-sm-9"
+							input type="text" class="form-control" data="middle_degree" id="input-middle_degree" name="middle_degree" autocomplete="off" placeholder="Título intermedio..."
+					// Duración (título intermedio)
+					div class="form-group"
+						label class="col-sm-3 control-label" for="input-middle_length"
+							| Duración (título intermedio)
+						div class="col-sm-9"
+							input type="number" class="form-control" data="middle_length" id="input-middle_length" name="middle_length" autocomplete="off" placeholder="Duración (título intermedio)..." min="1" max="9"
 					// Descripción
 					div class="form-group"
 						label class="col-sm-3 control-label" for="input-description"
@@ -141,6 +153,18 @@ div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labell
 							| Duración
 						div class="col-sm-9"
 							p class="form-control-static" data="length"
+					// Título intermedio
+					div class="form-group"
+						label class="col-sm-3 control-label"
+							| Título intermedio
+						div class="col-sm-9"
+							p class="form-control-static" data="middle_degree"
+					// Duración (título intermedio)
+					div class="form-group"
+						label class="col-sm-3 control-label"
+							| Duración (título intermedio)
+						div class="col-sm-9"
+							p class="form-control-static" data="middle_length"
 					// Descripción
 					div class="form-group"
 						label class="col-sm-3 control-label"
@@ -182,7 +206,7 @@ div class="panel panel-default"
 				span class="input-group-btn"
 					button type="submit" class="btn btn-default"
 						span class="glyphicon glyphicon-search"
-					button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_edit-modal" data-action="Crear" data-id="-" data-university="={current_id}" data-knowledge_area="" data-name="" data-degree="" data-length="" data-description="" data-verified="0"
+					button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create_edit-modal" data-action="Crear" data-id="-" data-university="={current_id}" data-knowledge_area="" data-name="" data-degree="" data-length="" data-middle_degree="" data-middle_length="" data-description="" data-verified="0"
 						| Crear
 	// Cuerpo (datos)
 	!- if(!empty($search_list)) {
@@ -213,6 +237,7 @@ div class="panel panel-default"
 
 					!- $verified = $item->verified ? 'Sí' : 'No';
 					!- $length = !empty($item->length) ? "{$item->length} años" : '-';
+					!- $middle_length = !empty($item->middle_length) ? "{$item->middle_length} años" : '-';
 
 					tr
 						th class="text-right"
@@ -245,10 +270,10 @@ div class="panel panel-default"
 							button type="button" class="btn btn-primary" data-link="/admin/cp/={item->id}"
 								span class="glyphicon glyphicon-search"
 								| &nbsp;En dónde cursar (={c})
-							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={item->id}" data-university="={u_id}" data-knowledge_area="={k_id}" data-name="={item->name}" data-degree="={item->degree}" data-length="={item->length}" data-description="={item->description}" data-verified="={item->verified}"
+							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={item->id}" data-university="={u_id}" data-knowledge_area="={k_id}" data-name="={item->name}" data-degree="={item->degree}" data-length="={item->length}" data-middle_degree="={item->middle_degree}" data-middle_length="={item->middle_length}" data-description="={item->description}" data-verified="={item->verified}"
 								span class="glyphicon glyphicon-edit"
 								| &nbsp;Editar
-							button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={item->id}" data-university="={u_name}" data-knowledge_area="={k_name}" data-name="={item->name}" data-degree="={item->degree}" data-length="={length}" data-description="=raw{parsed_description}" data-verified="={verified}"
+							button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="={item->id}" data-university="={u_name}" data-knowledge_area="={k_name}" data-name="={item->name}" data-degree="={item->degree}" data-length="={length}" data-middle_degree="={item->middle_degree}" data-middle_length="={middle_length}" data-description="=raw{parsed_description}" data-verified="={verified}"
 								span class="glyphicon glyphicon-remove"
 								| &nbsp;Eliminar
 	!- } else {
