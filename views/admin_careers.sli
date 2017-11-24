@@ -241,6 +241,10 @@ div class="panel panel-default"
 								span class="label label-danger"
 									span class="glyphicon glyphicon-remove"
 						td class="text-right"
+							!- $c = count($item->places);
+							button type="button" class="btn btn-primary" data-link="/admin/cp/={item->id}"
+								span class="glyphicon glyphicon-search"
+								| &nbsp;En dónde cursar (={c})
 							button type="button" class="btn btn-warning" data-toggle="modal" data-target="#create_edit-modal" data-action="Editar" data-id="={item->id}" data-university="={u_id}" data-knowledge_area="={k_id}" data-name="={item->name}" data-degree="={item->degree}" data-length="={item->length}" data-description="={item->description}" data-verified="={item->verified}"
 								span class="glyphicon glyphicon-edit"
 								| &nbsp;Editar

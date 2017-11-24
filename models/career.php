@@ -23,6 +23,11 @@
 		 */
 
 		public static $belongs_to = [['university'], ['knowledge_area']];
+		public static $has_many =
+		[
+			['career_places'],
+			['places', 'through'	=> 'career_places']
+		];
 
 		public static $validates_length_of =
 		[
@@ -40,14 +45,5 @@
 			$this->pretty_url = ApplicationController::getPrettyURL($this->name);
 
 			$this->pretty_url .= '-' . count(self::all(['conditions' => ['pretty_url like ?', $this->pretty_url . '-%']]));
-		}
-
-		public static function getPlacesList()
-		{
-			/*$all = [];
-			foreach(self::all() as $item)
-				$all[$item->id] = CareerPlace::find_by_career_id($item->id);
-
-			return $all;*/
 		}
 	}

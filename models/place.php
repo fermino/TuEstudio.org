@@ -21,7 +21,9 @@
 		public static $has_many =
 		[
 			['places', 'foreign_key' => 'parent_id', 'class_name' => 'Place'],
-			['universities']
+			['universities'],
+			['career_places'],
+			['careers', 'through'	=> 'career_places']
 		];
 
 		public static $attr_protected = ['pretty_url'];
