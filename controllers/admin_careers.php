@@ -63,7 +63,7 @@
 
 		public function post()
 		{
-			if(!empty($_POST['id']) && !empty($_POST['university']) && !empty($_POST['knowledge-area']) && !empty($_POST['name']) && !empty($_POST['description']) && isset($_POST['verified']))
+			if(!empty($_POST['id']) && !empty($_POST['university']) && !empty($_POST['knowledge-area']) && !empty($_POST['name']) && isset($_POST['verified']))
 			{
 				// Crear
 				if('-' === $_POST['id'])
@@ -91,7 +91,7 @@
 					$item->name = $_POST['name'];
 
 					$item->length = !empty($_POST['length']) ? $_POST['length'] : null;
-					$item->description = $_POST['description'];
+					$item->description = !empty($_POST['description']) ? $_POST['description'] : null;
 
 					$item->degree = !empty($_POST['degree']) ? $_POST['degree'] : null;
 
@@ -141,7 +141,7 @@
 						$item->name = $_POST['name'];
 
 						$item->length = !empty($_POST['length']) ? $_POST['length'] : null;
-						$item->description = $_POST['description'];
+						$item->description = !empty($_POST['description']) ? $_POST['description'] : null;
 
 						$item->degree = !empty($_POST['degree']) ? $_POST['degree'] : null;
 

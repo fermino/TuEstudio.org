@@ -71,7 +71,7 @@ div class="modal fade" id="create_edit-modal" tabindex="-1" role="dialog" aria-l
 						label class="col-sm-3 control-label" for="input-description"
 							| Descripción
 						div class="col-sm-9"
-							textarea class="form-control" name="description" data="description" rows="15" id="input-description" required
+							textarea class="form-control" name="description" data="description" rows="15" id="input-description"
 					// Verificado (Si/No)
 					div class="form-group"
 						label class="col-sm-3 control-label" for="input-verified"

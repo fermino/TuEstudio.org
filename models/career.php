@@ -10,7 +10,7 @@
 		 *	  `pretty_url` varchar(255) NOT NULL,
 		 *	  `degree` varchar(255) DEFAULT NULL,
 		 *	  `length` tinyint(1) DEFAULT NULL,
-		 *	  `description` text NOT NULL,
+		 *	  `description` text DEFAULT NULL,
 		 *	  `verified` tinyint(1) NOT NULL DEFAULT '0'
 		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		 *	
