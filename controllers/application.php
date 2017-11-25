@@ -63,7 +63,7 @@
 					$this->google_client->setClientSecret($json->secret);
 
 					$this->google_client->setApplicationName('TuEstudio.org');
-					$this->google_client->setRedirectUri('https://localhost/login-callback-google');
+					$this->google_client->setRedirectUri("https://{$_SERVER['SERVER_NAME']}/login-callback-google");
 
 					$this->google_client->addScope('https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile');
 
