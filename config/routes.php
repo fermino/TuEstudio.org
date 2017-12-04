@@ -6,8 +6,8 @@
 		'/login-callback-google'		=> 'login_callback_google',
 		'/logout'						=> 'logout',
 		// User  
-		'/u/{university_id}'			=> 'university',
-		'/c/{career_id}'				=> 'career',
+		'/u/{university_pretty_url}'	=> 'university',
+		'/c/{career_pretty_url}'		=> 'career',
 		// Admin
 		'/admin'						=>
 		[

@@ -1,20 +1,15 @@
-!- $parents = $current->getParentList();
-!- $root_id = array_keys($parents)[0];
-!- $root_name = array_values($parents)[0];
-!- $parents = array_diff_key($parents, [$root_id => 0])
-
 div
 	h2 class="text-center"
-		a href="/u/={root_id}"
+		a href="/u/={root_pretty_url}"
 			| ={root_name}
 
 div
 	!- $info_col = !empty(count($universities)) ? 7 : 12;
 	div class="col-sm-={info_col}"
 		div class="data"
-			-- foreach($parents as $i => $n)
+			-- foreach($parents as $p => $n)
 				h3 class="text-center"
-					a href="/u/={i}"
+					a href="/u/={p}"
 						| ={n}
 
 			// Teléfono
@@ -77,11 +72,10 @@ div
 
 				div class="list-group"
 					-- foreach($universities as $u)
-						a class="list-group-item" href="/u/={u->id}"
+						a class="list-group-item" href="/u/={u->pretty_url}"
 							p class="list-group-item-text"
 								| ={u->name}
 								!- $c = count(array_filter($u->careers, function($item) { return $item->verified; }));
-								// !- $c = count(Career::find_all_by_university_id_and_verified($u->id, true));
 								-- if(!empty($c))
 									span class="pull-right"
 										span class="badge"
@@ -95,7 +89,7 @@ div
 				| Carreras
 			div class="list-group"
 				-- foreach($careers as $c)
-					a class="list-group-item" href="/c/={c->id}"
+					a class="list-group-item" href="/c/={c->pretty_url}"
 						h4 class="list-group-item-heading"
 							| ={c->name}
 						-- if(!empty($c->middle_degree))

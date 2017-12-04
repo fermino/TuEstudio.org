@@ -70,13 +70,13 @@
 			return $all;
 		}
 
-		public function getParentList(bool $reverse = true) : array
+		public function getParentList(bool $reverse = true, $pretty_url_instead_id = false) : array
 		{
 			$parent = $this;
 
 			while(!empty($parent))
 			{
-				$data[$parent->id] = $parent->name;
+				$data[($pretty_url_instead_id ? $parent->pretty_url : $parent->id)] = $parent->name;
 
 				$parent = $parent->parent;
 			}
