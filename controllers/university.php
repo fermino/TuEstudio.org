@@ -8,6 +8,8 @@
 			if(empty($current))
 				return '/';
 
+			$this->title = &$current->name;
+
 			$parents = $current->getParentList(true, true);
 			$root_pretty_url = array_keys($parents)[0];
 
