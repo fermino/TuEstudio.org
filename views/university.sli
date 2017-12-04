@@ -1,0 +1,116 @@
+!- $parents = $current->getParentList();
+!- $root_id = array_keys($parents)[0];
+!- $root_name = array_values($parents)[0];
+!- $parents = array_diff_key($parents, [$root_id => 0])
+
+div
+	h2 class="text-center"
+		a href="/u/={root_id}"
+			| ={root_name}
+
+div
+	!- $info_col = !empty(count($universities)) ? 7 : 12;
+	div class="col-sm-={info_col}"
+		div class="data"
+			-- foreach($parents as $i => $n)
+				h3 class="text-center"
+					a href="/u/={i}"
+						| ={n}
+
+			// Teléfono
+			label class="col-sm-2 text-right"
+				| Teléfono:
+			p class="col-sm-10"
+				!- if(!empty($current->phone) && !empty(($phone = ApplicationController::formatPhone($current->phone)))) {
+					!- if($mobile_detect->isMobile()) {
+						a href="tel:={current->phone}"
+							| (={phone[0]}) ={phone[1]}-={phone[2]}
+					-- } else
+						| (={phone[0]}) ={phone[1]}-={phone[2]}
+				-- } else
+					| -
+
+			// Sitio web
+			label class="col-sm-2 text-right"
+				| Sitio web:
+			p class="col-sm-10"
+				!- if(!empty($current->web_address)) {
+					a href="={current->web_address}"
+						| ={current->web_address}
+				-- } else
+					| -
+
+			// E-mail
+			label class="col-sm-2 text-right"
+				| E-mail:
+			p class="col-sm-10"
+				!- if(!empty($current->email)) {
+					a href="mailto:={current->email}"
+						| ={current->email}
+				-- } else
+					| -
+
+			// Dirección
+			label class="col-sm-2 text-right"
+				| Dirección:
+			p class="col-sm-10"
+				!- if(!empty($current->address)) {
+					!- $address = $current->address . ', ' . implode(', ', $current->place->getParentList(false));
+					!- $encoded_address = rawurlencode($address);
+
+					| ={address}
+				-- } else
+					| -
+
+			// Google Maps
+			-- if(!empty($encoded_address) && !empty($google->maps))
+				iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=={encoded_address}&key=={google->maps}" allowfullscreen
+
+			p class="data-info"
+				| Si tiene información que nos pueda ser de utilidad PORFAVOR CONTACTATE GIL AIUDAA
+
+	-- if(!empty(count($universities)))
+		div class="col-sm-5"
+			div class="data"
+				h3 class="text-center"
+					| Sedes y Facultades
+
+				div class="list-group"
+					-- foreach($universities as $u)
+						a class="list-group-item" href="/u/={u->id}"
+							p class="list-group-item-text"
+								| ={u->name}
+								!- $c = count(array_filter($u->careers, function($item) { return $item->verified; }));
+								// !- $c = count(Career::find_all_by_university_id_and_verified($u->id, true));
+								-- if(!empty($c))
+									span class="pull-right"
+										span class="badge"
+											!- $d = $c > 1 ? 's' : null;
+											| ={c} carrera={d}
+
+-- if(!empty(count($careers)))
+	div class="col-sm-12"
+		div class="data"
+			h3 class="text-center"
+				| Carreras
+			div class="list-group"
+				-- foreach($careers as $c)
+					a class="list-group-item" href="/c/={c->id}"
+						h4 class="list-group-item-heading"
+							| ={c->name}
+						-- if(!empty($c->middle_degree))
+							p class="list-group-item-text degree"
+								| ={c->middle_degree}
+								-- if(!empty($c->middle_length))
+									span class="pull-right"
+										span class="badge"
+											!- $d = $c->middle_length > 1 ? 's' : null;
+											| ={c->middle_length} año={d}
+						-- if(!empty($c->degree))
+							p class="list-group-item-text degree"
+								| ={c->degree}
+								-- if(!empty($c->length))
+									span class="pull-right"
+										span class="badge"
+											!- $d = $c->length > 1 ? 's' : null;
+											| ={c->length} año={d}

@@ -5,6 +5,10 @@
 		'/assets/{folder}/{file}.{ext}'	=> 'assets',
 		'/login-callback-google'		=> 'login_callback_google',
 		'/logout'						=> 'logout',
+		// User  
+		'/u/{university_id}'			=> 'university',
+		'/c/{career_id}'				=> 'career',
+		// Admin
 		'/admin'						=>
 		[
 			''												=> ['admin_index'			,['get']		],

@@ -44,6 +44,8 @@
 				}
 			}
 
+			$this->environment['mobile_detect'] = new Mobile_Detect;
+
 			return $this->environment;
 		}
 
@@ -62,6 +64,9 @@
 					$this->google_client->setClientId($json->id);
 					$this->google_client->setClientSecret($json->secret);
 
+					$json->secret = null;
+					$this->environment['google'] = $json;
+
 					$this->google_client->setApplicationName('TuEstudio.org');
 					$this->google_client->setRedirectUri("https://{$_SERVER['SERVER_NAME']}/login-callback-google");
 
@@ -74,16 +79,14 @@
 
 				$this->logger->critical('[ApplicationController::initGoogleClient] config/google.json is not a json-valid file',
 				[
-					'controller'	=> get_class($this),
-					'method'		=> $http_method
+					'controller'	=> get_class($this)
 				]);
 				return 500;
 			}
 
 			$this->logger->critical('[ApplicationController::initGoogleClient] config/google.json is not readable',
 			[
-				'controller'	=> get_class($this),
-				'method'		=> $http_method
+				'controller'	=> get_class($this)
 			]);
 			return 500;
 		}

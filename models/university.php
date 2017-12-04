@@ -62,24 +62,25 @@
 		{
 			$all = [];
 			foreach(self::all() as $item)
-			{
-				$all[$item->id] = [$item->id => $item->name];
-
-				$parent = $item->parent;
-
-				while(!empty($parent))
-				{
-					$all[$item->id][$parent->id] = $parent->name;
-
-					$parent = $parent->parent;
-				}
-
-				$all[$item->id] = array_reverse($all[$item->id], true);
-			}
+				$all[$item->id] = $item->getParentList();
 
 			uasort($all, function($a, $b)
 			{ return strnatcmp(implode('/', $a), implode('/', $b)); });
 
 			return $all;
+		}
+
+		public function getParentList(bool $reverse = true) : array
+		{
+			$parent = $this;
+
+			while(!empty($parent))
+			{
+				$data[$parent->id] = $parent->name;
+
+				$parent = $parent->parent;
+			}
+
+			return $reverse ? array_reverse($data, true) : $data;
 		}
 	}
