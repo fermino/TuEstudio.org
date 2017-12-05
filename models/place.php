@@ -39,9 +39,12 @@
 		public function set_name($name)
 		{
 			$this->assign_attribute('name', $name);
-			$this->pretty_url = ApplicationController::getPrettyURL($this->name);
 
-			$this->pretty_url .= '-' . count(self::all(['conditions' => ['pretty_url like ?', $this->pretty_url . '-%']]));
+			if(empty($this->pretty_url))
+			{
+				$this->pretty_url = ApplicationController::getPrettyURL($this->name);
+				$this->pretty_url .= '-' . count(self::all(['conditions' => ['pretty_url like ?', $this->pretty_url . '-%']]));
+			}
 		}
 
 		public static function getList()
