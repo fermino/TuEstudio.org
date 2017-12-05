@@ -8,12 +8,12 @@
 			if(empty($current))
 				return '/';
 
-			// $this->title = "{$current->name} en {$current->university->}"
-
 			$university = $current->university;
 
 			$parents = $university->getParentList(true, true);
 			$root_pretty_url = array_keys($parents)[0];
+
+			$this->title = $current->name . ' en ' . implode(' / ', $parents);
 
 			return
 			[

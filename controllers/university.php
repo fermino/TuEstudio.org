@@ -8,13 +8,13 @@
 			if(empty($current))
 				return '/';
 
-			$this->title = &$current->name;
-
 			$parents = $current->getParentList(true, true);
 			$root_pretty_url = array_keys($parents)[0];
 
 			$universities = University::find_all_by_parent_id_and_verified($current->id, true);
 			$careers = Career::find_all_by_university_id_and_verified($current->id, true);
+
+			$this->title = implode(' / ', $parents);
 
 			return
 			[
