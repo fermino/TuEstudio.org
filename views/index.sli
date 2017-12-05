@@ -34,22 +34,30 @@ form method="post" action="/"
 		a href="/contacto"
 			| aquí. 
 
--- if(!empty($search_u_list))
-	div class="col-sm-12"
-		div class="data"
-			h3 class="text-center"
-				| Universidades y facultades
-			div class="list-group list-group-nomargin"
-				-- foreach($search_u_list as $u)
-					a class="list-group-item" href="/u/={u->pretty_url}"
-						h4 class="list-group-item-heading"
-							!- $u_name = implode(' > ', $universities[$u->id]);
-							| ={u_name}
-						!- $c = count(array_filter($u->careers, function($item) { return $item->verified; }));
-						-- if(!empty($c))
-							h5 class="list-group-item-heading"
-								!- $d = $c > 1 ? 's' : null;
-								| Ver ={c} carrera={d}
+-- if(!empty($search) || !empty($search_place) || !empty($search_knowledge_area))
+	!- if(!empty($search_u_list)) {
+		div class="col-sm-12"
+			div class="data"
+				h3 class="text-center"
+					| Universidades y facultades
+				div class="list-group list-group-nomargin"
+					-- foreach($search_u_list as $u)
+						a class="list-group-item" href="/u/={u->pretty_url}"
+							h4 class="list-group-item-heading"
+								!- $u_name = implode(' > ', $universities[$u->id]);
+								| ={u_name}
+							!- $c = count(array_filter($u->careers, function($item) { return $item->verified; }));
+							-- if(!empty($c))
+								h5 class="list-group-item-heading"
+									!- $d = $c > 1 ? 's' : null;
+									| Ver ={c} carrera={d}
+			p class="data-info"
+				| Si tiene más información por favor contáctese con nosotros
+				a href="/contacto"
+					| aquí. 
+	-- } else
+		h3 class="text-center main-search-title"
+			| No se encontraron universidades...
 
 -- if(!empty($search) || !empty($search_place) || !empty($search_knowledge_area))
 	!- if(!empty($search_c_list)) {
@@ -83,7 +91,10 @@ form method="post" action="/"
 											span class="badge"
 												!- $d = $c->length > 1 ? 's' : null;
 												| ={c->length} año={d}
-
+			p class="data-info"
+				| Si tiene más información por favor contáctese con nosotros
+				a href="/contacto"
+					| aquí. 
 	-- } else
 		h3 class="text-center main-search-title"
-			| No hay resultados...
+			| No se encontraron carreras...

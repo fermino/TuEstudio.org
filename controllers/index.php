@@ -75,7 +75,7 @@
 
 				if(!empty($knowledge_areas))
 				{
-					$conditions[0] .= ' AND knowledge_area IN(?)';
+					$conditions[0] .= ' AND knowledge_area_id IN(?)';
 					$conditions[] = $knowledge_areas;
 				}
 
