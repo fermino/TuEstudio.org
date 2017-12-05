@@ -29,6 +29,23 @@ form method="post" action="/"
 				option value="={i}" ={selected}
 					| ={name}
 
+-- if(!empty($search_u_list))
+	div class="col-sm-12"
+		div class="data"
+			h3 class="text-center"
+				| Universidades y facultades
+			div class="list-group list-group-nomargin"
+				-- foreach($search_u_list as $u)
+					a class="list-group-item" href="/u/={u->pretty_url}"
+						h4 class="list-group-item-heading"
+							!- $u_name = implode(' > ', $universities[$u->id]);
+							| ={u_name}
+						!- $c = count(array_filter($u->careers, function($item) { return $item->verified; }));
+						-- if(!empty($c))
+							h5 class="list-group-item-heading"
+								!- $d = $c > 1 ? 's' : null;
+								| Ver ={c} carrera={d}
+
 -- if(!empty($search_c_list))
 	div class="col-sm-12"
 		div class="data"
