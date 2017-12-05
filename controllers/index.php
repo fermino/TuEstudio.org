@@ -86,6 +86,11 @@
 			$knowledge_areas = KnowledgeArea::getList();
 			$universities = University::getList(true, true);
 
+			if(!empty($search))
+				$this->title = $search . ' | ';
+
+			$this->title .= 'Encuentra universidades y carreras en todo el país';
+
 			return
 			[
 				'search'				=> $search,

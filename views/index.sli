@@ -29,6 +29,11 @@ form method="post" action="/"
 				option value="={i}" ={selected}
 					| ={name}
 
+	p class="data-info"
+		| Si tiene más información por favor contáctese con nosotros
+		a href="/contacto"
+			| aquí. 
+
 -- if(!empty($search_u_list))
 	div class="col-sm-12"
 		div class="data"
@@ -46,34 +51,39 @@ form method="post" action="/"
 								!- $d = $c > 1 ? 's' : null;
 								| Ver ={c} carrera={d}
 
--- if(!empty($search_c_list))
-	div class="col-sm-12"
-		div class="data"
-			h3 class="text-center"
-				| Carreras
-			div class="list-group list-group-nomargin"
-				-- foreach($search_c_list as $c)
-					a class="list-group-item" href="/c/={c->pretty_url}"
-						h4 class="list-group-item-heading"
-							| ={c->name}
-						h5 class="list-group-item-heading"
-							!- $u_name = implode(' > ', $universities[$c->university->id]);
-							| ={u_name}
-						-- if(!empty($c->middle_degree) || !empty($c->degree))
-							hr
-						-- if(!empty($c->middle_degree))
-							p class="list-group-item-text degree"
-								| ={c->middle_degree}
-								-- if(!empty($c->middle_length))
-									span class="pull-right"
-										span class="badge"
-											!- $d = $c->middle_length > 1 ? 's' : null;
-											| ={c->middle_length} año={d}
-						-- if(!empty($c->degree))
-							p class="list-group-item-text degree"
-								| ={c->degree}
-								-- if(!empty($c->length))
-									span class="pull-right"
-										span class="badge"
-											!- $d = $c->length > 1 ? 's' : null;
-											| ={c->length} año={d}
+-- if(!empty($search) || !empty($search_place) || !empty($search_knowledge_area))
+	!- if(!empty($search_c_list)) {
+		div class="col-sm-12"
+			div class="data"
+				h3 class="text-center"
+					| Carreras
+				div class="list-group list-group-nomargin"
+					-- foreach($search_c_list as $c)
+						a class="list-group-item" href="/c/={c->pretty_url}"
+							h4 class="list-group-item-heading"
+								| ={c->name}
+							h5 class="list-group-item-heading"
+								!- $u_name = implode(' > ', $universities[$c->university->id]);
+								| ={u_name}
+							-- if(!empty($c->middle_degree) || !empty($c->degree))
+								hr
+							-- if(!empty($c->middle_degree))
+								p class="list-group-item-text degree"
+									| ={c->middle_degree}
+									-- if(!empty($c->middle_length))
+										span class="pull-right"
+											span class="badge"
+												!- $d = $c->middle_length > 1 ? 's' : null;
+												| ={c->middle_length} año={d}
+							-- if(!empty($c->degree))
+								p class="list-group-item-text degree"
+									| ={c->degree}
+									-- if(!empty($c->length))
+										span class="pull-right"
+											span class="badge"
+												!- $d = $c->length > 1 ? 's' : null;
+												| ={c->length} año={d}
+
+	-- } else
+		h3 class="text-center main-search-title"
+			| No hay resultados...

@@ -39,6 +39,6 @@ div class="col-sm-12"
 			| =raw{parsed_description}
 
 		p class="data-info"
-			| Si tiene información más información por favor contáctese con nosotros
+			| Si tiene más información por favor contáctese con nosotros
 			a href="/contacto"
 				| aquí. 
