@@ -9,6 +9,10 @@ html
 		css bootstrap.min
 		css application
 		css iziToast.min
+
+		css selectize.min
+		css selectize.bootstrap3.min
+
 		-- if($user_logged_in && $user->is_admin) {
 			css admin
 			css simplemde.min
@@ -20,6 +24,9 @@ html
 
 		js main
 		js iziToast.min
+
+		js selectize.min
+
 		-- if($user_logged_in && $user->is_admin) {
 			js admin
 			js simplemde.min
