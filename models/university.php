@@ -2,18 +2,18 @@
 	class University extends ActiveRecord\Model
 	{
 		/**
-		  *	CREATE TABLE `universities` (
+		 *	CREATE TABLE `universities` (
 		 *	  `id` int(11) NOT NULL,
 		 *	  `parent_id` int(11) DEFAULT NULL,
 		 *	  `place_id` int(11) NOT NULL,
-		 *	  `name` varchar(255) NOT NULL,
-		 *	  `pretty_url` varchar(255) NOT NULL,
-		 *	  `web_address` varchar(255) DEFAULT NULL,
-		 *	  `email` varchar(255) DEFAULT NULL,
-		 *	  `phone` varchar(255) DEFAULT NULL,
-		 *	  `address` varchar(255) DEFAULT NULL,
+		 *	  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `pretty_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `web_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		 *	  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		 *	  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		 *	  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 		 *	  `verified` tinyint(1) NOT NULL DEFAULT '0'
-		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		 *	
 		 *	ALTER TABLE `universities`
 		 *	  ADD PRIMARY KEY (`id`),

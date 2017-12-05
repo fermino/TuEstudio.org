@@ -5,13 +5,13 @@
 		 *	CREATE TABLE `knowledge_areas` (
 		 *	  `id` int(11) NOT NULL,
 		 *	  `parent_id` int(11) DEFAULT NULL,
-		 *	  `name` varchar(255) NOT NULL,
-		 *	  `pretty_url` varchar(255) NOT NULL,
-		 *	  `description` varchar(255) DEFAULT NULL
-		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		 *	  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `pretty_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		 *	
 		 *	ALTER TABLE `knowledge_areas`
-		 *	  ADD PRIMARY KEY (`id`)
+		 *	  ADD PRIMARY KEY (`id`),
 		 *	  ADD UNIQUE KEY `pretty_url` (`pretty_url`);
 		 *	
 		 *	ALTER TABLE `knowledge_areas`

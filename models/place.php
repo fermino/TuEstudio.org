@@ -5,9 +5,9 @@
 		 *	CREATE TABLE `places` (
 		 *	  `id` int(11) NOT NULL,
 		 *	  `parent_id` int(11) DEFAULT NULL,
-		 *	  `name` varchar(255) NOT NULL,
-		 *	  `pretty_url` varchar(255) NOT NULL
-		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		 *	  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `pretty_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		 *	
 		 *	ALTER TABLE `places`
 		 *	  ADD PRIMARY KEY (`id`),

@@ -2,17 +2,17 @@
 	class Career extends ActiveRecord\Model
 	{
 		/**
-		 *  CREATE TABLE `careers` (
+		 *	CREATE TABLE `careers` (
 		 *	  `id` int(11) NOT NULL,
 		 *	  `university_id` int(11) NOT NULL,
 		 *	  `knowledge_area_id` int(11) NOT NULL,
-		 *	  `name` varchar(255) NOT NULL,
-		 *	  `pretty_url` varchar(255) NOT NULL,
-		 *	  `degree` varchar(255) DEFAULT NULL,
+		 *	  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `pretty_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `degree` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 		 *	  `length` tinyint(1) DEFAULT NULL,
-		 *	  `middle_degree` varchar(255) DEFAULT NULL,
+		 *	  `middle_degree` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 		 *	  `middle_length` tinyint(1) DEFAULT NULL,
-		 *	  `description` text,
+		 *	  `description` text COLLATE utf8_unicode_ci,
 		 *	  `verified` tinyint(1) NOT NULL DEFAULT '0'
 		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		 *	

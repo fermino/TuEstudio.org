@@ -2,22 +2,25 @@
 	class User extends ActiveRecord\Model
 	{
 		/**
-		 * CREATE TABLE `users` (
-		 *   `id` int(11) NOT NULL,
-		 *   `email` varchar(255) NOT NULL,
-		 *   `first_name` varchar(255) NOT NULL,
-		 *   `last_name` varchar(255) NOT NULL,
-		 *   `gender` varchar(1) NOT NULL,
-		 *   `google_profile_id` varchar(255) NULL,
-		 *   `google_profile_picture` varchar(255) NULL,
-		 *   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
-		 *   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		 *   `updated_at` timestamp NULL DEFAULT NULL
-		 * ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		 *	CREATE TABLE `users` (
+		 *	  `id` int(11) NOT NULL,
+		 *	  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `gender` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `google_profile_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		 *	  `google_profile_picture` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		 *	  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
+		 *	  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		 *	  `updated_at` timestamp NULL DEFAULT NULL
+		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		 * 
-		 * ALTER TABLE `users`
-		 *   ADD PRIMARY KEY (`id`),
-		 *   ADD UNIQUE KEY `email` (`email`);
+		 *	ALTER TABLE `users`
+		 *	  ADD PRIMARY KEY (`id`),
+		 *	  ADD UNIQUE KEY `email` (`email`);
+		 *	
+		 *	ALTER TABLE `users`
+		 *	  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 		 */
 
 		public static $attr_protected =
