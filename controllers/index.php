@@ -70,7 +70,7 @@
 					$places_careers = array_map(function($item) { return $item->career_id; }, $places_careers);
 
 					$conditions[0] .= ' AND id IN(?)';
-					$conditions[] = $places_careers;
+					$conditions[] = array_merge($places_careers, [0 => 0]);
 				}
 
 				if(!empty($knowledge_areas))
