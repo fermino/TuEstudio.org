@@ -18,6 +18,7 @@
 		 *	ALTER TABLE `universities`
 		 *	  ADD PRIMARY KEY (`id`),
 		 *	  ADD UNIQUE KEY `pretty_url` (`pretty_url`);
+		 *	ALTER TABLE `universities` ADD FULLTEXT KEY `name` (`name`);
 		 *	
 		 *	ALTER TABLE `universities`
 		 *	  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

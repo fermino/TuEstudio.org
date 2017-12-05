@@ -19,7 +19,7 @@
 		 *	ALTER TABLE `careers`
 		 *	  ADD PRIMARY KEY (`id`),
 		 *	  ADD UNIQUE KEY `pretty_url` (`pretty_url`);
-		 *	ALTER TABLE `careers` ADD FULLTEXT KEY `description` (`description`);
+		 *	ALTER TABLE `careers` ADD FULLTEXT KEY `description` (`name`, `degree`, `middle_degree`, `description`);
 		 *	
 		 *	ALTER TABLE `careers`
 		 *	  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

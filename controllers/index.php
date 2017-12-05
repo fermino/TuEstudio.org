@@ -38,8 +38,10 @@
 
 				if(!empty($search))
 				{
-					$conditions[0] .= ' AND name LIKE ?';
-					$conditions[] = '%' . $search . '%';
+					// Usar alguna vista (SQL) para poder manejar el score y ordenarlo
+
+					$conditions[0] .= ' AND MATCH(name) AGAINST(?)';
+					$conditions[] = $search;
 				}
 
 				if(!empty($places))
@@ -56,10 +58,10 @@
 
 				if(!empty($search))
 				{
-					$conditions[0] .= ' AND (name LIKE ? OR degree LIKE ? OR middle_degree LIKE ?)';
-					$conditions[] = '%' . $search . '%';
-					$conditions[] = '%' . $search . '%';
-					$conditions[] = '%' . $search . '%';
+					// Usar alguna vista (SQL) para poder manejar el score y ordenarlo
+
+					$conditions[0] .= ' AND MATCH(name, degree, middle_degree, description) AGAINST(?)';
+					$conditions[] = $search;
 				}
 
 				if(!empty($places))
@@ -76,8 +78,6 @@
 					$conditions[0] .= ' AND knowledge_area IN(?)';
 					$conditions[] = $knowledge_areas;
 				}
-
-				// Falta FULL TEXT
 
 				$search_c_list = Career::all(['conditions' => $conditions, 'order' => 'name ASC']);
 			}
