@@ -39,6 +39,14 @@ $(function()
 		});
 	});
 
+	$('select[selectize]').each(function(i, select)
+	{
+		$(select).selectize({
+			placeholder: $(select).data('placeholder'),
+			selectOnTab: true
+		});
+	});
+
 	$('.modal').on('show.bs.modal', function(event)
 	{
 		var data = $(event.relatedTarget).data();

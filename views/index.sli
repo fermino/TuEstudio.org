@@ -1,2 +1,62 @@
-p
-	| This is an example of view
+h3 class="text-center"
+	| Encuentra carreras y universidades en todo el país
+
+form method="post" action="/"
+	div class="col-sm-12 main-search"
+		div class="input-group"
+			input type="text" class="form-control" placeholder="Buscar..." name="search" value="={search}" autocomplete="off" autofocus
+			span class="input-group-btn"
+				button type="submit" class="btn btn-default"
+					span class="glyphicon glyphicon-search"
+	// Lugar
+	div class="col-sm-6"
+		select name="place" selectize data-placeholder="Lugar de estudios..."
+			option value=""
+				| Seleccionar...
+			-- foreach($places as $i => $p)
+				!- $name = implode(' > ', $p);
+				!- $selected = $i === $search_place ? 'selected' : null;
+				option value="={i}" ={selected}
+					| ={name}
+	// Área de conocimientos
+	div class="col-sm-6"
+		select name="knowledge_area" selectize data-placeholder="Área de conocimientos..."
+			option value=""
+				| Selecionar...
+			-- foreach($knowledge_areas as $i => $a)
+				!- $name = implode(' > ', $a);
+				!- $selected = $i === $search_knowledge_area ? 'selected' : null;
+				option value="={i}" ={selected}
+					| ={name}
+
+-- if(!empty($search_c_list))
+	div class="col-sm-12"
+		div class="data"
+			h3 class="text-center"
+				| Carreras
+			div class="list-group list-group-nomargin"
+				-- foreach($search_c_list as $c)
+					a class="list-group-item" href="/c/={c->pretty_url}"
+						h4 class="list-group-item-heading"
+							| ={c->name}
+						h5 class="list-group-item-heading"
+							!- $u_name = implode(' > ', $universities[$c->university->id]);
+							| ={u_name}
+						-- if(!empty($c->middle_degree) || !empty($c->degree))
+							hr
+						-- if(!empty($c->middle_degree))
+							p class="list-group-item-text degree"
+								| ={c->middle_degree}
+								-- if(!empty($c->middle_length))
+									span class="pull-right"
+										span class="badge"
+											!- $d = $c->middle_length > 1 ? 's' : null;
+											| ={c->middle_length} año={d}
+						-- if(!empty($c->degree))
+							p class="list-group-item-text degree"
+								| ={c->degree}
+								-- if(!empty($c->length))
+									span class="pull-right"
+										span class="badge"
+											!- $d = $c->length > 1 ? 's' : null;
+											| ={c->length} año={d}

@@ -61,11 +61,11 @@
 			}
 		}
 
-		public static function getList()
+		public static function getList(bool $reverse = true, bool $pretty_url_instead_id = false) : array
 		{
 			$all = [];
 			foreach(self::all() as $item)
-				$all[$item->id] = $item->getParentList();
+				$all[$item->id] = $item->getParentList($reverse, $pretty_url_instead_id);
 
 			uasort($all, function($a, $b)
 			{ return strnatcmp(implode('/', $a), implode('/', $b)); });
@@ -73,7 +73,7 @@
 			return $all;
 		}
 
-		public function getParentList(bool $reverse = true, $pretty_url_instead_id = false) : array
+		public function getParentList(bool $reverse = true, bool $pretty_url_instead_id = false) : array
 		{
 			$parent = $this;
 
