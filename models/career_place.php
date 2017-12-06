@@ -6,8 +6,8 @@
 		 *	  `id` int(11) NOT NULL,
 		 *	  `career_id` int(11) NOT NULL,
 		 *	  `place_id` int(11) NOT NULL,
-		 *	  `address` varchar(255) NOT NULL
-		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		 *	  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		 *	
 		 *	ALTER TABLE `career_places`
 		 *	  ADD PRIMARY KEY (`id`);

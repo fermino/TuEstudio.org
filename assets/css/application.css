@@ -1,3 +1,9 @@
+body
+{
+	/*background-color: #5CB85C;/**/
+	background-color: rgb(35, 177, 77);
+}
+
 .button
 {
 	margin-right: 10px;
@@ -6,5 +12,73 @@
 
 #main
 {
-	margin-top: 60px;
+	background-color: #FFF;
+
+	margin: 25px 25px 30px 25px;
+	padding: 10px 20px 20px 20px;
+
+	border: 1px solid;
+	border-color: #1fabef;
+	border-radius: 4px;
+	box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.75);
+}
+
+.data
+{
+	background-color: #FAFAFA;
+
+	margin-top: 20px;
+
+	border: 1px solid #ccc;
+	border-radius: 4px;
+
+	padding: 9.5px;
+
+	font-size: 15px;
+}
+
+.sub-data
+{
+	background-color: #EAEAFF;
+
+	margin-left: 15px;
+
+	border-radius: 4px;
+}
+
+.data-description
+{
+	margin: 10px;
+}
+
+.data-info
+{
+	font-size: 12px;
+
+	margin: 20px 10px 10px 10px;
+}
+
+.list-group
+{
+	margin-top: 25px;
+}
+
+.list-group-nomargin
+{
+	margin-bottom: 0px;
+}
+
+.degree
+{
+	margin-top: 10px;
+}
+
+.main-search
+{
+	margin: 15px 0;
+}
+
+.main-search-title
+{
+	margin-top: 20px;
 }
