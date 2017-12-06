@@ -1,11 +1,19 @@
 <?php
 	$routes = 
 	[
-		'/'								=> 'index',
+		// Main page
+		'/'											=> ['index', ['get', 'post']],
+		'/search/{search}/{place}/{knowledge_area}'	=> 'index',
+		// Assets
 		'/assets/{folder}/{file}.{ext}'	=> 'assets',
-		'/login-callback-google'		=> 'login_callback_google',
-		'/logout'						=> 'logout',
-		'/admin'						=>
+		// User session
+		'/login-callback-google'	=> 'login_callback_google',
+		'/logout'					=> 'logout',
+		// User
+		'/u/{university_pretty_url}'	=> 'university',
+		'/c/{career_pretty_url}'		=> 'career',
+		// Admin
+		'/admin'	=>
 		[
 			''												=> ['admin_index'			,['get']		],
 			'/p[/{id_or_search}[/{search}]]'				=> ['admin_places'			,['get', 'post']],

@@ -1,0 +1,44 @@
+div
+	h2 class="text-center"
+		a href="/u/={root_pretty_url}"
+			| ={root_name}
+
+div class="col-sm-12"
+	div class="data"		
+		h3 class="text-center"
+			-- foreach($parents as $p => $n)
+				a href="/u/={p}"
+					| ={n}
+				-- if(end($parents) !== $n)
+					| /
+
+		-- if(!empty($current->degree) || !empty($current->middle_degree))
+			div class="sub-data col-sm-4 pull-right"
+				h4
+					| Títulos
+				ul class="list-group"
+					-- if(!empty($current->middle_degree))
+						li class="list-group-item"
+							-- if(!empty($current->middle_length))
+								!- $d = $current->middle_length > 1 ? 's' : null;
+								span class="badge"
+									| ={current->middle_length} año={d}
+							| ={current->middle_degree}
+					-- if(!empty($current->degree))
+						li class="list-group-item"
+							-- if(!empty($current->length))
+								!- $d = $current->length > 1 ? 's' : null;
+								span class="badge"
+									| ={current->length} año={d}
+							| ={current->degree}
+
+		h3 class="data-description"
+			| ={current->name}
+
+		div class="data-description"
+			| =raw{parsed_description}
+
+		p class="data-info"
+			| Si tiene más información por favor contáctese con nosotros
+			a href="/contacto"
+				| aquí. 

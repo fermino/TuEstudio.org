@@ -2,22 +2,23 @@
 	class University extends ActiveRecord\Model
 	{
 		/**
-		  *	CREATE TABLE `universities` (
+		 *	CREATE TABLE `universities` (
 		 *	  `id` int(11) NOT NULL,
 		 *	  `parent_id` int(11) DEFAULT NULL,
 		 *	  `place_id` int(11) NOT NULL,
-		 *	  `name` varchar(255) NOT NULL,
-		 *	  `pretty_url` varchar(255) NOT NULL,
-		 *	  `web_address` varchar(255) DEFAULT NULL,
-		 *	  `email` varchar(255) DEFAULT NULL,
-		 *	  `phone` varchar(255) DEFAULT NULL,
-		 *	  `address` varchar(255) DEFAULT NULL,
+		 *	  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `pretty_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		 *	  `web_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		 *	  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		 *	  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		 *	  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 		 *	  `verified` tinyint(1) NOT NULL DEFAULT '0'
-		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		 *	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 		 *	
 		 *	ALTER TABLE `universities`
 		 *	  ADD PRIMARY KEY (`id`),
 		 *	  ADD UNIQUE KEY `pretty_url` (`pretty_url`);
+		 *	ALTER TABLE `universities` ADD FULLTEXT KEY `name` (`name`);
 		 *	
 		 *	ALTER TABLE `universities`
 		 *	  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
@@ -53,33 +54,37 @@
 		public function set_name($name)
 		{
 			$this->assign_attribute('name', $name);
-			$this->pretty_url = ApplicationController::getPrettyURL($this->name);
 
-			$this->pretty_url .= '-' . count(self::all(['conditions' => ['pretty_url like ?', $this->pretty_url . '-%']]));
+			if(empty($this->pretty_url))
+			{
+				$this->pretty_url = ApplicationController::getPrettyURL($this->name);
+				$this->pretty_url .= '-' . count(self::all(['conditions' => ['pretty_url like ?', $this->pretty_url . '-%']]));
+			}
 		}
 
-		public static function getList()
+		public static function getList(bool $reverse = true, bool $pretty_url_instead_id = false) : array
 		{
 			$all = [];
 			foreach(self::all() as $item)
-			{
-				$all[$item->id] = [$item->id => $item->name];
-
-				$parent = $item->parent;
-
-				while(!empty($parent))
-				{
-					$all[$item->id][$parent->id] = $parent->name;
-
-					$parent = $parent->parent;
-				}
-
-				$all[$item->id] = array_reverse($all[$item->id], true);
-			}
+				$all[$item->id] = $item->getParentList($reverse, $pretty_url_instead_id);
 
 			uasort($all, function($a, $b)
 			{ return strnatcmp(implode('/', $a), implode('/', $b)); });
 
 			return $all;
+		}
+
+		public function getParentList(bool $reverse = true, bool $pretty_url_instead_id = false) : array
+		{
+			$parent = $this;
+
+			while(!empty($parent))
+			{
+				$data[($pretty_url_instead_id ? $parent->pretty_url : $parent->id)] = $parent->name;
+
+				$parent = $parent->parent;
+			}
+
+			return $reverse ? array_reverse($data, true) : $data;
 		}
 	}
